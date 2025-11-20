@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Full height */
+html, body, #root { height: 100%; width: 100%; margin: 0; padding: 0; }
+
+/* Fondo opcional */
+.fondo {
+  @apply min-h-screen w-full relative;
+  background-image: linear-gradient(to bottom right, oklch(0.98 0.005 95), oklch(0.92 0.02 85));
+}
+.fondo::before {
+  content: "";
+  @apply absolute inset-0 pointer-events-none;
+  background: radial-gradient(circle at top left, oklch(0.23 0.05 260) 0%, transparent 50%);
+  opacity: 0.03;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.pause-animation {
+  animation-play-state: paused !important;
+}
