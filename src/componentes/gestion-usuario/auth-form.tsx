@@ -5,10 +5,11 @@ import UsuarioService from "./usuario-service";
 import FormInput from "../herramientas/formateo-de-campos/form-input";
 import { Label } from "../ui/Label";
 import { Button } from "../ui/Button";
-import { schemaLogin, type FormValuesLogin } from "./interfaces-validaciones-usuario";
 import { parseApiError } from "../../utils/errores";
-import RecuperarContrasenaForm from "./recuperar-contrasena-form";
 import { Eye, EyeOff } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useSesion } from "../herramientas/context/SesionContext";
+import { schemaLogin, type FormValuesLogin } from "./interfaces-validaciones-usuario";
 
 export default function AuthForm({ onClose, onSuccess }: { onClose?: () => void; onSuccess?: () => void }) {
   //===================== CONSTANTES VARIAS ============================================
@@ -24,16 +25,13 @@ export default function AuthForm({ onClose, onSuccess }: { onClose?: () => void;
     setError,
     register,
   } = methods;
-  console.log("Errores del formulario:", errors);
 
-  // Obtener proveedores, marcas y líneas
   const [, setErrorMessage] = useState("");
-  const [mostrarModal, setMostrarModal] = useState(false);
+  const { setSesionEnContext } = useSesion();
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   //=============================== FUNCIONALIDAD ==================================
-
-
 
   const onSubmit = async (formData: FormValuesLogin) => {
     setErrorMessage("");
@@ -41,19 +39,18 @@ export default function AuthForm({ onClose, onSuccess }: { onClose?: () => void;
     try {
       const payload = { ...formData };
 
-      console.log("Payload enviado:", JSON.stringify(payload, null, 2));
-
       const response = await UsuarioService.login(payload);
-      const token = response?.data.accessToken;
 
-      localStorage.setItem("Token", token);
+      setSesionEnContext({
+        usuarioId: response.usuarioId,
+        rolId: response.rolId,
+      });
 
-      window.location.href = "/admin";
+      navigate("/admin");
 
       if (onClose) onClose();
       if (onSuccess) onSuccess();
     } catch (error) {
-      console.error("Error al guardar el usuario:", error);
 
       const errorMessage = parseApiError(error);
 
@@ -74,7 +71,7 @@ export default function AuthForm({ onClose, onSuccess }: { onClose?: () => void;
             <FormInput name="email" label="Correo Electrónico" placeholder="tu@ejemplo.com" className="text-sm" />
 
             <div className="relative">
-              <Label htmlFor={"contrasena"} className="text-sm font-medium text-gray-700 block mb-1">
+              <Label htmlFor={"password"} className="text-sm font-medium text-gray-700 block mb-1">
                 Constraseña
               </Label>
               <input
@@ -108,29 +105,9 @@ export default function AuthForm({ onClose, onSuccess }: { onClose?: () => void;
           >
             {isSubmitting ? "Verificando..." : "Iniciar Sesión"}
           </Button>
-
-          {/* Botón para recuperar contraseña */}
-          <p className="text-sm text-center mt-2 text-red-500">
-            ¿Olvidaste tu contraseña?{" "}
-            <button
-              type="button"
-              onClick={() => setMostrarModal(true)}
-              className="text-principal bg-transparent hover:underline"
-            >
-              Recuperar
-            </button>
-          </p>
-          
         </form>
       </FormProvider>
 
-      {mostrarModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="relative p-6 sm:p-8 rounded-lg w-4/5 sm:w-3/5 md:w-2/3 lg:w-1/2 xl:w-2/5 max-w-full">
-            <RecuperarContrasenaForm onClose={() => setMostrarModal(false)} />
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -30,8 +30,7 @@ interface MenuItem {
   subMenu?: MenuItem[]; // 🔹 Ahora es opcional
 }
 
-const { sesion } = useSesion();
-const rolId = sesion.rolId;
+
 
 const menuItems: MenuItem[] = [
   {
@@ -110,6 +109,9 @@ const menuItemsEmpleado: MenuItem[] = [
 export function SidebarMenus({ isOpen, onClose, onOpen }: SidebarProps) {
   const navigate = useNavigate();
   const [openSubMenus, setOpenSubMenus] = useState<Record<string, boolean>>({});
+
+  const { sesion } = useSesion();
+  const rolId = sesion.rolId;
 
   const toggleSubMenu = (label: string, parentPath: string | null = null) => {
     setOpenSubMenus((prev) => {

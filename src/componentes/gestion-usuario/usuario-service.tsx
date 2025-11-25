@@ -1,4 +1,4 @@
-import axios from "axios";
+import { api } from "../../utils/apiService";
 import axiosConfig from "../../utils/axiosConfig";
 import { createCrudService } from "../../utils/crudFactory";
 import type { FormValuesRegister } from "./interfaces-validaciones-usuario";
@@ -15,7 +15,7 @@ const UsuarioService = {
       const token = localStorage.getItem("Token");
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-      const { data } = await axios.get(`${apiUrl}/usuario/${id}`, { headers });
+      const { data } = await api.get(`${apiUrl}/usuario/${id}`, { headers });
       return data;
     } catch (error) {
       console.error("Error al obtener usuario:", error);
@@ -25,8 +25,8 @@ const UsuarioService = {
 
   login: async (payload: any) => {
     try {
-      const response = await axios.post(`${apiUrl}/auth/login`, payload);
-      return response;
+      const { data } = await api.post(`${apiUrl}/auth/login`, payload);
+      return data;
     } catch (error) {
       console.error("Error al iniciar Sesion:", error);
       throw error
@@ -37,7 +37,7 @@ const UsuarioService = {
   obtenerRol: async (id: number) => {
     try {
       const token = localStorage.getItem("Token");
-      const roleResponse = await axios.get(`${apiUrl}/rol/${id}`, {
+      const roleResponse = await api.get(`${apiUrl}/rol/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Agregar el token al header
         },
@@ -54,7 +54,7 @@ const UsuarioService = {
       const token = localStorage.getItem("Token");
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-      const response = await axios.post(`${apiUrl}/auth/register`, payload, {
+      const response = await api.post(`${apiUrl}/auth/register`, payload, {
         headers,
       });
 
@@ -70,7 +70,7 @@ const UsuarioService = {
       const token = localStorage.getItem("Token");
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-      const { data } = await axios.get(`${apiUrl}/rol`, {
+      const { data } = await api.get(`${apiUrl}/rol`, {
         headers,
       });
       return data;
@@ -82,7 +82,7 @@ const UsuarioService = {
 
   recuperarContrasena: async (mail: string) => {
     try {
-      const response = await axios.post(`${apiUrl}/auth/recuperar`, { mail });
+      const response = await api.post(`${apiUrl}/auth/recuperar`, { mail });
       return response;
     } catch (error) {
       console.error("Error al recuperar contraseña:", error);
@@ -92,7 +92,7 @@ const UsuarioService = {
 
   verificarCodigo: async (mail: string, codigo: string) => {
     try {
-      const response = await axios.post(`${apiUrl}/auth/verificar-codigo`, {
+      const response = await api.post(`${apiUrl}/auth/verificar-codigo`, {
         mail,
         codigo,
       });
@@ -105,7 +105,7 @@ const UsuarioService = {
 
   cambiarContrasena: async (mail: string, nuevaContrasena: string) => {
     try {
-      const response = await axios.patch(`${apiUrl}/auth/cambiar-contrasena`, {
+      const response = await api.patch(`${apiUrl}/auth/cambiar-contrasena`, {
         mail,
         nuevaContrasena,
       });
