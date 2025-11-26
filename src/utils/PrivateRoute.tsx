@@ -46,7 +46,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ allowedRoles }) => {
 
   // Ahora decidimos el contenido a renderizar
   if (!sesionValida) {
-    content = <Navigate to="/login" state={{ from: location }} replace />;
+    content = <Navigate to="/" state={{ from: location }} replace />;
   } else if (allowedRoles.includes(sesion.rolId)) {
     content = <Outlet />;
   } else {

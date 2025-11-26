@@ -29,7 +29,7 @@ api.interceptors.response.use(
       } catch (refreshError) {
         console.error("Error al refrescar token", refreshError);
 
-        //window.location.href = "/login"; 
+        window.location.href = "/"; 
       }
     }
 
@@ -88,7 +88,7 @@ const ApiService = {
     }
   },
 
-  delete: async (url: string, usuarioId:number) => {
+  delete: async (url: string, usuarioId:string) => {
     try {
       const { data } = await api.delete(`${apiUrl}${url}`, {
         params: { usuarioId },

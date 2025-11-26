@@ -42,6 +42,8 @@ export const createCrudService = <T>(baseEndpoint: string) => ({
 
   obtenerTotalesPara: (id:number, entidades:string) => ApiService.get(`/${baseEndpoint}/find-all-for-${entidades}-for/${id}/select`),
 
+  obtenerTotalesDe: (filtros: any, usuarioId:string) => ApiService.get(`/${baseEndpoint}/find-all-for/${usuarioId}`, filtros),
+
   obtenerTotalesSinFacturarPara: (id:number, entidades:string) => ApiService.get(`/${baseEndpoint}/find-all-for-${entidades}-sin-facturar-for/${id}/select`),
 
 
@@ -49,7 +51,7 @@ export const createCrudService = <T>(baseEndpoint: string) => ({
   
   obtenerIdEntidad: (id:number, entidad:string) => ApiService.get(`/${baseEndpoint}/${entidad}/${id}`),
 
-  eliminar: (id: number, usuarioId:number) => ApiService.delete(`/${baseEndpoint}/${id}`, usuarioId),
+  eliminar: (id: number, usuarioId:string) => ApiService.delete(`/${baseEndpoint}/${id}`, usuarioId),
 
   obtenerAuditoria: (id: number) => ApiService.get(`/${baseEndpoint}/${id}/audit`),
 

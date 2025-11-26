@@ -1,5 +1,5 @@
 export interface Sesion {
-  usuarioId: number;
+  usuarioId: string;
   rolId: number;
 }
 
@@ -7,5 +7,10 @@ export interface Sesion {
 export const Rol = {
   ADMINISTRADOR: 1,
   EMPLEADO: 2,
-  AUDITOR: 3,
+  CLIENTE: 3,
 };
+
+export interface SelectCliente {
+  id: string;
+  nombre: string;
+}

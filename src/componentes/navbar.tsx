@@ -31,7 +31,7 @@ function ThemeToggleButton() {
     try {
       await api.post(`${axiosConfig.apiUrl}/auth/logout`);
       // Redirigir al login después de cerrar sesión
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     }

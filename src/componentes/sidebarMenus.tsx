@@ -35,11 +35,49 @@ interface MenuItem {
 const menuItems: MenuItem[] = [
   {
     icon: ShoppingCart,
-    label: "Gestión Ventas",
+    label: "Gestión Proyectos",
     path: "",
     subMenu: [
-      { icon: Receipt, label: "Venta", path: "factura-venta" },
-      { icon: ChartColumnIncreasing, label: "Estadisticas", path: "estadisticas" },
+      { icon: Receipt, label: "Proyectos", path: "proyectos" },
+    ],
+  },
+
+  {
+    icon: ShoppingBag,
+    label: "Gestión Productos",
+    path: "",
+    subMenu: [
+      { icon: Tag, label: "Marca", path: "marca" },
+      { icon: ShoppingBag, label: "Producto", path: "producto" },
+      { icon: ShoppingBag, label: "Linea", path: "linea" },
+    ],
+  },
+
+  {
+    icon: Users,
+    label: "Gestión Usuario",
+    path: "",
+    subMenu: [{ icon: Users, label: "Usuario", path: "usuario" }],
+  },
+
+  {
+    icon: Building,
+    label: "Organización",
+    path: "",
+    subMenu: [
+      { icon: Users, label: "Cliente", path: "cliente" },
+    ],
+  },
+
+];
+
+const menuItemsCliente: MenuItem[] = [
+  {
+    icon: ShoppingCart,
+    label: "Gestión Proyectos",
+    path: "",
+    subMenu: [
+      { icon: Receipt, label: "Proyectos", path: "proyectos" },
     ],
   },
 
@@ -77,11 +115,10 @@ const menuItems: MenuItem[] = [
 const menuItemsEmpleado: MenuItem[] = [
   {
     icon: ShoppingCart,
-    label: "Gestión Ventas",
+    label: "Gestión Proyectos",
     path: "",
     subMenu: [
-      { icon: Receipt, label: "Venta", path: "factura-venta" },
-      { icon: ChartColumnIncreasing, label: "Estadisticas", path: "estadisticas" },
+      { icon: Receipt, label: "Proyectos", path: "proyectos" },
     ],
   },
 
@@ -253,7 +290,10 @@ export function SidebarMenus({ isOpen, onClose, onOpen }: SidebarProps) {
               {/* Contenido scrolleable - CLAVE: usar flex-1 min-h-0 overflow-y-auto */}
               <div className="flex-1 min-h-0 overflow-y-auto">
                 <div className="p-4 space-y-2">
-                  {renderMenuItems(rolId === Rol.ADMINISTRADOR ? menuItems : menuItemsEmpleado)}
+                  {renderMenuItems(
+                    rolId === Rol.ADMINISTRADOR ? menuItems : 
+                    rolId === Rol.EMPLEADO ? menuItemsEmpleado : menuItemsCliente
+                 )}
                   {/* Espaciado adicional al final para asegurar que el último elemento sea visible */}
                   <div className="h-4"></div>
                 </div>

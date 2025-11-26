@@ -10,6 +10,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useSesion } from "../herramientas/context/SesionContext";
 import { schemaLogin, type FormValuesLogin } from "./interfaces-validaciones-usuario";
+import { Rol } from "../../interfaces/generales/interfaces-generales";
 
 export default function AuthForm({ onClose, onSuccess }: { onClose?: () => void; onSuccess?: () => void }) {
   //===================== CONSTANTES VARIAS ============================================
@@ -45,6 +46,12 @@ export default function AuthForm({ onClose, onSuccess }: { onClose?: () => void;
         usuarioId: response.usuarioId,
         rolId: response.rolId,
       });
+
+      if (response.rolId === Rol.ADMINISTRADOR || response.rolId === Rol.EMPLEADO){
+        navigate("/admin");
+      } else if (response.rolId === Rol.CLIENTE) {
+        navigate("/public");
+      }
 
       navigate("/admin");
 
