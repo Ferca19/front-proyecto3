@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, type Resolver } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import UsuarioService from "./usuario-service";
 import { Card, CardContent, CardFooter } from "../ui/Card";
 import FormInput from "../herramientas/formateo-de-campos/form-input";
-import { Label } from "../ui/Label";
 import { Button } from "../ui/Button";
 import { parseApiError } from "../../utils/errores";
 import { schemaRegister, type FormValuesRegister } from "./interfaces-validaciones-usuario";
-import type { Rol } from "../../interfaces/gestion-usuario/interfaces-usuario";
+import type { Area } from "../../interfaces/gestion-usuario/interfaces-usuario";
 import { User } from "lucide-react";
+import { RolS } from "../../interfaces/generales/interfaces-generales";
+import Select from "react-select";
+import React from "react";
 
 export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () => void; onSuccess: () => void }) {
   
   //===================== CONSTANTES VARIAS ============================================
 
   const methods = useForm<FormValuesRegister>({
-    resolver: yupResolver(schemaRegister),
+    resolver: yupResolver(schemaRegister) as Resolver<FormValuesRegister>,
     defaultValues: { email: "", password: "", nombre: "", apellido: "", rolId: 0 },
   });
 
@@ -29,17 +31,20 @@ export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () =
   } = methods;
 
   const rolId = watch("rolId");
-  const [roles, setRoles] = useState<Rol[]>([]);
+  const [areas, setAreas] = useState<Area[]>([]);
+  const [selectedArea, setSelectedArea] = React.useState<Area>({} as Area);
   const [, setErrorMessage] = useState("");
+
+  const areaId = watch("areaId");
 
   //=============================== FUNCIONALIDAD ==================================
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [rolRes] = await Promise.all([await UsuarioService.obtenerRolesTotales()]);
+        const [areaRes] = await Promise.all([await UsuarioService.obtenerTotales({},"areas")]);
 
-        setRoles(rolRes);
+        setAreas(areaRes);
       } catch (error) {
         console.error("Error al obtener los datos:", error);
       }
@@ -117,25 +122,96 @@ export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () =
               <FormInput name="email" label="Correo Electrónico" placeholder="tu@ejemplo.com" />
               
 
+              <div>
+                <label className="mb-2 block text-sm font-medium text-gray-700">Roles</label>
+                <div  className="w-full">
+                  <Select
+                    value={
+                      Object.entries(RolS)
+                        .map(([key, value]) => ({
+                          value: Number(key),
+                          label: value // or provide a more user-friendly label if needed
+                        }))
+                        .find((option) => Number(option.value) === watch('rolId')) || null
+                    }
+                    options={Object.entries(RolS).map(([key, value]) => ({
+                      value: Number(key),
+                      label: value,
+                    }))}
+                    onChange={(selectedOption) => {
+                      methods.setValue(`rolId`, Number(selectedOption?.value) || 0);
+                    }}
+                    className="text-black"
+                    menuPortalTarget={document.body}
+                    styles={{
+                      control: (base) => ({
+                        ...base,
+                        color: "black",
+                      }),
+                      singleValue: (base) => ({
+                        ...base,
+                        color: "black",
+                      }),
+                      option: (base, { isSelected, isFocused }) => ({
+                        ...base,
+                        color: isSelected ? "white" : "black",
+                        backgroundColor: isSelected 
+                        ? "#3b82f6" 
+                        : isFocused 
+                        ? "#93c5fd"
+                        : "white",
+                      }),
+                      menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                    }}
+                  />
+                  {errors.rolId && <small className="text-red-500">{errors.rolId?.message as string}</small>}
+                </div>
+              </div>
 
-              <div className="space-y-1 sm:space-y-2">
-                <Label htmlFor="rolId" className="text-sm font-medium text-gray-700 block mb-1">
-                  Rol
-                </Label>
-                <select
-                  id="rolId"
-                  value={rolId}
-                  onChange={(e) => setValue("rolId",Number(e.target.value))}
-                  required
-                  className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-800"
-                >
-                  <option value="">Selecciona un rol</option>
-                  {roles.map((rol) => (
-                    <option key={rol.id} value={rol.id}>
-                      {rol.nombre}
-                    </option>
-                  ))}
-                </select>
+              <div className="flex-1 rounded-lg p-2 shadow-sm">
+                <label className="block text-sm font-medium text-gray-700 py-1">Areas</label>
+                <div className="flex items-end gap-x-2">
+                  <div className="flex flex-col w-full gap-y-2">
+                    <div className="w-full">
+                      <Select
+                        value={
+                          areas.length > 0
+                            ? areas.find((option) => option._id === areaId) || null
+                            : selectedArea
+                        }
+                        options={areas}
+                        getOptionLabel={(option) => option.nombre}
+                        getOptionValue={(option) => String(option._id)}
+                        onChange={(selectedOption) => {
+                          if (selectedOption) {
+                            setValue('areaId', selectedOption._id);  
+                            setSelectedArea(selectedOption);
+                          }
+                        }}
+                        placeholder="Seleccione"
+                        className="text-black"
+                        menuPortalTarget={document.body}
+                        styles={{
+                          control: (base) => ({ ...base, color: "black" }),
+                          singleValue: (base) => ({ ...base, color: "black" }),
+                          option: (base, { isSelected, isFocused }) => ({
+                            ...base,
+                            color: isSelected ? "white" : "black",
+                            backgroundColor: isSelected
+                              ? "#3b82f6"
+                              : isFocused
+                              ? "#93c5fd"
+                              : "white",
+                          }),
+                          menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                        }}
+                      />
+                        {errors.areaId?.message && (
+                        <p className="text-sm text-red-600 mt-1">{errors.areaId.message}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <FormInput name="password" label="Contraseña" type="password" />

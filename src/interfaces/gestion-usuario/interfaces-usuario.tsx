@@ -7,7 +7,7 @@ export type Rol = {
 };
 
 export interface Usuario {
-  id: number;
+  _id: number;
   nombre: string
   apellido: string
   email: string;
@@ -15,9 +15,20 @@ export interface Usuario {
   createdAt: string | null;
   updatedAt: string | null;
   deletedAt: string | null;
+  area: Area;
+  telefono?: string;
+  direccion?: string;
+  localidad?: string;
 }
 
+export interface Area {
+  _id: string;
+  nombre: string;
+}
+
+
+
 export interface SelectUsuario {
-  id: number;
+  _id: string;
   correo: string;
 }

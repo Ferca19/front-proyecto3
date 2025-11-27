@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { CreditCard, PlusCircle, Trash } from 'lucide-react'
+import { CreditCard, PlusCircle, Search, Trash } from 'lucide-react'
 import { useSesion } from '../herramientas/context/SesionContext';
 import RegistrarActualizarProyectoForm from './registrar-proyecto';
 import { Alertas, TipoAlerta, TituloAlerta, useAlerts } from '../herramientas/alertas/alertas';
@@ -7,10 +7,13 @@ import Paginacion from '../herramientas/reutilizables/paginacion';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { TablaAGGrid, type Column } from '../herramientas/tablas/tabla-flexible-ag-grid';
-import type { ConsultarProyecto } from '../../interfaces/gestion-proyecto/interfaces-proyecto';
+import { EstadoProyectoS, type ConsultarProyecto } from '../../interfaces/gestion-proyecto/interfaces-proyecto';
 import ProyectoService from './proyecto-service';
 import { TipoAlertaConfirmacion, TituloAlertaConfirmacion, useConfirmation } from '../herramientas/alertas/alertas-confirmacion';
 import { Rol } from '../../interfaces/generales/interfaces-generales';
+import type { SelectCliente } from '../../interfaces/generales/interfaces-generales';
+import { EstadoBadge } from '../ui/EstadoBadge';
+import { SelectContentUI, SelectItemUI, SelectTriggerUI, SelectUI, SelectValueUI } from '../ui/Select';
 
 export default function ConsultarProyectos() {
   const { sesion } = useSesion();
@@ -22,6 +25,13 @@ export default function ConsultarProyectos() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { alerts, addAlert, removeAlert } = useAlerts()
   const { showConfirmation, AlertasConfirmacion: AlertasConfirmacion } = useConfirmation()
+  const [clientes, setClientes] = useState<SelectCliente[]>([]);
+  const [filtros, setFiltros] = useState({
+    estado: 1,
+    clienteId: 0,
+    tipo: 0
+  });
+
 
   // MANEJO DE PAGINACION =======================================
   const [paginaActual, setPaginaActual] = useState(1);
@@ -31,8 +41,17 @@ export default function ConsultarProyectos() {
   // MANEJO DE PAGINACION =======================================
 
 
+  useEffect(() => {
+    const fetchClientes = async () => {
+      const response = await ProyectoService.obtenerTotales({}, "clientes");
+      setClientes(response);
+    };
+    fetchClientes();
+  }, []);
 
-  const handleDelete = async (id: number) => {
+
+
+  const handleDelete = async (id: string) => {
 
     const confirmed = await showConfirmation({
       type: TipoAlertaConfirmacion.DESTRUCTIVE,
@@ -47,7 +66,7 @@ export default function ConsultarProyectos() {
 
     try {
       await ProyectoService.eliminar(id, usuarioId)
-      setProyectos(proyectos.filter((presentacion) => presentacion.id !== id))
+      setProyectos(proyectos.filter((proyecto) => proyecto._id !== id))
       addAlert({
         type: TipoAlerta.SUCCESS,
         title: TituloAlerta.SUCCESS,
@@ -153,14 +172,34 @@ export default function ConsultarProyectos() {
   }
 
   const columns: Column<ConsultarProyecto>[] = [
-    { 
-      header: 'Nombre', 
-      accessor: 'nombre',
-      flex: 1,
-      type: 'text',
+    {
+      header: "Nombre",
+      accessor: "nombre",
+      flex: 1.3,
+      type: "text",
       editable: false,
+      formatFunction: ({ value, row }) => (
+        <div className="flex flex-col">
+          <div
+            className="flex items-center gap-1 truncate whitespace-nowrap max-w-[700px]"
+            title={typeof value === "string" ? `${value}${row.descripcion ? `\n${row.descripcion}` : ""}` : undefined}
+          >
+            <span>{value}</span>
+          </div>
+          {row.descripcion && <div className="text-sm text-gray-500 truncate max-w-[700px]">{row.descripcion}</div>}
+        </div>
+      ),
+      scrollable: false,
+    },
+    {
+      header: "Estado",
+      accessor: "estado",
+      flex: 0.5,
+      formatFunction: ({ value }) => <EstadoBadge estado={EstadoProyectoS[value]} />,
     },
   ];
+
+  console.log("los filtros son:", filtros);
 
   return (
     <div className="w-full">
@@ -186,10 +225,95 @@ export default function ConsultarProyectos() {
                     <CreditCard className="consultar-icon" />
                     <span>Proyectos</span>
                   </CardTitle>
+
+                  <div className="flex items-center gap-2">
+
+                    <div className="flex flex-col w-full">
+                      <label className="mb-1 text-sm font-medium text-gray-700">
+                        Estado
+                      </label>
+                      <SelectUI
+                        value={String(filtros.estado)}
+                        onValueChange={(key) => {
+                          setFiltros({
+                            ...filtros,
+                            estado: Number(key)
+                          })
+                        }}
+                      >
+                        <SelectTriggerUI className="w-full px-3 py-2 rounded-lg border border-gray-300 text-black bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                          <SelectValueUI placeholder="Seleccione un estado" />
+                        </SelectTriggerUI>
+
+                        <SelectContentUI className="bg-white text-black">
+                          {Object.entries(EstadoProyectoS).map(([key, value]) => (
+                            <SelectItemUI
+                              key={key}
+                              value={key} // 👈 SIEMPRE string
+                              className="
+                                  data-[state=checked]:bg-blue-500 
+                                  data-[state=checked]:text-white
+                                  data-[highlighted]:bg-blue-200 
+                                  data-[highlighted]:text-black
+                                "
+                            >
+                              {value}
+                            </SelectItemUI>
+                          ))}
+                        </SelectContentUI>
+                      </SelectUI>
+                    </div>
+
+                    <div className="flex flex-col w-full">
+                      <label className="mb-1 text-sm font-medium text-gray-700">
+                        Cliente
+                      </label>
+                      <SelectUI
+                        value={String(filtros.clienteId)}
+                        onValueChange={(key) => {
+                          setFiltros({
+                            ...filtros,
+                            clienteId: Number(key)
+                          })
+                        }}
+                      >
+                        <SelectTriggerUI className="w-full px-3 py-2 rounded-lg border border-gray-300 text-black bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                          <SelectValueUI placeholder="Seleccione un cliente" />
+                        </SelectTriggerUI>
+
+                        <SelectContentUI className="bg-white text-black">
+                          {clientes.map((cliente) => (
+                            <SelectItemUI
+                              key={cliente._id}
+                              value={String(cliente._id)} // 👈 SIEMPRE string
+                              className="
+                                  data-[state=checked]:bg-blue-500 
+                                  data-[state=checked]:text-white
+                                  data-[highlighted]:bg-blue-200 
+                                  data-[highlighted]:text-black
+                                "
+                            >
+                              {cliente.nombre}
+                            </SelectItemUI>
+                          ))}
+                        </SelectContentUI>
+                      </SelectUI>
+                    </div>
+
+                  </div>
                 </div>
 
                 {/* Contenedor de botones */}
                 <div className="flex items-center gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    className="bg-blue-500 text-white hover:bg-gray-700 w-10 h-10 rounded-full shadow-md transition"
+                    onClick={() => handleBuscarProyectos(true)}
+                  >
+                    <Search size={20} />
+                  </Button>
                   { rolId !== Rol.CLIENTE && ( 
                     <Button
                       className="bg-blue-500 hover:bg-blue-700 text-white flex items-center px-4 py-3"
@@ -213,7 +337,7 @@ export default function ConsultarProyectos() {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => handleDelete(row.id)}
+                          onClick={() => handleDelete(row._id)}
                           className="w-8 h-8 flex items-center justify-center bg-blue-500 text-white hover:bg-blue-800"
                         >
                           <Trash size={18} />
@@ -223,7 +347,6 @@ export default function ConsultarProyectos() {
                     </>
                   )}
                   actionsFlex={0.5}
-                  vacioFlex={0.5}
                   rowHeight={50}
                 />
               </div>

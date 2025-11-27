@@ -7,6 +7,8 @@ import PrivateRoute from "./utils/PrivateRoute";
 import { Rol } from "./interfaces/generales/interfaces-generales";
 import PublicPage from "./pages/public-page";
 import ConsultarProyectos from "./componentes/gestion-proyecto/consultar-proyecto";
+import ConsultarReclamos from "./componentes/gestion-reclamos/reclamo/consultar-reclamo";
+import ConsultarUsuarios from "./componentes/gestion-usuario/consultar-usuarios";
 
 function App() {
   return (
@@ -23,6 +25,12 @@ function App() {
               <Route element={<PrivateRoute allowedRoles={[Rol.EMPLEADO, Rol.ADMINISTRADOR]} />}>
                   <Route path="proyectos" element={<ConsultarProyectos />} />
               </Route>
+              <Route element={<PrivateRoute allowedRoles={[Rol.EMPLEADO, Rol.ADMINISTRADOR]} />}>
+                  <Route path="reclamos" element={<ConsultarReclamos />} />
+              </Route>
+              <Route element={<PrivateRoute allowedRoles={[Rol.EMPLEADO, Rol.ADMINISTRADOR]} />}>
+                  <Route path="usuarios" element={<ConsultarUsuarios />} />
+              </Route>
             </Route>
 
           </Route>
@@ -33,6 +41,9 @@ function App() {
             <Route path="/public" element={<PublicPage />} >
               <Route element={<PrivateRoute allowedRoles={[Rol.ADMINISTRADOR, Rol.EMPLEADO, Rol.CLIENTE]} />}>
                   <Route path="proyectos" element={<ConsultarProyectos />} />
+              </Route>
+              <Route element={<PrivateRoute allowedRoles={[Rol.ADMINISTRADOR, Rol.EMPLEADO, Rol.CLIENTE]} />}>
+                  <Route path="reclamos" element={<ConsultarReclamos />} />
               </Route>
             </Route>
             

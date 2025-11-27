@@ -1,13 +1,9 @@
 import { useState } from "react";
 import {
-  ShoppingBag,
-  Tag,
   Users,
   ChevronDown,
   ShoppingCart,
-  Building,
   Receipt,
-  ChartColumnIncreasing,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "../utils/Utils";
@@ -41,32 +37,17 @@ const menuItems: MenuItem[] = [
       { icon: Receipt, label: "Proyectos", path: "proyectos" },
     ],
   },
-
-  {
-    icon: ShoppingBag,
-    label: "Gestión Productos",
-    path: "",
-    subMenu: [
-      { icon: Tag, label: "Marca", path: "marca" },
-      { icon: ShoppingBag, label: "Producto", path: "producto" },
-      { icon: ShoppingBag, label: "Linea", path: "linea" },
-    ],
-  },
-
   {
     icon: Users,
-    label: "Gestión Usuario",
+    label: "Gestión Reclamos",
     path: "",
-    subMenu: [{ icon: Users, label: "Usuario", path: "usuario" }],
+    subMenu: [{ icon: Users, label: "Reclamos", path: "reclamos" }],
   },
-
   {
-    icon: Building,
-    label: "Organización",
+    icon: Users,
+    label: "Gestión Usuarios",
     path: "",
-    subMenu: [
-      { icon: Users, label: "Cliente", path: "cliente" },
-    ],
+    subMenu: [{ icon: Users, label: "Usuarios", path: "usuarios" }],
   },
 
 ];
@@ -80,34 +61,12 @@ const menuItemsCliente: MenuItem[] = [
       { icon: Receipt, label: "Proyectos", path: "proyectos" },
     ],
   },
-
-  {
-    icon: ShoppingBag,
-    label: "Gestión Productos",
-    path: "",
-    subMenu: [
-      { icon: Tag, label: "Marca", path: "marca" },
-      { icon: ShoppingBag, label: "Producto", path: "producto" },
-      { icon: ShoppingBag, label: "Linea", path: "linea" },
-    ],
-  },
-
   {
     icon: Users,
-    label: "Gestión Usuario",
+    label: "Gestión Reclamos",
     path: "",
-    subMenu: [{ icon: Users, label: "Usuario", path: "usuario" }],
+    subMenu: [{ icon: Users, label: "Reclamos", path: "reclamos" }],
   },
-
-  {
-    icon: Building,
-    label: "Organización",
-    path: "",
-    subMenu: [
-      { icon: Users, label: "Cliente", path: "cliente" },
-    ],
-  },
-
 ];
 
 
@@ -121,26 +80,12 @@ const menuItemsEmpleado: MenuItem[] = [
       { icon: Receipt, label: "Proyectos", path: "proyectos" },
     ],
   },
-
   {
-    icon: ShoppingBag,
-    label: "Gestión Productos",
+    icon: Users,
+    label: "Gestión Reclamos",
     path: "",
-    subMenu: [
-      { icon: Tag, label: "Marca", path: "marca" },
-      { icon: ShoppingBag, label: "Producto", path: "producto" },
-      { icon: ShoppingBag, label: "Linea", path: "linea" },
-    ],
+    subMenu: [{ icon: Users, label: "Reclamos", path: "reclamos" }],
   },
-  {
-    icon: Building,
-    label: "Organización",
-    path: "",
-    subMenu: [
-      { icon: Users, label: "Cliente", path: "cliente" },
-    ],
-  },
-
 ];
 
 export function SidebarMenus({ isOpen, onClose, onOpen }: SidebarProps) {

@@ -53,8 +53,6 @@ export default function AuthForm({ onClose, onSuccess }: { onClose?: () => void;
         navigate("/public");
       }
 
-      navigate("/admin");
-
       if (onClose) onClose();
       if (onSuccess) onSuccess();
     } catch (error) {

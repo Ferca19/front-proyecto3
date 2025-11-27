@@ -5,9 +5,9 @@ export const createCrudService = <T>(baseEndpoint: string) => ({
 
   nuevo: (payload: T) => ApiService.post(`/${baseEndpoint}`, payload),
 
-  actualizar: (id: number,payload: T) => ApiService.put(`/${baseEndpoint}/${id}`, payload),
+  actualizar: (id: string,payload: T) => ApiService.put(`/${baseEndpoint}/${id}`, payload),
 
-  obtenerId: (id: number) => ApiService.get(`/${baseEndpoint}/${id}`),
+  obtenerId: (id: string) => ApiService.get(`/${baseEndpoint}/${id}`),
 
   obtener: (filtros: any) => {
     return ApiService.get(`/${baseEndpoint}/search-by`, filtros);
@@ -40,7 +40,7 @@ export const createCrudService = <T>(baseEndpoint: string) => ({
 
   obtenerTotalesSistema: (filtros:any, entidades:string) => ApiService.get(`/${baseEndpoint}/find-all-for-${entidades}-sistema/select`, filtros),
 
-  obtenerTotalesPara: (id:number, entidades:string) => ApiService.get(`/${baseEndpoint}/find-all-for-${entidades}-for/${id}/select`),
+  obtenerTotalesPara: (id:string, entidades:string) => ApiService.get(`/${baseEndpoint}/find-all-for-${entidades}-for/${id}/select`),
 
   obtenerTotalesDe: (filtros: any, usuarioId:string) => ApiService.get(`/${baseEndpoint}/find-all-for/${usuarioId}`, filtros),
 
@@ -51,7 +51,7 @@ export const createCrudService = <T>(baseEndpoint: string) => ({
   
   obtenerIdEntidad: (id:number, entidad:string) => ApiService.get(`/${baseEndpoint}/${entidad}/${id}`),
 
-  eliminar: (id: number, usuarioId:string) => ApiService.delete(`/${baseEndpoint}/${id}`, usuarioId),
+  eliminar: (id: string, usuarioId:string) => ApiService.delete(`/${baseEndpoint}/${id}`, usuarioId),
 
   obtenerAuditoria: (id: number) => ApiService.get(`/${baseEndpoint}/${id}/audit`),
 

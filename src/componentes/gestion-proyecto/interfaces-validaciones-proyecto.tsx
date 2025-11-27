@@ -3,12 +3,16 @@ import * as yup from "yup";
 
 export interface FormValuesProyecto {
   clienteId: string;
+  nombre: string;
+  descripcion?: string;
 }
 
 //===================== schema de validacion ============================================//
 
 export const schemaProyecto = yup.object().shape({
   clienteId: yup.string().required("El cliente es obligatorio"),
+  nombre: yup.string().required("El nombre es obligatorio"),
+  descripcion: yup.string().optional(),
 });
 
 //===================== transform data ============================================//

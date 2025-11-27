@@ -1,5 +1,5 @@
 import { useEffect} from "react";
-import { useForm, FormProvider} from "react-hook-form";
+import { useForm, FormProvider, type Resolver} from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import Select from "react-select";
@@ -22,9 +22,9 @@ export default function RegistrarActualizarProyectoForm({onClose, onSuccess } :
 
     //===================== CONSTANTES VARIAS ============================================
     const [clientes, setClientes] = React.useState<SelectCliente[]>([]);
-    const [selectedEnvase, setSelectedEnvase] = React.useState<SelectCliente>({} as SelectCliente);
+    const [selectedCliente, setSelectedCliente] = React.useState<SelectCliente>({} as SelectCliente);
     const methods = useForm<FormValuesProyecto>({
-      resolver: yupResolver(schemaProyecto),
+      resolver: yupResolver(schemaProyecto) as Resolver<FormValuesProyecto>,
       defaultValues: {
         clienteId: "",
       },
@@ -93,13 +93,6 @@ return (
 
             {/* Título del formulario */}
             <div className="form-header">
-              <button
-                onClick={onClose}
-                className="btn-onClose-title-form"
-              >
-                &times;
-              </button>
-  
               <h2 className="form-title">
                 <CreditCard className="form-icon" />
                 <span>{"Registrar Presentación"}</span>
@@ -112,10 +105,16 @@ return (
               <form onSubmit={handleSubmit(onSubmit)}>
               <CardContent className="space-y-3 px-3 py-2">
                   {/* Contenedor responsivo para Familias Banco y Banco */}
+               
                   <div className="flex flex-col md:flex-row gap-4">
+                       <div className="flex gap-x-4">
+                          <div className="flex-1">
+                            <FormInput name="nombre" label="Nombre" />
+                          </div>
+                        </div>
                     {/* --- Bloque Familias Banco --- */}
                     <div className="flex-1 rounded-lg p-2 shadow-sm">
-                      <label className="block text-sm font-medium text-gray-700 py-1">Envase</label>
+                      <label className="block text-sm font-medium text-gray-700 py-1">Cliente</label>
                       <div className="flex items-end gap-x-2">
                         <div className="flex flex-col w-full gap-y-2">
                           <div className="w-full">
@@ -123,7 +122,7 @@ return (
                               value={
                                 clientes.length > 0
                                   ? clientes.find((option) => option.id === clienteId) || null
-                                  : selectedEnvase
+                                  : selectedCliente
                               }
                               options={clientes}
                               getOptionLabel={(option) => option.nombre}
@@ -131,7 +130,7 @@ return (
                               onChange={(selectedOption) => {
                                 if (selectedOption) {
                                   setValue('clienteId', selectedOption.id);  
-                                  setSelectedEnvase(selectedOption);
+                                  setSelectedCliente(selectedOption);
                                 }
                               }}
                               placeholder="Seleccione"
@@ -162,7 +161,7 @@ return (
 
                      <div className="flex gap-x-4">
                       <div className="flex-1">
-                        <FormInput name="cantidad" label="Cantidad" />
+                        <FormInput name="descripcion" label="Descripcion" />
                       </div>
                     </div>
 

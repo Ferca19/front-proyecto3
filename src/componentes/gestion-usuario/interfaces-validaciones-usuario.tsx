@@ -13,6 +13,10 @@ export interface FormValuesRegister {
   password: string;
   passwordConfirmada: string;
   rolId: number;
+  areaId?: string;
+  telefono?: string;
+  direccion?: string;
+  localidad?: string;
 }
 
 export interface FormValuesLogin {
@@ -74,6 +78,23 @@ export const schemaRegister = yup.object().shape({
     .required("La contraseña es obligatoria.")
     .min(6, "La contraseña debe tener al menos 6 caracteres."),
   rolId: yup.number().typeError("El rol es obligatorio.").required("El rol es obligatorio."),
+  areaId: yup.string().typeError("El área es obligatoria.").notRequired(),
+  telefono: yup
+    .string()
+    .trim()
+    .notRequired()
+    .max(20, "Máximo 20 caracteres.")
+    .matches(/^[0-9()+-\s]*$/, "Formato de teléfono inválido."),
+  direccion: yup
+    .string()
+    .trim()
+    .notRequired()
+    .max(255, "Máximo 255 caracteres."),
+  localidad: yup
+    .string()
+    .trim()
+    .notRequired()
+    .max(100, "Máximo 100 caracteres."),
 });
 
 export const schemaRecuperarContrasena = yup.object().shape({

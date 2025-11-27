@@ -90,7 +90,7 @@ export default function ConsultarUsuarios() {
     }
     setLoading(true);
     const filtrosConPaginacion = {
-      nombre: "",
+      rolId: 3,
       skip: skip,
       take: take,
     };
@@ -107,7 +107,7 @@ export default function ConsultarUsuarios() {
     setLoading(true);
 
     const filtrosConPaginacion = {
-      nombre: "",
+      rolId: 3,
       skip: skip,
       take: take,
     };

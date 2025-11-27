@@ -10,7 +10,13 @@ export const Rol = {
   CLIENTE: 3,
 };
 
+export const RolS = {
+  1: "ADMINISTRADOR",
+  2: "EMPLEADO",
+  3: "CLIENTE",
+};
+
 export interface SelectCliente {
-  id: string;
+  _id: string;
   nombre: string;
 }
