@@ -137,11 +137,7 @@ export default function ConsultarProyectos() {
 
     let proyectosFiltrados = { data: [] as ConsultarProyecto[], total: 0 };
 
-    if (rolId === Rol.CLIENTE) {
-      proyectosFiltrados = await ProyectoService.obtenerTotalesDe(filtrosConPaginacion, usuarioId);
-    } else {
-      proyectosFiltrados = await ProyectoService.obtener(filtrosConPaginacion);
-    }
+    proyectosFiltrados = await ProyectoService.obtener(filtrosConPaginacion);
 
     setLoading(false)
     setProyectos(proyectosFiltrados.data);

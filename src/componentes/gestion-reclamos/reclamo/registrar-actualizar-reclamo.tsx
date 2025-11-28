@@ -65,14 +65,10 @@ export default function RegistrarActualizarReclamoForm({
     const fetchData = async () => {
       try {
         if (reclamo) {
-          /*
-          setValue("proyectoId", reclamo.proyecto._id || "");
-          setSelectedProyecto(reclamo.proyecto);;
 
-          
-          
-          
-          */
+          setValue("proyectoId", reclamo.proyecto.id || "");
+          setSelectedProyecto(reclamo.proyecto);;
+  
           setValue("titulo", reclamo.titulo || "");
           setValue("descripcion", reclamo.descripcion || null);
 
@@ -356,14 +352,14 @@ export default function RegistrarActualizarReclamoForm({
                       <Select
                         value={
                           proyectos.length > 0
-                            ? proyectos.find((option) => option._id === proyectoId) || null
+                            ? proyectos.find((option) => option.id === proyectoId) || null
                             : selectedProyecto
                         }
                         options={proyectos}
                         getOptionLabel={(option) => option.nombre}
-                        getOptionValue={(option) => String(option._id)}
+                        getOptionValue={(option) => String(option.id)}
                         onChange={(selectedOption) => {
-                          methods.setValue(`proyectoId`, selectedOption?._id || "");
+                          methods.setValue(`proyectoId`, selectedOption?.id || "");
                           setSelectedProyecto(selectedOption as SelectProyecto);
                         }}
                         placeholder="Seleccione"

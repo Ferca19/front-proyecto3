@@ -26,6 +26,12 @@ export interface Area {
   nombre: string;
 }
 
+export const RolesS: Record<number, string> = {
+    1: 'ADMINISTRADORES',
+    2: 'EMPLEADOS',
+    3: 'CLIENTES',
+}
+
 
 
 export interface SelectUsuario {

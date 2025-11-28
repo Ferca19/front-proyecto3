@@ -13,7 +13,7 @@ export interface ConsultarProyecto {
 }
 
 export interface SelectProyecto {
-  _id: string;
+  id: string;
   nombre: string
 }
 

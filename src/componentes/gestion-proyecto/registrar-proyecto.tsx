@@ -43,7 +43,7 @@ export default function RegistrarActualizarProyectoForm({onClose, onSuccess } :
         try {      
 
           const clientes = await ProyectoService.obtenerTotales({denominacion: ""},"clientes");
-          setClientes(clientes.data);
+          setClientes(clientes);
 
         } catch (error) {
           console.error("Error al obtener los datos:", error);
@@ -95,9 +95,9 @@ return (
             <div className="form-header">
               <h2 className="form-title">
                 <CreditCard className="form-icon" />
-                <span>{"Registrar Presentación"}</span>
+                <span>{"Registrar Proyecto"}</span>
               </h2>
-              <p className="form-subtitle">{"Ingresa los datos de la nueva Presentación para registrarla."}</p>
+              <p className="form-subtitle">{"Ingresa los datos del nuevo Proyecto para registrarlo."}</p>
             </div>
 
             {/* Formulario */}
@@ -121,15 +121,15 @@ return (
                             <Select
                               value={
                                 clientes.length > 0
-                                  ? clientes.find((option) => option.id === clienteId) || null
+                                  ? clientes.find((option) => option._id === clienteId) || null
                                   : selectedCliente
                               }
                               options={clientes}
                               getOptionLabel={(option) => option.nombre}
-                              getOptionValue={(option) => String(option.id)}
+                              getOptionValue={(option) => String(option._id)}
                               onChange={(selectedOption) => {
                                 if (selectedOption) {
-                                  setValue('clienteId', selectedOption.id);  
+                                  setValue('clienteId', selectedOption._id);  
                                   setSelectedCliente(selectedOption);
                                 }
                               }}

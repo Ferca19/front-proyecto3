@@ -50,6 +50,7 @@ export const transformData = (reclamo: Reclamo): FormValuesReclamo => {
     criticidad: reclamo.criticidad ?? 0,
     descripcion: reclamo.descripcion ?? null,
     titulo: reclamo.titulo,
+    proyectoId: reclamo.proyecto.id ?? "",
 
   
   };

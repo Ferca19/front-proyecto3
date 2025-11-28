@@ -213,7 +213,7 @@ export default function ConsultarReclamos() {
     {
       header: "Título",
       accessor: "titulo",
-      flex: 1.3,
+      flex: 1,
       type: "text",
       editable: false,
       formatFunction: ({ value, row }) => (
@@ -232,25 +232,25 @@ export default function ConsultarReclamos() {
     {
       header: "Tipo",
       accessor: "tipo",
-      flex: 0.5,
+      flex: 0.3,
       formatFunction: ({ value }) => <EstadoBadge estado={TipoReclamoS[value]} />,
     },
     {
       header: "Estado",
       accessor: "estado",
-      flex: 0.5,
+      flex: 0.3,
       formatFunction: ({ value }) => <EstadoBadge estado={EstadoReclamoS[value]} />,
     },
     {
       header: "Prioridad",
       accessor: "prioridad",
-      flex: 0.5,
+      flex: 0.3,
       formatFunction: ({ value }) => <EstadoBadge estado={PrioridadReclamoS[value]} />,
     },
     {
       header: "Criticidad",
       accessor: "criticidad",
-      flex: 0.5,
+      flex: 0.3,
       formatFunction: ({ value }) => <EstadoBadge estado={CriticidadReclamoS[value]} />,
     },
     
@@ -360,7 +360,7 @@ export default function ConsultarReclamos() {
                         )}
                       </div>
                     )}
-                    actionsFlex={0.3}
+                    actionsFlex={0.5}
                     actionsScrollable={false}
                     rowHeight={55}
                   />

@@ -8,9 +8,11 @@ import Paginacion from "../herramientas/reutilizables/paginacion";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/Card";
 import { TablaAGGrid, type Column } from "../herramientas/tablas/tabla-flexible-ag-grid";
 import UsuarioService from "./usuario-service";
-import type { Usuario } from "../../interfaces/gestion-usuario/interfaces-usuario";
+import { RolesS, type Usuario } from "../../interfaces/gestion-usuario/interfaces-usuario";
 import { Alertas, TipoAlerta, TituloAlerta, useAlerts } from "../herramientas/alertas/alertas";
 import { TipoAlertaConfirmacion, TituloAlertaConfirmacion, useConfirmation } from "../herramientas/alertas/alertas-confirmacion";
+import { SelectContentUI, SelectItemUI, SelectTriggerUI, SelectUI, SelectValueUI } from "../ui/Select";
+import { RolS } from "../../interfaces/generales/interfaces-generales";
 
 export default function ConsultarUsuarios() {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
@@ -27,6 +29,12 @@ export default function ConsultarUsuarios() {
   const [entidadesTotales, setEntidadesTotales] = useState(1);
   const [skip, setSkip] = useState(0);
   const [take, setTake] = useState(10);
+
+  const [filtros, setFiltros] = useState({
+    estado: 1,
+    clienteId: 0,
+    tipo: 0
+  });
 
 
 
@@ -195,10 +203,52 @@ export default function ConsultarUsuarios() {
               <CardHeader className="form-header flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4">
                 <div className="flex flex-col md:flex-row flex-wrap gap-4 w-full">
 
+                  <div className="flex items-center gap-8">
+
                   <CardTitle className="flex items-center space-x-2">
                     <User className="consultar-icon" />
                     <span>Usuarios</span>
                   </CardTitle>
+                  
+
+                  <div className="flex flex-col w-full">
+                      <label className="mb-1 text-sm font-mediumtext-black dark:text-white">
+                        Rol
+                      </label>
+                      <SelectUI
+                        value={String(filtros.estado)}
+                        onValueChange={(key) => {
+                          setFiltros({
+                            ...filtros,
+                            estado: Number(key)
+                          })
+                        }}
+                      >
+                        <SelectTriggerUI className="w-full px-3 py-2 rounded-lg border border-gray-300 text-black bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                          <SelectValueUI placeholder="Seleccione un estado" />
+                        </SelectTriggerUI>
+
+                        <SelectContentUI className="bg-white text-black">
+                          {Object.entries(RolesS).map(([key, value]) => (
+                            <SelectItemUI
+                              key={key}
+                              value={key} // 👈 SIEMPRE string
+                              className="
+                                  data-[state=checked]:bg-blue-500 
+                                  data-[state=checked]:text-white
+                                  data-[highlighted]:bg-blue-200 
+                                  data-[highlighted]:text-black
+                                "
+                            >
+                              {value}
+                            </SelectItemUI>
+                          ))}
+                        </SelectContentUI>
+                      </SelectUI>
+                    </div>
+                    </div>
+
+                    
                 </div>
 
                 <div className="flex items-center gap-2">

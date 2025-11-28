@@ -98,7 +98,7 @@ export function Navbar({ className }: NavbarProps) {
           <div className="flex items-center space-x-2 flex-shrink-0">
             <div className="hidden sm:inline">
               <h1 className="text-blue-600 dark:text-blue-500 text-sm sm:text-base md:text-lg font-bold leading-tight">Grupo 5</h1>
-              <p className="text-xs text-black dark:text-blue-400 leading-tight">Sistema de Ventas</p>
+              <p className="text-xs text-black dark:text-blue-400 leading-tight">Sistema de Reclamos</p>
             </div>
           </div>
 

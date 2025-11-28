@@ -120,6 +120,7 @@ export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () =
               <FormInput name="nombre" label="Nombre" type="nombre" />
               <FormInput name="apellido" label="Apellido" type="apellido" />
               <FormInput name="email" label="Correo Electrónico" placeholder="tu@ejemplo.com" />
+              <FormInput name="telefono" label="Telefono" placeholder="3534114047" />
               
 
               <div>
