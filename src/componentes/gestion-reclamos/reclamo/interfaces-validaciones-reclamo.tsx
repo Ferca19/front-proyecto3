@@ -6,7 +6,7 @@ import type { Reclamo } from "../../../interfaces/gestion-reclamo/interfaces-rec
 
 export interface FormValuesReclamo{
   titulo: string;
-  descripcion?: string | null;
+  descripcion: string;
   tipo: number
   prioridad: number
   criticidad: number
@@ -18,7 +18,7 @@ export interface FormValuesReclamo{
 export const schemaReclamo = 
   yup.object().shape({
     titulo: yup.string().required("El título es obligatorio").max(200, "El título no puede tener más de 200 caracteres"),
-    descripcion: yup.string().optional(),
+    descripcion: yup.string().required("La descripción es obligatoria").max(400, "La descripción no puede tener más de 400 caracteres"),
     tipo: yup.number().required("El tipo de reclamo es obligatorio"),
     prioridad: yup.number().required("La prioridad es obligatoria"),
     criticidad: yup.number().required("La criticidad es obligatoria"),
