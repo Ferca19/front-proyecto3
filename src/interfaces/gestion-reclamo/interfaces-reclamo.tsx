@@ -1,10 +1,11 @@
 import type { SelectProyecto } from "../gestion-proyecto/interfaces-proyecto";
-import type { Usuario } from "../gestion-usuario/interfaces-usuario";
+import type { Area, Usuario } from "../gestion-usuario/interfaces-usuario";
 
  
 
 
 export interface Reclamo {
+    id: string;
     _id: string;
     titulo: string;
     descripcion: string;
@@ -17,6 +18,7 @@ export interface Reclamo {
     fechaCierre: string;
     clienteId: string;
     areaId: string;
+    area: Area;
     calificacion: number;
     asignadoA?: string;
     comentarioCliente: string;
@@ -26,8 +28,9 @@ export interface Reclamo {
     deletedAt?: string;
 }
 
+
 export interface HistorialReclamo {
-    _id: string;
+    id: string;
     tipoEvento: number;
     descripcion: string;
     reclamoId: string;
@@ -40,8 +43,7 @@ export interface HistorialReclamo {
     criticidadNueva: number;
     areaAnteriorId: string;
     areaNuevaId: string;
-    usuarioAnteriorId: string;
-    usuarioNuevoId: string;
+    usuario: Usuario;
     createdAt: string;
 
 }
@@ -142,4 +144,9 @@ export interface Comentario {
   createdAt: string | Date;
   updatedAt: string | Date;
   deletedAt?: string | Date | null;
+}
+
+export interface SelectArea {
+    id: string;
+    nombre: string;
 }

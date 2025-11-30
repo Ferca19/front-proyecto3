@@ -22,7 +22,7 @@ export interface Usuario {
 }
 
 export interface Area {
-  _id: string;
+  id: string;
   nombre: string;
 }
 

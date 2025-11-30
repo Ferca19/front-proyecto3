@@ -114,7 +114,7 @@ export default function RegistrarActualizarReclamoForm({
       }
 
       if (reclamo) {
-        await ReclamoService.actualizar(reclamo._id, payload);
+        await ReclamoService.actualizar(reclamo.id, payload);
       } else {
         await ReclamoService.nuevo(payload);
       }
@@ -384,6 +384,12 @@ export default function RegistrarActualizarReclamoForm({
                         }}
                       />
                     </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-x-4">
+                  <div className="flex-1">
+                    <FormInput name="descripcion" label="Descripcion" />
                   </div>
                 </div>
 

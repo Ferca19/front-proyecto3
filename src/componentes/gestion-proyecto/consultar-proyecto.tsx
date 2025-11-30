@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { CreditCard, PlusCircle, Search, Trash } from 'lucide-react'
+import { CreditCard, PlusCircle, Recycle, Search, Trash } from 'lucide-react'
 import { useSesion } from '../herramientas/context/SesionContext';
 import RegistrarActualizarProyectoForm from './registrar-proyecto';
 import { Alertas, TipoAlerta, TituloAlerta, useAlerts } from '../herramientas/alertas/alertas';
@@ -13,7 +13,7 @@ import { TipoAlertaConfirmacion, TituloAlertaConfirmacion, useConfirmation } fro
 import { Rol } from '../../interfaces/generales/interfaces-generales';
 import type { SelectCliente } from '../../interfaces/generales/interfaces-generales';
 import { EstadoBadge } from '../ui/EstadoBadge';
-import { SelectContentUI, SelectItemUI, SelectTriggerUI, SelectUI, SelectValueUI } from '../ui/Select';
+import Select from "react-select";
 
 export default function ConsultarProyectos() {
   const { sesion } = useSesion();
@@ -26,10 +26,10 @@ export default function ConsultarProyectos() {
   const { alerts, addAlert, removeAlert } = useAlerts()
   const { showConfirmation, AlertasConfirmacion: AlertasConfirmacion } = useConfirmation()
   const [clientes, setClientes] = useState<SelectCliente[]>([]);
+
   const [filtros, setFiltros] = useState({
     estado: 1,
-    clienteId: 0,
-    tipo: 0
+    clienteId: "",
   });
 
 
@@ -131,6 +131,8 @@ export default function ConsultarProyectos() {
     setLoading(true)
 
     const filtrosConPaginacion = {
+      clienteId: filtros.clienteId,
+      estado: filtros.estado,
       skip: skip,
       take: take,
     };
@@ -195,7 +197,12 @@ export default function ConsultarProyectos() {
     },
   ];
 
-  console.log("los filtros son:", filtros);
+  const handleLimpiarFiltros = () => {
+    setFiltros({
+      estado: 1,
+      clienteId: "",
+    })
+  }
 
   return (
     <div className="w-full">
@@ -215,111 +222,150 @@ export default function ConsultarProyectos() {
         ) : (
             <>
               <Card className="border-gray-200 dark:border-slate-700">
-              <CardHeader className="flex flex-row items-center justify-between p-4 gap-4">
-                <div className="flex items-center gap-6">
-                  <CardTitle className="flex items-center space-x-2">
-                    <CreditCard className="consultar-icon" />
-                    <span>Proyectos</span>
-                  </CardTitle>
+                <CardHeader className="form-header flex flex-col md:flex-row md:items-center md:justify-between p-4 gap-6">
+                  {/* CONTENEDOR IZQUIERDO */}
+                  <div className="flex flex-col md:flex-row items-start md:items-center gap-6 w-full">
 
-                  <div className="flex items-center gap-2">
+                    <CardTitle className="flex items-center space-x-2">
+                      <CreditCard className="consultar-icon" />
+                      <span>Proyectos</span>
+                    </CardTitle>
 
-                    <div className="flex flex-col w-full">
-                      <label className="mb-1 text-sm font-medium text-gray-700">
-                        Estado
-                      </label>
-                      <SelectUI
-                        value={String(filtros.estado)}
-                        onValueChange={(key) => {
-                          setFiltros({
-                            ...filtros,
-                            estado: Number(key)
-                          })
-                        }}
-                      >
-                        <SelectTriggerUI className="w-full px-3 py-2 rounded-lg border border-gray-300 text-black bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                          <SelectValueUI placeholder="Seleccione un estado" />
-                        </SelectTriggerUI>
+                    {/* FILTROS */}
+                    <div className="flex flex-col sm:flex-row flex-wrap gap-4 w-full">
 
-                        <SelectContentUI className="bg-white text-black">
-                          {Object.entries(EstadoProyectoS).map(([key, value]) => (
-                            <SelectItemUI
-                              key={key}
-                              value={key} // 👈 SIEMPRE string
-                              className="
-                                  data-[state=checked]:bg-blue-500 
-                                  data-[state=checked]:text-white
-                                  data-[highlighted]:bg-blue-200 
-                                  data-[highlighted]:text-black
-                                "
-                            >
-                              {value}
-                            </SelectItemUI>
-                          ))}
-                        </SelectContentUI>
-                      </SelectUI>
+                      {/* ESTADO */}
+                      <div className="flex flex-col w-full sm:w-[48%] md:w-[200px]">
+                        <label className="mb-1 text-sm font-medium text-gray-700">
+                          Estado
+                        </label>
+
+                        <Select
+                          value={
+                            Object.entries(EstadoProyectoS)
+                              .map(([key, value]) => ({
+                                value: Number(key),
+                                label: value // or provide a more user-friendly label if needed
+                              }))
+                              .find((option) => Number(option.value) === filtros.estado) || null
+                          }
+                          options={Object.entries(EstadoProyectoS).map(([key, value]) => ({
+                            value: Number(key),
+                            label: value,
+                          }))}
+                          onChange={(selectedOption) => {
+                            setFiltros({ ...filtros, estado: Number(selectedOption?.value) })
+                          }}
+                          className="text-black"
+                          menuPortalTarget={document.body}
+                          styles={{
+                            control: (base) => ({
+                              ...base,
+                              color: "black",
+                            }),
+                            singleValue: (base) => ({
+                              ...base,
+                              color: "black",
+                            }),
+                            option: (base, { isSelected, isFocused }) => ({
+                              ...base,
+                              color: isSelected ? "white" : "black",
+                              backgroundColor: isSelected 
+                              ? "#3b82f6" 
+                              : isFocused 
+                              ? "#93c5fd"
+                              : "white",
+                            }),
+                            menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                          }}
+                        />
+                      </div>
+                      
+
+                      {/* CLIENTE */}
+                      {rolId === Rol.CLIENTE ? null : (
+                      <div className="flex flex-col w-full sm:w-[48%] md:w-[240px]">
+                        <label className="mb-1 text-sm font-medium text-gray-700">
+                          Cliente
+                        </label>
+
+                        <Select
+                          value={
+                            filtros.clienteId
+                              ? clientes.find((option) => String(option.id) === filtros.clienteId) || null
+                              : null
+                          }
+                          options={clientes}
+                          getOptionLabel={(option) => option.nombre}
+                          getOptionValue={(option) => String(option.id)}
+                          onChange={(selectedOption) => {
+                            setFiltros({
+                              ...filtros,
+                              clienteId: selectedOption ? String(selectedOption.id) : ""
+                            });
+                          }}
+                          placeholder="Seleccione"
+                          className="text-black"
+                          menuPortalTarget={document.body}
+                          styles={{
+                            control: (base) => ({
+                              ...base,
+                              color: "black",
+                            }),
+                            singleValue: (base) => ({
+                              ...base,
+                              color: "black",
+                            }),
+                            option: (base, { isSelected, isFocused }) => ({
+                              ...base,
+                              color: isSelected ? "white" : "black",
+                              backgroundColor: isSelected ? "#3b82f6" : isFocused ? "#93c5fd" : "white",
+                            }),
+                            menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                          }}
+                        />
+                      </div>
+                      )}
+
+                      {/* BOTÓN LIMPIAR */}
+                      <div className="flex flex-col w-full sm:w-auto">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="icon"
+                          className="mt-5 bg-blue-500 text-white hover:bg-gray-700 w-10 h-10 rounded-full shadow-md transition"
+                          onClick={handleLimpiarFiltros}
+                        >
+                          <Recycle size={20} />
+                        </Button>
+                      </div>
                     </div>
-
-                    <div className="flex flex-col w-full">
-                      <label className="mb-1 text-sm font-medium text-gray-700">
-                        Cliente
-                      </label>
-                      <SelectUI
-                        value={String(filtros.clienteId)}
-                        onValueChange={(key) => {
-                          setFiltros({
-                            ...filtros,
-                            clienteId: Number(key)
-                          })
-                        }}
-                      >
-                        <SelectTriggerUI className="w-full px-3 py-2 rounded-lg border border-gray-300 text-black bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                          <SelectValueUI placeholder="Seleccione un cliente" />
-                        </SelectTriggerUI>
-
-                        <SelectContentUI className="bg-white text-black">
-                          {clientes.map((cliente) => (
-                            <SelectItemUI
-                              key={cliente._id}
-                              value={String(cliente._id)} // 👈 SIEMPRE string
-                              className="
-                                  data-[state=checked]:bg-blue-500 
-                                  data-[state=checked]:text-white
-                                  data-[highlighted]:bg-blue-200 
-                                  data-[highlighted]:text-black
-                                "
-                            >
-                              {cliente.nombre}
-                            </SelectItemUI>
-                          ))}
-                        </SelectContentUI>
-                      </SelectUI>
-                    </div>
-
                   </div>
-                </div>
 
-                {/* Contenedor de botones */}
-                <div className="flex items-center gap-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon"
-                    className="bg-blue-500 text-white hover:bg-gray-700 w-10 h-10 rounded-full shadow-md transition"
-                    onClick={() => handleBuscarProyectos(true)}
-                  >
-                    <Search size={20} />
-                  </Button>
-                  { rolId !== Rol.CLIENTE && ( 
+                  {/* CONTENEDOR DERECHA (Botones) */}
+                  <div className="flex items-center gap-2 w-full md:w-auto justify-end">
                     <Button
-                      className="bg-blue-500 hover:bg-blue-700 text-white flex items-center px-4 py-3"
-                      onClick={openModal}
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      className="bg-blue-500 text-white hover:bg-gray-700 w-10 h-10 rounded-full shadow-md transition"
+                      onClick={() => handleBuscarProyectos(true)}
                     >
-                      <PlusCircle className="mr-2 h-4 w-4" /> Añadir
+                      <Search size={20} />
                     </Button>
-                  )}
-                </div>
-              </CardHeader>
+
+                    {rolId !== Rol.CLIENTE && (
+                      <Button
+                        className="bg-blue-500 hover:bg-blue-700 text-white flex items-center px-4 py-3"
+                        onClick={openModal}
+                      >
+                        <PlusCircle className="mr-2 h-4 w-4" /> Añadir
+                      </Button>
+                    )}
+                  </div>
+
+                </CardHeader>
+
               <CardContent className="p-0">
                 <div className="overflow-x-auto">
                 <TablaAGGrid

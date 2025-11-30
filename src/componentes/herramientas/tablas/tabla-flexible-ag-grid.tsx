@@ -123,10 +123,11 @@ export function TablaAGGrid<T extends Record<string, any>>({
       baseCols.push({
         headerName: "Acciones",
         field: "actions",
+        flex: actionsFlex,
         cellRenderer: (params: any) => (
           <div
             style={{
-              maxWidth: "200px", // 👈 Limita explícitamente el ancho visible
+              maxWidth: "400px", // 👈 Limita explícitamente el ancho visible
               overflowX: actionsScrollable ? "auto" : "hidden",
               whiteSpace: actionsScrollable ? "nowrap" : "normal",
             }}
@@ -151,7 +152,6 @@ export function TablaAGGrid<T extends Record<string, any>>({
         editable: false,
         suppressMenu: true,
         sortable: false,
-        flex: actionsFlex,
         cellStyle: {
           display: "block",
           overflowX: actionsScrollable ? "auto" : "hidden",

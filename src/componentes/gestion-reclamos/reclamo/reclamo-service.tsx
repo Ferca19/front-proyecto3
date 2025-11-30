@@ -37,6 +37,50 @@ const ReclamoService = {
     }
   },
 
+  asignar: async (reclamoId: string, payload:any) => {
+    try {
+
+      const { data } = await api.get(`${apiUrl}/reclamo/asignar/${reclamoId}`, payload);
+      return data;
+    } catch (error) {
+      console.error("Error al obtener usuario:", error);
+      throw error
+    }
+  },
+
+  cambiarPrioridad: async (reclamoId: string, payload:any) => {
+    try {
+
+      const { data } = await api.get(`${apiUrl}/reclamo/cambiar-prioridad-criticidad/${reclamoId}`, payload);
+      return data;
+    } catch (error) {
+      console.error("Error al obtener usuario:", error);
+      throw error
+    }
+  },
+
+  cambiarCriticidad: async (reclamoId: string, payload:any) => {
+    try {
+
+      const { data } = await api.get(`${apiUrl}/reclamo/cambiar-criticidad/${reclamoId}`, payload);
+      return data;
+    } catch (error) {
+      console.error("Error al obtener usuario:", error);
+      throw error
+    }
+  },
+
+  cambiarEstado: async (reclamoId: string, payload:any) => {
+    try {
+
+      const { data } = await api.get(`${apiUrl}/reclamo/cambiar-estado/${reclamoId}`, payload);
+      return data;
+    } catch (error) {
+      console.error("Error al obtener usuario:", error);
+      throw error
+    }
+  },
+
 };
 
 export default ReclamoService;

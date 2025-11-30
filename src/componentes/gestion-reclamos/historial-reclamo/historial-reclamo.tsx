@@ -153,157 +153,60 @@ export const formatDate = (dateStr: string) => {
 
 export default function HistorialReclamoForm({ historial, onClose }:{ historial: HistorialReclamo[], onClose: () => void }) {
 
-const historialesMock: HistorialReclamo[] = [
-  {
-    _id: "1",
-    tipoEvento: TipoEventoHistorial.CREACION,
-    descripcion: "El reclamo fue creado por el usuario.",
-    reclamoId: "R-100",
-    usuarioId: "USR-01",
-    estadoAnterior: 0,
-    estadoNuevo: EstadoReclamo.PENDIENTE,
-    prioridadAnterior: PrioridadReclamo.BAJA,
-    prioridadNueva: PrioridadReclamo.BAJA,
-    criticidadAnterior: 1,
-    criticidadNueva: 1,
-    areaAnteriorId: "AREA-00",
-    areaNuevaId: "AREA-01",
-    usuarioAnteriorId: "USR-01",
-    usuarioNuevoId: "USR-01",
-    createdAt: "2025-01-01T10:20:00"
-  },
 
-  {
-    _id: "2",
-    tipoEvento: TipoEventoHistorial.ASIGNACION,
-    descripcion: "El reclamo fue asignado a un técnico.",
-    reclamoId: "R-100",
-    usuarioId: "USR-02",
-    estadoAnterior: EstadoReclamo.PENDIENTE,
-    estadoNuevo: EstadoReclamo.ASIGNADO,
-    prioridadAnterior: PrioridadReclamo.BAJA,
-    prioridadNueva: PrioridadReclamo.MEDIA,
-    criticidadAnterior: 1,
-    criticidadNueva: 2,
-    areaAnteriorId: "AREA-01",
-    areaNuevaId: "AREA-02",
-    usuarioAnteriorId: "USR-01",
-    usuarioNuevoId: "USR-02",
-    createdAt: "2025-01-01T11:00:00"
-  },
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  {
-    _id: "3",
-    tipoEvento: TipoEventoHistorial.REASIGNACION,
-    descripcion: "El reclamo fue reasignado a otro técnico.",
-    reclamoId: "R-100",
-    usuarioId: "USR-03",
-    estadoAnterior: EstadoReclamo.ASIGNADO,
-    estadoNuevo: EstadoReclamo.ASIGNADO,
-    prioridadAnterior: PrioridadReclamo.MEDIA,
-    prioridadNueva: PrioridadReclamo.MEDIA,
-    criticidadAnterior: 2,
-    criticidadNueva: 2,
-    areaAnteriorId: "AREA-02",
-    areaNuevaId: "AREA-02",
-    usuarioAnteriorId: "USR-02",
-    usuarioNuevoId: "USR-03",
-    createdAt: "2025-01-02T08:45:00"
-  },
+  // Sort by date ascending
+  const sorted = [...historial].sort(
+  (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+  );
 
-  {
-    _id: "4",
-    tipoEvento: TipoEventoHistorial.CAMBIO_PRIORIDAD,
-    descripcion: "Se incrementó la prioridad del reclamo por nueva información.",
-    reclamoId: "R-100",
-    usuarioId: "USR-03",
-    estadoAnterior: EstadoReclamo.ASIGNADO,
-    estadoNuevo: EstadoReclamo.ASIGNADO,
-    prioridadAnterior: PrioridadReclamo.MEDIA,
-    prioridadNueva: PrioridadReclamo.ALTA,
-    criticidadAnterior: 2,
-    criticidadNueva: 3,
-    areaAnteriorId: "AREA-02",
-    areaNuevaId: "AREA-02",
-    usuarioAnteriorId: "USR-03",
-    usuarioNuevoId: "USR-03",
-    createdAt: "2025-01-02T12:10:00"
-  },
-
-  {
-    _id: "5",
-    tipoEvento: TipoEventoHistorial.CIERRE,
-    descripcion: "El reclamo fue resuelto y cerrado.",
-    reclamoId: "R-100",
-    usuarioId: "USR-03",
-    estadoAnterior: EstadoReclamo.ASIGNADO,
-    estadoNuevo: EstadoReclamo.RESUELTO,
-    prioridadAnterior: PrioridadReclamo.ALTA,
-    prioridadNueva: PrioridadReclamo.ALTA,
-    criticidadAnterior: 3,
-    criticidadNueva: 3,
-    areaAnteriorId: "AREA-02",
-    areaNuevaId: "AREA-02",
-    usuarioAnteriorId: "USR-03",
-    usuarioNuevoId: "USR-03",
-    createdAt: "2025-01-03T09:00:00"
+  // Auto scroll to end on load
+  useEffect(() => {
+  if (scrollRef.current) {
+      scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
   }
-];
+  }, [historial]);
 
+  const getIcon = (type: number) => {
+    switch (type) {
+      case TipoEventoHistorial.CREACION: // CREACIÓN
+        return <FilePlus size={18} />;
 
-const scrollRef = useRef<HTMLDivElement>(null);
+      case TipoEventoHistorial.ASIGNACION: // ASIGNACIÓN
+        return <UserCheck size={18} />;
 
-// Sort by date ascending
-const sorted = [...historialesMock].sort(
-(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-);
+      case TipoEventoHistorial.REASIGNACION: // REASIGNACIÓN
+        return <UserPlus size={18} />;
 
-// Auto scroll to end on load
-useEffect(() => {
-if (scrollRef.current) {
-    scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
-}
-}, [historialesMock]);
+      case TipoEventoHistorial.CAMBIO_ESTADO: // CAMBIO ESTADO
+        return <RefreshCw size={18} />;
 
-const getIcon = (type: number) => {
-  switch (type) {
-    case TipoEventoHistorial.CREACION: // CREACIÓN
-      return <FilePlus size={18} />;
+      case TipoEventoHistorial.CAMBIO_PRIORIDAD: // CAMBIO PRIORIDAD
+        return <Flag size={18} />;
 
-    case TipoEventoHistorial.ASIGNACION: // ASIGNACIÓN
-      return <UserCheck size={18} />;
+      case TipoEventoHistorial.CAMBIO_CRITICIDAD: // CAMBIO CRITICIDAD
+        return <Flame size={18} />;
 
-    case TipoEventoHistorial.REASIGNACION: // REASIGNACIÓN
-      return <UserPlus size={18} />;
+      case TipoEventoHistorial.COMENTARIO_INTERNO: // COMENTARIO INTERNO
+        return <MessageSquare size={18} />;
 
-    case TipoEventoHistorial.CAMBIO_ESTADO: // CAMBIO ESTADO
-      return <RefreshCw size={18} />;
+      case TipoEventoHistorial.ARCHIVO_ADJUNTO: // ARCHIVO ADJUNTO
+        return <Paperclip size={18} />;
 
-    case TipoEventoHistorial.CAMBIO_PRIORIDAD: // CAMBIO PRIORIDAD
-      return <Flag size={18} />;
+      case TipoEventoHistorial.CIERRE: // CIERRE
+        return <CheckCircle2 size={18} />;
 
-    case TipoEventoHistorial.CAMBIO_CRITICIDAD: // CAMBIO CRITICIDAD
-      return <Flame size={18} />;
+      case TipoEventoHistorial.CALIFICACION: // CALIFICACIÓN
+        return <Star size={18} />;
 
-    case TipoEventoHistorial.COMENTARIO_INTERNO: // COMENTARIO INTERNO
-      return <MessageSquare size={18} />;
+      case TipoEventoHistorial.CANCELACION: // CANCELACIÓN
+        return <XCircle size={18} />;
 
-    case TipoEventoHistorial.ARCHIVO_ADJUNTO: // ARCHIVO ADJUNTO
-      return <Paperclip size={18} />;
-
-    case TipoEventoHistorial.CIERRE: // CIERRE
-      return <CheckCircle2 size={18} />;
-
-    case TipoEventoHistorial.CALIFICACION: // CALIFICACIÓN
-      return <Star size={18} />;
-
-    case TipoEventoHistorial.CANCELACION: // CANCELACIÓN
-      return <XCircle size={18} />;
-
-    default:
-      return <Calendar size={18} />;
-  }
-};
+      default:
+        return <Calendar size={18} />;
+    }
+  };
 
 return (
     <div className="w-full max-w-8xl bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col h-full">
@@ -337,7 +240,7 @@ return (
             const dateInfo = formatDate(item.createdAt);
 
             return (
-              <div key={item._id} className="relative z-10 flex flex-col items-center group w-[300px]">
+              <div key={item.id} className="relative z-10 flex flex-col items-center group w-[300px]">
                 
                 {/* 1. Date (Above Line) */}
                 <div className="mb-4 flex flex-col items-center">
@@ -438,24 +341,22 @@ return (
                       )}
 
                       {/* User Assignment Changes */}
-                      {item.usuarioAnteriorId !== item.usuarioNuevoId && (
-                        <div className="flex items-center gap-2 text-xs pt-2 border-t border-slate-100 mt-2">
-                          <div className="p-1 bg-indigo-50 text-indigo-500 rounded-full">
-                            <UserPlus size={12} />
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-[11px] text-black">Reasignado a:</span>
-                            <span className="font-medium text-slate-700">
-                              {item.usuarioNuevoId}
-                            </span>
-                          </div>
+                      <div className="flex items-center gap-2 text-xs pt-2 border-t border-slate-100 mt-2">
+                        <div className="p-1 bg-indigo-50 text-indigo-500 rounded-full">
+                          <UserPlus size={12} />
                         </div>
-                      )}
+                        <div className="flex flex-col">
+                          <span className="text-[11px] text-black">Responsable:</span>
+                          <span className="font-medium text-slate-700">
+                            {item.usuario.nombre + " " + item.usuario.apellido}
+                          </span>
+                        </div>
+                      </div>
                     </div>
 
                     {/* Footer ID */}
                     <div className="mt-3 pt-2 text-[9px] text-slate-300 text-right font-mono">
-                      Ref: {item._id}
+                      Ref: {item.id}
                     </div>
 
                   </div>
