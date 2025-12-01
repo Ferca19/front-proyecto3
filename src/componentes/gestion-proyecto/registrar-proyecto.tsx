@@ -121,15 +121,15 @@ return (
                             <Select
                               value={
                                 clientes.length > 0
-                                  ? clientes.find((option) => option._id === clienteId) || null
+                                  ? clientes.find((option) => option.id === clienteId) || null
                                   : selectedCliente
                               }
                               options={clientes}
                               getOptionLabel={(option) => option.nombre}
-                              getOptionValue={(option) => String(option._id)}
+                              getOptionValue={(option) => String(option.id)}
                               onChange={(selectedOption) => {
                                 if (selectedOption) {
-                                  setValue('clienteId', selectedOption._id);  
+                                  setValue('clienteId', selectedOption.id);  
                                   setSelectedCliente(selectedOption);
                                 }
                               }}

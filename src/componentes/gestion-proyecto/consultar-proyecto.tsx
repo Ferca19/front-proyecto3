@@ -195,6 +195,12 @@ export default function ConsultarProyectos() {
       flex: 0.5,
       formatFunction: ({ value }) => <EstadoBadge estado={EstadoProyectoS[value]} />,
     },
+    {
+      header: "Cliente",
+      accessor: "cliente",
+      flex: 0.3,
+      formatFunction: ({ value }) => <span>{value ? `${value.nombre} ${value.apellido}` : ""}</span>,
+    },
   ];
 
   const handleLimpiarFiltros = () => {
@@ -379,7 +385,7 @@ export default function ConsultarProyectos() {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => handleDelete(row._id)}
+                          onClick={() => handleDelete(row.id)}
                           className="w-8 h-8 flex items-center justify-center bg-blue-500 text-white hover:bg-blue-800"
                         >
                           <Trash size={18} />

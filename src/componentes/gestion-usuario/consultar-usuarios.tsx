@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { PlusCircle, Search, Trash, User } from "lucide-react";
-import axiosConfig from "../../utils/axiosConfig";
 import { Button } from "../ui/Button";
 import RegistrarUsuario from "./registrar-usuario";
 import Paginacion from "../herramientas/reutilizables/paginacion";
@@ -11,19 +9,20 @@ import UsuarioService from "./usuario-service";
 import { RolesS, type Usuario } from "../../interfaces/gestion-usuario/interfaces-usuario";
 import { Alertas, TipoAlerta, TituloAlerta, useAlerts } from "../herramientas/alertas/alertas";
 import { TipoAlertaConfirmacion, TituloAlertaConfirmacion, useConfirmation } from "../herramientas/alertas/alertas-confirmacion";
-import { SelectContentUI, SelectItemUI, SelectTriggerUI, SelectUI, SelectValueUI } from "../ui/Select";
-import { RolS } from "../../interfaces/generales/interfaces-generales";
+import Select from "react-select";
+import { Rol } from "../../interfaces/generales/interfaces-generales";
+import { useSesion } from "../herramientas/context/SesionContext";
 
 export default function ConsultarUsuarios() {
+
+  const { sesion } = useSesion();
+  const usuarioId = sesion.usuarioId;
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, ] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { alerts, addAlert, removeAlert } = useAlerts();
   const { showConfirmation, AlertasConfirmacion: AlertasConfirmacion } = useConfirmation();
-  
-
-  const apiUrl = axiosConfig.apiUrl;
 
   const [paginaActual, setPaginaActual] = useState(1);
   const [entidadesTotales, setEntidadesTotales] = useState(1);
@@ -31,9 +30,7 @@ export default function ConsultarUsuarios() {
   const [take, setTake] = useState(10);
 
   const [filtros, setFiltros] = useState({
-    estado: 1,
-    clienteId: 0,
-    tipo: 0
+    rolId: 3,
   });
 
 
@@ -42,7 +39,7 @@ export default function ConsultarUsuarios() {
   // Realizar la búsqueda cada vez que el término cambia
  
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     
     const confirmed = await showConfirmation({
       type: TipoAlertaConfirmacion.DESTRUCTIVE,
@@ -56,13 +53,8 @@ export default function ConsultarUsuarios() {
     if (!confirmed) return;
 
     try {
-      const token = localStorage.getItem("Token");
 
-      await axios.delete(`${apiUrl}/usuario/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await UsuarioService.eliminar(id, usuarioId);
       handleBuscarUsuarios();
       
       addAlert({
@@ -98,7 +90,7 @@ export default function ConsultarUsuarios() {
     }
     setLoading(true);
     const filtrosConPaginacion = {
-      rolId: 3,
+      rolId: filtros.rolId,
       skip: skip,
       take: take,
     };
@@ -115,7 +107,7 @@ export default function ConsultarUsuarios() {
     setLoading(true);
 
     const filtrosConPaginacion = {
-      rolId: 3,
+      rolId: filtros.rolId,
       skip: skip,
       take: take,
     };
@@ -205,46 +197,62 @@ export default function ConsultarUsuarios() {
 
                   <div className="flex items-center gap-8">
 
-                  <CardTitle className="flex items-center space-x-2">
+                  <CardTitle className="flex w-full sm:w-[48%] md:w-[200px]">
                     <User className="consultar-icon" />
-                    <span>Usuarios</span>
+                    <span>{
+                      filtros.rolId === Rol.ADMINISTRADOR 
+                      ? "Administradores" 
+                      : filtros.rolId === Rol.EMPLEADO
+                      ? "Empleados"
+                      : "Clientes"
+                      }</span>
                   </CardTitle>
                   
 
-                  <div className="flex flex-col w-full">
+                  <div className="flex flex-col w-full sm:w-[48%] md:w-[200px]">
                       <label className="mb-1 text-sm font-mediumtext-black dark:text-white">
                         Rol
                       </label>
-                      <SelectUI
-                        value={String(filtros.estado)}
-                        onValueChange={(key) => {
-                          setFiltros({
-                            ...filtros,
-                            estado: Number(key)
-                          })
+                      <Select
+                        value={
+                          Object.entries(RolesS)
+                            .map(([key, value]) => ({
+                              value: Number(key),
+                              label: value // or provide a more user-friendly label if needed
+                            }))
+                            .find((option) => Number(option.value) === filtros.rolId) || null
+                        }
+                        options={Object.entries(RolesS).map(([key, value]) => ({
+                          value: Number(key),
+                          label: value,
+                        }))}
+                        onChange={(selectedOption) => {
+                          setFiltros({ ...filtros, rolId: Number(selectedOption?.value) })
+                          handleBuscarUsuarios(true);
                         }}
-                      >
-                        <SelectTriggerUI className="w-full px-3 py-2 rounded-lg border border-gray-300 text-black bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                          <SelectValueUI placeholder="Seleccione un estado" />
-                        </SelectTriggerUI>
-
-                        <SelectContentUI className="bg-white text-black">
-                          {Object.entries(RolesS).map(([key, value]) => (
-                            <SelectItemUI
-                              key={key}
-                              value={key} // 👈 SIEMPRE string
-                              className="
-                                  data-[state=checked]:bg-blue-500 
-                                  data-[state=checked]:text-white
-                                  data-[highlighted]:bg-blue-200 
-                                  data-[highlighted]:text-black
-                                "
-                            >
-                              {value}
-                            </SelectItemUI>
-                          ))}
-                        </SelectContentUI>
-                      </SelectUI>
+                        className="text-black"
+                        menuPortalTarget={document.body}
+                        styles={{
+                          control: (base) => ({
+                            ...base,
+                            color: "black",
+                          }),
+                          singleValue: (base) => ({
+                            ...base,
+                            color: "black",
+                          }),
+                          option: (base, { isSelected, isFocused }) => ({
+                            ...base,
+                            color: isSelected ? "white" : "black",
+                            backgroundColor: isSelected 
+                            ? "#3b82f6" 
+                            : isFocused 
+                            ? "#93c5fd"
+                            : "white",
+                          }),
+                          menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                        }}
+                      />
                     </div>
                     </div>
 

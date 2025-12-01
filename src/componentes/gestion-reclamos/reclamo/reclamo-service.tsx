@@ -10,6 +10,16 @@ const baseService = createCrudService<FormValuesReclamo | FormData>("reclamo");
 const ReclamoService = {
   ...baseService,
 
+  nuevoConArchivos: async (payload:any) => {
+    try {
+
+      const { data } = await api.post(`${apiUrl}/reclamo/with-files`, payload);
+      return data;
+    } catch (error) {
+      console.error("Error al obtener usuario:", error);
+      throw error
+    }
+  },
 
   obtenerHistorial: async (id: string) => {
     try {
@@ -44,6 +54,17 @@ const ReclamoService = {
       return data;
     } catch (error) {
       console.error("Error al obtener usuario:", error);
+      throw error
+    }
+  },
+
+  cancelar: async (reclamoId: string) => {
+    try {
+
+      const { data } = await api.post(`${apiUrl}/reclamo/cancelar/${reclamoId}`);
+      return data;
+    } catch (error) {
+      console.error("Error al cancelar reclamo:", error);
       throw error
     }
   },

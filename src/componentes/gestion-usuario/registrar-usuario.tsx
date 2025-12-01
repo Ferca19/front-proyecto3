@@ -9,16 +9,18 @@ import { parseApiError } from "../../utils/errores";
 import { schemaRegister, type FormValuesRegister } from "./interfaces-validaciones-usuario";
 import type { Area } from "../../interfaces/gestion-usuario/interfaces-usuario";
 import { User } from "lucide-react";
-import { RolS } from "../../interfaces/generales/interfaces-generales";
+import { Rol, RolS } from "../../interfaces/generales/interfaces-generales";
 import Select from "react-select";
 import React from "react";
+import ReclamoService from "../gestion-reclamos/reclamo/reclamo-service";
 
 export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () => void; onSuccess: () => void }) {
   
   //===================== CONSTANTES VARIAS ============================================
+  const [selectedRol, setSelectedRol] = React.useState<number>({} as number);
 
   const methods = useForm<FormValuesRegister>({
-    resolver: yupResolver(schemaRegister) as Resolver<FormValuesRegister>,
+    resolver: yupResolver(schemaRegister (selectedRol === Rol.EMPLEADO)) as Resolver<FormValuesRegister>,
     defaultValues: { email: "", password: "", nombre: "", apellido: "", rolId: 0 },
   });
 
@@ -30,9 +32,12 @@ export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () =
     watch,
   } = methods;
 
+  
+
   const rolId = watch("rolId");
   const [areas, setAreas] = useState<Area[]>([]);
   const [selectedArea, setSelectedArea] = React.useState<Area>({} as Area);
+  
   const [, setErrorMessage] = useState("");
 
   const areaId = watch("areaId");
@@ -42,7 +47,7 @@ export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () =
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [areaRes] = await Promise.all([await UsuarioService.obtenerTotales({},"areas")]);
+        const [areaRes] = await Promise.all([await ReclamoService.obtenerTotales({},"areas")]);
 
         setAreas(areaRes);
       } catch (error) {
@@ -66,7 +71,12 @@ export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () =
           return;
         }
   
-        const { passwordConfirmada, ...finalPayload } = formData;
+        const { passwordConfirmada, telefono, rolId, ...rest } = formData;
+  
+        const finalPayload = {
+          ...rest,
+          rolId: "692dcc020f979270b44a092a",
+        };
   
         await UsuarioService.register(finalPayload);
   
@@ -133,7 +143,7 @@ export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () =
                           value: Number(key),
                           label: value // or provide a more user-friendly label if needed
                         }))
-                        .find((option) => Number(option.value) === watch('rolId')) || null
+                        .find((option) => Number(option.value) === rolId) || null
                     }
                     options={Object.entries(RolS).map(([key, value]) => ({
                       value: Number(key),
@@ -141,6 +151,7 @@ export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () =
                     }))}
                     onChange={(selectedOption) => {
                       methods.setValue(`rolId`, Number(selectedOption?.value) || 0);
+                      setSelectedRol(Number(selectedOption?.value) || 0);
                     }}
                     className="text-black"
                     menuPortalTarget={document.body}
@@ -168,7 +179,8 @@ export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () =
                   {errors.rolId && <small className="text-red-500">{errors.rolId?.message as string}</small>}
                 </div>
               </div>
-
+              
+              {selectedRol === Rol.EMPLEADO && 
               <div className="flex-1 rounded-lg p-2 shadow-sm">
                 <label className="block text-sm font-medium text-gray-700 py-1">Areas</label>
                 <div className="flex items-end gap-x-2">
@@ -177,15 +189,15 @@ export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () =
                       <Select
                         value={
                           areas.length > 0
-                            ? areas.find((option) => option._id === areaId) || null
+                            ? areas.find((option) => option.id === areaId) || null
                             : selectedArea
                         }
                         options={areas}
                         getOptionLabel={(option) => option.nombre}
-                        getOptionValue={(option) => String(option._id)}
+                        getOptionValue={(option) => String(option.id)}
                         onChange={(selectedOption) => {
                           if (selectedOption) {
-                            setValue('areaId', selectedOption._id);  
+                            setValue('areaId', selectedOption.id);  
                             setSelectedArea(selectedOption);
                           }
                         }}
@@ -214,6 +226,7 @@ export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () =
                   </div>
                 </div>
               </div>
+              }
 
               <FormInput name="password" label="Contraseña" type="password" />
 

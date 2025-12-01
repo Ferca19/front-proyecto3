@@ -1,6 +1,7 @@
 import type { SelectCliente } from "../generales/interfaces-generales";
 
 export interface ConsultarProyecto {
+  id: string;
   _id: string;
   nombre: string
   descripcion: string

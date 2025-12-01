@@ -3,7 +3,7 @@ import { Button } from "../../ui/Button";
 import Select from "react-select";
 import FormInput from "../../herramientas/formateo-de-campos/form-input";
 import ReclamoService from "./reclamo-service";
-import { CriticidadReclamoS, PrioridadReclamoS, type Reclamo } from "../../../interfaces/gestion-reclamo/interfaces-reclamo";
+import { PrioridadReclamoS, type Reclamo } from "../../../interfaces/gestion-reclamo/interfaces-reclamo";
 import * as yup from "yup";
 import { FormProvider, useForm, type Resolver } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,7 +11,6 @@ import { parseApiError } from "../../../utils/errores";
 
 interface FormValues{
   prioridad: number;
-  criticidad: number;
   comentario?: string | null;
 }
 
@@ -20,7 +19,6 @@ interface FormValues{
 const schema = 
   yup.object().shape({
     prioridad: yup.number().required("La Prioridad es obligatoria"),
-    criticidad: yup.number().required("La Criticidad es obligatoria"),
     comentario: yup.string().optional(),
   });
 
@@ -40,7 +38,6 @@ export default function CambiarPrioridadForm({
     resolver: yupResolver(schema) as Resolver<FormValues>,
     defaultValues: {
       prioridad: reclamo.prioridad,
-      criticidad: reclamo.criticidad,
     }
   });
 
@@ -53,7 +50,6 @@ export default function CambiarPrioridadForm({
   } = methods;
 
   const prioridad = watch("prioridad");
-  const criticidad = watch("criticidad");
 
   const onSubmit = async (formData: FormValues) => {
     try {
@@ -153,48 +149,6 @@ export default function CambiarPrioridadForm({
                   />
                 </div>
 
-                <div className="flex flex-col">
-                  <label className="block text-sm font-medium text-gray-700 py-1">Criticidad</label>
-                  <Select
-                    value={
-                      Object.entries(CriticidadReclamoS)
-                        .map(([key, value]) => ({
-                          value: Number(key),
-                          label: value // or provide a more user-friendly label if needed
-                        }))
-                        .find((option) => Number(option.value) === criticidad) || null
-                    }
-                    options={Object.entries(CriticidadReclamoS).map(([key, value]) => ({
-                      value: Number(key),
-                      label: value,
-                    }))}
-                    onChange={(selectedOption) => {
-                      setValue(`criticidad`, selectedOption ? Number(selectedOption.value) : 0);
-                    }}
-                    className="text-black"
-                    menuPortalTarget={document.body}
-                    styles={{
-                      control: (base) => ({
-                        ...base,
-                        color: "black",
-                      }),
-                      singleValue: (base) => ({
-                        ...base,
-                        color: "black",
-                      }),
-                      option: (base, { isSelected, isFocused }) => ({
-                        ...base,
-                        color: isSelected ? "white" : "black",
-                        backgroundColor: isSelected 
-                        ? "#3b82f6" 
-                        : isFocused 
-                        ? "#93c5fd"
-                        : "white",
-                      }),
-                      menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-                    }}
-                  />
-                </div>
 
                 <div className="flex-1">
                   <FormInput name="comentario" label="Comentario" />

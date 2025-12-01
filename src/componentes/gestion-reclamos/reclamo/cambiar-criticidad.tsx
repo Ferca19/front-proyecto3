@@ -3,7 +3,7 @@ import { Button } from "../../ui/Button";
 import Select from "react-select";
 import FormInput from "../../herramientas/formateo-de-campos/form-input";
 import ReclamoService from "./reclamo-service";
-import { CriticidadReclamoS } from "../../../interfaces/gestion-reclamo/interfaces-reclamo";
+import { CriticidadReclamoS, type Reclamo } from "../../../interfaces/gestion-reclamo/interfaces-reclamo";
 import * as yup from "yup";
 import { FormProvider, useForm, type Resolver } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -24,11 +24,11 @@ const schema =
 
 
 export default function CambiarCriticidadForm({
-  reclamoId,
+  reclamo,
   onSuccess,
   onClose,
 }: {
-  reclamoId: string;
+  reclamo: Reclamo;
   onSuccess: () => void;
   onClose: () => void;
 }) {
@@ -55,7 +55,7 @@ export default function CambiarCriticidadForm({
           ...formData,
       };
 
-      await ReclamoService.cambiarCriticidad(reclamoId, payload);
+      await ReclamoService.cambiarCriticidad(reclamo.id, payload);
 
       onClose();
       onSuccess();

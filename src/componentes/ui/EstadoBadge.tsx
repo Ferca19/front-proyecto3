@@ -1,5 +1,6 @@
 import React from "react";
 import { CriticidadReclamoS, EstadoReclamoS, PrioridadReclamoS, TipoReclamoS } from "../../interfaces/gestion-reclamo/interfaces-reclamo";
+import { EstadoProyectoS } from "../../interfaces/gestion-proyecto/interfaces-proyecto";
 
 
 interface EstadoBadgeProps {
@@ -36,6 +37,12 @@ const colorMap: Record<string, string> = {
   [PrioridadReclamoS[2]]: "bg-yellow-100 text-yellow-800", // MEDIA
   [PrioridadReclamoS[3]]: "bg-orange-100 text-orange-800", // ALTA
   [PrioridadReclamoS[4]]: "bg-red-100 text-red-800",       // URGENTE
+
+  // ---------------- ESTADOS PROYECTO ----------------
+  [EstadoProyectoS[1]]: "bg-green-100 text-green-800",   // ACTIVO
+  [EstadoProyectoS[2]]: "bg-yellow-100 text-yellow-800", // EN_PAUSA
+  [EstadoProyectoS[3]]: "bg-blue-100 text-blue-800",     // FINALIZADO
+  [EstadoProyectoS[4]]: "bg-red-100 text-red-800",       // CANCELADO
 };
 
 

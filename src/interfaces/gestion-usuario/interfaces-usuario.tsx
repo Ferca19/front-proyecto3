@@ -7,7 +7,7 @@ export type Rol = {
 };
 
 export interface Usuario {
-  _id: number;
+  id: string;
   nombre: string
   apellido: string
   email: string;

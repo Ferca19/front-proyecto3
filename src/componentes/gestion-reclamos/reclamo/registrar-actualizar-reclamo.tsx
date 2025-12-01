@@ -9,12 +9,12 @@ import { Card } from "../../ui/Card";
 import Select from "react-select";
 import { parseApiError } from "../../../utils/errores";
 import { Layers } from "lucide-react";
-import CargaImagen from "../../herramientas/reutilizables/carga-imagen";
 import {CriticidadReclamoS, PrioridadReclamoS, TipoReclamoS, type Reclamo } from "../../../interfaces/gestion-reclamo/interfaces-reclamo";
 import { schemaReclamo, transformData, type FormValuesReclamo } from "./interfaces-validaciones-reclamo";
 import type { SelectProyecto } from "../../../interfaces/gestion-proyecto/interfaces-proyecto";
 import ReclamoService from "./reclamo-service";
 import { useSesion } from "../../herramientas/context/SesionContext";
+import CargaArchivos from "../../herramientas/reutilizables/carga-archivos";
 
 
 export default function RegistrarActualizarReclamoForm({
@@ -49,7 +49,7 @@ export default function RegistrarActualizarReclamoForm({
   // Obtener proveedores, marcas y líneas
   const [proyectos, setProyectos] = React.useState<SelectProyecto[]>([]);
   const [selectedProyecto, setSelectedProyecto] = React.useState<SelectProyecto>();
-  const [imagen, setImagen] = useState<File | null>(null);
+  const [archivos, setArchivos] = useState<File[]>([]);
   const { sesion } = useSesion();
   const usuarioId = sesion.usuarioId;
 
@@ -70,7 +70,7 @@ export default function RegistrarActualizarReclamoForm({
           setSelectedProyecto(reclamo.proyecto);;
   
           setValue("titulo", reclamo.titulo || "");
-          setValue("descripcion", reclamo.descripcion || null);
+          setValue("descripcion", reclamo.descripcion);
 
           setValue("tipo", reclamo.prioridad || 0);
           setValue("prioridad", reclamo.prioridad || 0);
@@ -101,26 +101,38 @@ export default function RegistrarActualizarReclamoForm({
 
     try {
 
-      const payload = new FormData();
+      if (archivos.length > 0) {
 
-      Object.entries(formData).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-          payload.append(key, value.toString());
-        }
-      });
+        const payload = new FormData();
 
-      if (imagen) {
-        payload.append("imagen", imagen);
-      }
+        // Datos del reclamo (texto / números)
+        Object.entries(formData).forEach(([key, value]) => {
+          if (value === undefined || value === null) return;
 
-      if (reclamo) {
-        await ReclamoService.actualizar(reclamo.id, payload);
-      } else {
-        await ReclamoService.nuevo(payload);
+          if (value instanceof File) {
+            payload.append(key, value);
+          } else if (typeof value === "object") {
+            payload.append(key, JSON.stringify(value));
+          } else {
+            payload.append(key, String(value));
+          }
+        });
+
+        // Archivos múltiples
+        archivos.forEach(file => {
+          payload.append("files", file);
+        });
+
+        await ReclamoService.nuevoConArchivos(payload);
+
+      }else {
+
+        await ReclamoService.nuevo(formData);
       }
 
       await onSuccess();
       onClose();
+
     } catch (error) {
       const errorMessage = parseApiError(error);
 
@@ -149,8 +161,8 @@ export default function RegistrarActualizarReclamoForm({
     }
   };
 
-  const handleFileSelect = (file: File | null) => {
-    setImagen(file);
+  const handleFilesChange = (files: File[]) => {
+    setArchivos(files);
   };
 
 
@@ -406,7 +418,10 @@ export default function RegistrarActualizarReclamoForm({
               <div className="col-span-full flex flex-col lg:flex-row gap-4">
 
                 <div className="w-full lg:w-1/2 lg:pl-4 lg:border-r lg:border-gray-300">
-                  <CargaImagen label="Foto del Reclamo" onFileSelect={handleFileSelect} defaultPreview={reclamo?.imagen_url || ""} />
+                  <CargaArchivos
+                    label="Archivos del Reclamo"
+                    onFilesChange={handleFilesChange}
+                  />
                 </div>
 
     

@@ -47,7 +47,8 @@ export const schemaLogin = yup.object().shape({
   password: yup.string().typeError("La contraseña es obligatoria.").required("La contraseña es obligatoria."),
 });
 
-export const schemaRegister = yup.object().shape({
+export const schemaRegister = (requiereArea: boolean) =>
+  yup.object().shape({
   nombre: yup
     .string()
     .trim()
@@ -78,7 +79,11 @@ export const schemaRegister = yup.object().shape({
     .required("La contraseña es obligatoria.")
     .min(6, "La contraseña debe tener al menos 6 caracteres."),
   rolId: yup.number().typeError("El rol es obligatorio.").required("El rol es obligatorio."),
-  areaId: yup.string().typeError("El área es obligatoria.").notRequired(),
+  areaId: yup.number().when([], {
+    is: () => requiereArea,
+    then: (schema) => schema.required("El Área es obligatoria."),
+    otherwise: (schema) => schema.optional(),
+  }),
   telefono: yup
     .string()
     .trim()

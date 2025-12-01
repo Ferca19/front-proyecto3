@@ -49,6 +49,12 @@ const menuItems: MenuItem[] = [
     path: "",
     subMenu: [{ icon: Users, label: "Usuarios", path: "usuarios" }],
   },
+  {
+    icon: Users,
+    label: "Gestión Estadísticas",
+    path: "",
+    subMenu: [{ icon: Users, label: "Estadísticas", path: "estadisticas" }],
+  },
 
 ];
 

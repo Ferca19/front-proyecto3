@@ -9,6 +9,7 @@ import PublicPage from "./pages/public-page";
 import ConsultarProyectos from "./componentes/gestion-proyecto/consultar-proyecto";
 import ConsultarReclamos from "./componentes/gestion-reclamos/reclamo/consultar-reclamo";
 import ConsultarUsuarios from "./componentes/gestion-usuario/consultar-usuarios";
+import ConsultarEstadisticas from "./componentes/gestion-estadisticas/consultar-estadisticas";
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
               </Route>
               <Route element={<PrivateRoute allowedRoles={[Rol.EMPLEADO, Rol.ADMINISTRADOR]} />}>
                   <Route path="usuarios" element={<ConsultarUsuarios />} />
+              </Route>
+              <Route element={<PrivateRoute allowedRoles={[Rol.EMPLEADO, Rol.ADMINISTRADOR]} />}>
+                  <Route path="estadisticas" element={<ConsultarEstadisticas />} />
               </Route>
             </Route>
 
