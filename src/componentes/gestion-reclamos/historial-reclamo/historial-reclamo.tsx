@@ -380,10 +380,12 @@ return (
                              <div className="bg-slate-50 rounded p-2 border border-slate-100">
                               <p className="text-[10px] uppercase tracking-wider font-bold text-slate-400 mb-1">Área</p>
                               <div className="flex items-center gap-1 flex-wrap">
-                                <span className="font-medium text-slate-700">
-                                  {item.areaAnterior?.nombre}
+                                <span className="font-medium text-slate-700 flex items-center gap-1">
+                                  {item.areaAnterior?.nombre ?? "Sin Área"}
+
                                   <ArrowRight size={10} className="text-black" />
-                                  {item.areaNueva?.nombre}
+
+                                  {item.areaNueva?.nombre ?? "Sin Área"}
                                 </span>
                               </div>
                             </div>
