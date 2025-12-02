@@ -45,6 +45,14 @@ export default function ComentariosForm({
   onClose: () => void;
 }) {
 
+  const [comentariosTraidos, setComentariosTraidos] = useState<Comentario[]>(comentarios);
+
+
+  const handleBuscarComentarios = async () => {
+    const respuesta = await ReclamoService.obtenerComentarios(reclamoId);
+    setComentariosTraidos(respuesta);
+  }
+
 
 
 
@@ -60,10 +68,10 @@ export default function ComentariosForm({
   //===================== AUTO SCROLL ====================================================
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [comentarios]);
+  }, [comentariosTraidos]);
 
   //===================== AGRUPAR MENSAJES POR FECHA ======================================
-  const groupedMessages = comentarios.reduce((acc, comment) => {
+  const groupedMessages = comentariosTraidos.reduce((acc, comment) => {
     const dateKey = formatMessageDate(comment.createdAt);
     if (!acc[dateKey]) acc[dateKey] = [];
     acc[dateKey].push(comment);
@@ -80,6 +88,7 @@ export default function ComentariosForm({
     };
     
     await ReclamoService.crearComentario(payload)
+    handleBuscarComentarios();
   };
 
   //=======================================================================================
@@ -101,7 +110,7 @@ export default function ComentariosForm({
 
         {/* AVATARES (más a la izquierda) */}
         <div className="flex -space-x-2 overflow-hidden mr-10">
-            {Object.values(comentarios)
+            {Object.values(comentariosTraidos)
             .slice(0, 3)
             .map((comentario) => (
                 <img
