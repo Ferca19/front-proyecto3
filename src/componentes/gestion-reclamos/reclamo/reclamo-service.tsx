@@ -38,10 +38,10 @@ const ReclamoService = {
     }
   },
 
-  obtenerComentarios: async (id: string) => {
+  obtenerComentarios: async (payload: any) => {
     try {
 
-      const { data } = await api.get(`${apiUrl}/comentario/${id}`);
+      const { data } = await api.get(`${apiUrl}/comentario`, payload);
       return data;
     } catch (error) {
       console.error("Error al obtener usuario:", error);
