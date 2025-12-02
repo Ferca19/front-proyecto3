@@ -88,6 +88,7 @@ export default function ComentariosForm({
     };
     
     await ReclamoService.crearComentario(payload)
+    setInputText("");
     handleBuscarComentarios();
   };
 
