@@ -105,20 +105,14 @@ export default function RegistrarActualizarReclamoForm({
 
         const payload = new FormData();
 
-        // Datos del reclamo (texto / números)
-        Object.entries(formData).forEach(([key, value]) => {
-          if (value === undefined || value === null) return;
+        payload.append("titulo", formData.titulo);
+        payload.append("descripcion", formData.descripcion);
+        payload.append("tipo", String(formData.tipo));
+        payload.append("prioridad", String(formData.prioridad));
+        payload.append("criticidad", String(formData.criticidad));
+        payload.append("proyectoId", formData.proyectoId);
 
-          if (value instanceof File) {
-            payload.append(key, value);
-          } else if (typeof value === "object") {
-            payload.append(key, JSON.stringify(value));
-          } else {
-            payload.append(key, String(value));
-          }
-        });
-
-        // Archivos múltiples
+        // Archivos
         archivos.forEach(file => {
           payload.append("files", file);
         });

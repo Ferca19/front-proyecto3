@@ -79,7 +79,7 @@ export const schemaRegister = (requiereArea: boolean) =>
     .required("La contraseña es obligatoria.")
     .min(6, "La contraseña debe tener al menos 6 caracteres."),
   rolId: yup.number().typeError("El rol es obligatorio.").required("El rol es obligatorio."),
-  areaId: yup.number().when([], {
+  areaId: yup.string().when([], {
     is: () => requiereArea,
     then: (schema) => schema.required("El Área es obligatoria."),
     otherwise: (schema) => schema.optional(),

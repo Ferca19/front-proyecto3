@@ -51,12 +51,8 @@ const UsuarioService = {
 
   register: async (payload: any) => {
     try {
-      const token = localStorage.getItem("Token");
-      const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-      const response = await api.post(`${apiUrl}/auth/register`, payload, {
-        headers,
-      });
+      const response = await api.post(`${apiUrl}/usuario`, payload);
 
       return response;
     } catch (error) {

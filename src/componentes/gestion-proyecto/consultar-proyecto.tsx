@@ -66,7 +66,7 @@ export default function ConsultarProyectos() {
 
     try {
       await ProyectoService.eliminar(id, usuarioId)
-      setProyectos(proyectos.filter((proyecto) => proyecto._id !== id))
+      handleBuscarProyectos()
       addAlert({
         type: TipoAlerta.SUCCESS,
         title: TituloAlerta.SUCCESS,
@@ -102,7 +102,7 @@ export default function ConsultarProyectos() {
     addAlert({
       type: TipoAlerta.SUCCESS,
       title: TituloAlerta.SUCCESS,
-      message: "mensajeAlerta",
+      message: "El proyecto se ha guardado correctamente.",
       autoClose: true,
       duration: 3000,
     })
@@ -110,6 +110,8 @@ export default function ConsultarProyectos() {
     setLoading(true)
 
     const filtrosConPaginacion = {
+      clienteId: filtros.clienteId,
+      estado: filtros.estado,
       skip: skip,
       take: take,
     };

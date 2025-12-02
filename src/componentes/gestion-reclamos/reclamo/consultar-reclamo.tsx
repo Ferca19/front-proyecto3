@@ -325,6 +325,20 @@ export default function ConsultarReclamos() {
     setLoading(false);
   };
 
+  const handleBuscarRapido = async (proyectoId: string) => {
+    setLoading(true);
+    const filtrosConPaginacion = {
+      usuarioId: usuarioId,
+      proyectoId: proyectoId,
+      skip: skip,
+      take: take,
+    };
+    const reclamosFiltrados = await ReclamoService.obtener(filtrosConPaginacion);
+    setLoading(false);
+    setReclamo(reclamosFiltrados.data);
+    setEntidadesTotales(reclamosFiltrados.total);
+  };
+
   // MANEJO DE PAGINACION ===========================================
 
   useEffect(() => {
@@ -492,10 +506,13 @@ export default function ConsultarReclamos() {
                       getOptionLabel={(option) => option.nombre}
                       getOptionValue={(option) => String(option.id)}
                       onChange={(selectedOption) => {
+                        const proyectoId = selectedOption ? String(selectedOption.id) : "";
                         setFiltros({
                           ...filtros,
-                          proyectoId: selectedOption ? String(selectedOption.id) : ""
+                          proyectoId
                         });
+                        // Only call quick search with a safe string (can be empty)
+                        handleBuscarRapido(proyectoId);
                       }}
                       placeholder="Seleccione"
                       className="text-black"

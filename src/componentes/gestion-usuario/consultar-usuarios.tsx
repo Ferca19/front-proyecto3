@@ -100,6 +100,19 @@ export default function ConsultarUsuarios() {
     setEntidadesTotales(usuariosFiltrados.total);
   };
 
+  const handleBuscarRapido = async (rolId: number) => {
+    setLoading(true);
+    const filtrosConPaginacion = {
+      rolId: rolId,
+      skip: skip,
+      take: take,
+    };
+    const usuariosFiltrados = await UsuarioService.obtener(filtrosConPaginacion);
+    setLoading(false);
+    setUsuarios(usuariosFiltrados.data);
+    setEntidadesTotales(usuariosFiltrados.total);
+  };
+
 
   const handleSuccess = async () => {
     closeModal();
@@ -228,7 +241,7 @@ export default function ConsultarUsuarios() {
                         }))}
                         onChange={(selectedOption) => {
                           setFiltros({ ...filtros, rolId: Number(selectedOption?.value) })
-                          handleBuscarUsuarios(true);
+                          handleBuscarRapido(Number(selectedOption?.value));
                         }}
                         className="text-black"
                         menuPortalTarget={document.body}

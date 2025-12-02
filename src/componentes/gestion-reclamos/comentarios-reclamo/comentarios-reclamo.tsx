@@ -42,121 +42,6 @@ export default function ComentariosForm({
     onClose: () => void;
 }) {
 
-    const comentariosMock: Comentario[] = [
-  {
-    _id: "CMT-001",
-    contenido: "Se verificó el reclamo y se solicitó más información al usuario.",
-    reclamoId: "R-100",
-    usuario: {
-      _id: 1,
-      nombre: "Lucía",
-      apellido: "Gómez",
-      email: "lucia.gomez@empresa.com",
-      rol: {
-        id: 2,
-        nombre: "Empleado"
-      },
-      createdAt: "2024-11-01T12:00:00",
-      updatedAt: "2024-12-05T14:30:00",
-      deletedAt: null,
-      area: {
-        _id: "AREA-02",
-        nombre: "Soporte Técnico",
-      },
-      telefono: "3815551234",
-      direccion: "Av. Mitre 450",
-      localidad: "San Miguel de Tucumán"
-    },
-    createdAt: "2025-01-01T09:10:00",
-    updatedAt: "2025-01-01T09:10:00",
-    deletedAt: null
-  },
-
-  {
-    _id: "CMT-002",
-    contenido: "Se asignó el reclamo a un técnico especializado.",
-    reclamoId: "R-100",
-    usuario: {
-      _id: 2,
-      nombre: "Martín",
-      apellido: "Rivas",
-      email: "martin.rivas@empresa.com",
-      rol: {
-        id: 1,
-        nombre: "Administrador"
-      },
-      createdAt: "2023-08-10T10:00:00",
-      updatedAt: "2024-10-22T16:00:00",
-      deletedAt: null,
-      area: {
-        _id: "AREA-01",
-        nombre: "Administración",
-      },
-      telefono: "3814449988",
-      direccion: "Belgrano 1020",
-      localidad: "Yerba Buena"
-    },
-    createdAt: "2025-01-01T11:45:00",
-    updatedAt: "2025-01-01T11:45:00",
-    deletedAt: null
-  },
-
-  {
-    _id: "CMT-003",
-    contenido: "Se realizaron las pruebas iniciales y no se reprodujo el error. Se continuará investigando.",
-    reclamoId: "R-100",
-    usuario: {
-      _id: 3,
-      nombre: "Federico",
-      apellido: "Cagliero",
-      email: "federico.cagliero@empresa.com",
-      rol: {
-        id: 1,
-        nombre: "Administrador"
-      },
-      createdAt: "2024-02-15T14:00:00",
-      updatedAt: "2024-12-01T12:00:00",
-      deletedAt: null,
-      area: {
-        _id: "AREA-02",
-        nombre: "Soporte Técnico",
-      },
-      telefono: "3816001122",
-      direccion: "San Martín 870",
-      localidad: "Tafí Viejo"
-    },
-    createdAt: "2025-01-02T08:30:00",
-    updatedAt: "2025-01-02T08:30:00",
-    deletedAt: null
-  },
-
-  {
-    _id: "CMT-004",
-    contenido: "Se encontró la causa del problema y se corrigió en el sistema.",
-    reclamoId: "R-100",
-    usuario: {
-      _id: 1,
-      nombre: "Lucía",
-      apellido: "Gómez",
-      email: "lucia.gomez@empresa.com",
-      rol: {
-        id: 2,
-        nombre: "Empleado"
-      },
-      createdAt: "2024-11-01T12:00:00",
-      updatedAt: "2024-12-05T14:30:00",
-      deletedAt: null,
-      area: {
-        _id: "AREA-02",
-        nombre: "Soporte Técnico",
-      }
-    },
-    createdAt: "2025-01-03T09:00:00",
-    updatedAt: "2025-01-03T09:00:00",
-    deletedAt: null
-  }
-];
-
 
 
 
@@ -172,10 +57,10 @@ export default function ComentariosForm({
   //===================== AUTO SCROLL ====================================================
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [comentariosMock]);
+  }, [comentarios]);
 
   //===================== AGRUPAR MENSAJES POR FECHA ======================================
-  const groupedMessages = comentariosMock.reduce((acc, comment) => {
+  const groupedMessages = comentarios.reduce((acc, comment) => {
     const dateKey = formatMessageDate(comment.createdAt);
     if (!acc[dateKey]) acc[dateKey] = [];
     acc[dateKey].push(comment);
@@ -210,11 +95,11 @@ export default function ComentariosForm({
 
         {/* AVATARES (más a la izquierda) */}
         <div className="flex -space-x-2 overflow-hidden mr-10">
-            {Object.values(comentariosMock)
+            {Object.values(comentarios)
             .slice(0, 3)
             .map((comentario) => (
                 <img
-                key={comentario.usuario._id}
+                key={comentario.usuario.id}
                 className="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover"
                 src={`https://ui-avatars.com/api/?name=${comentario.usuario.nombre}&background=random`}
                 alt={comentario.usuario.nombre}
@@ -247,7 +132,7 @@ export default function ComentariosForm({
                 key={comentario._id}
                 comentario={comentario}
                 user={comentario.usuario}
-                isCurrentUser={comentario.usuario._id === Number(usuarioId)}
+                isCurrentUser={comentario.usuario.id === usuarioId}
               />
             ))}
           </div>

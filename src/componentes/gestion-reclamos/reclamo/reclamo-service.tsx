@@ -13,7 +13,11 @@ const ReclamoService = {
   nuevoConArchivos: async (payload:any) => {
     try {
 
-      const { data } = await api.post(`${apiUrl}/reclamo/with-files`, payload);
+      const { data } = await api.post(`${apiUrl}/reclamo/with-files`, payload, {
+        headers: {
+          "Content-Type": "multipart/form-data", // IMPORTANTE
+        },
+      });
       return data;
     } catch (error) {
       console.error("Error al obtener usuario:", error);
