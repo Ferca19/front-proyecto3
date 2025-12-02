@@ -346,7 +346,7 @@ return (
                       )}
 
                       {/* Priority/Criticality Changes */}
-                      {(item.prioridadAnterior !== item.prioridadNueva || item.criticidadAnterior !== item.criticidadNueva) && (
+                      {(item.prioridadAnterior !== item.prioridadNueva || item.criticidadAnterior !== item.criticidadNueva || item.areaAnterior !== item.areaNueva) && (
                         <div className="grid grid-cols-1 gap-2">
                           {item.prioridadAnterior !== item.prioridadNueva && (
                              <div className="bg-slate-50 rounded p-2 border border-slate-100">
@@ -373,6 +373,18 @@ return (
                                 <Badge className={getCriticidadConfig(item.criticidadNueva).color}>
                                   {getCriticidadConfig(item.criticidadNueva).label}
                                 </Badge>
+                              </div>
+                            </div>
+                          )}
+                          {item.areaAnterior !== item.areaNueva && (
+                             <div className="bg-slate-50 rounded p-2 border border-slate-100">
+                              <p className="text-[10px] uppercase tracking-wider font-bold text-slate-400 mb-1">Área</p>
+                              <div className="flex items-center gap-1 flex-wrap">
+                                <span className="font-medium text-slate-700">
+                                  {item.areaAnterior.nombre}
+                                  <ArrowRight size={10} className="text-black" />
+                                  {item.areaNueva.nombre}
+                                </span>
                               </div>
                             </div>
                           )}

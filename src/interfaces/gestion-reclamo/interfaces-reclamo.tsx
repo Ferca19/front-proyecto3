@@ -41,8 +41,8 @@ export interface HistorialReclamo {
     prioridadNueva: number;
     criticidadAnterior: number;
     criticidadNueva: number;
-    areaAnteriorId: string;
-    areaNuevaId: string;
+    areaAnterior: Area;
+    areaNueva: Area;
     usuario: Usuario;
     createdAt: string;
 
