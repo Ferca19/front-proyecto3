@@ -37,7 +37,7 @@ export default function CambiarEstadoReclamoForm({
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema) as Resolver<FormValues>,
     defaultValues: {
-      estado: reclamo.estado,
+      estado: reclamo.estado+1,
     }
   });
 
