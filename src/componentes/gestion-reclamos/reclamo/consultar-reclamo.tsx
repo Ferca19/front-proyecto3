@@ -52,7 +52,6 @@ export default function ConsultarReclamos() {
     areaId: ""
   });
 
-  console.log("Filtros actuales:", filtros);
 
   // MANEJO DE PAGINACION =======================================
   const [paginaActual, setPaginaActual] = useState(1);
@@ -651,6 +650,7 @@ export default function ConsultarReclamos() {
                             size="sm"
                             onClick={() => handleCambiarPrioridad(row.id)}
                             className="bg-blue-500 text-white hover:bg-blue-800 w-8 h-8 flex items-center justify-center"
+                            disabled={row.estado === EstadoReclamo.CERRADO || row.estado === EstadoReclamo.CANCELADO || row.estado === EstadoReclamo.RESUELTO}
                             title="Cambiar Prioridad"
                           >
                             <ArrowUp size={18} />
@@ -660,6 +660,7 @@ export default function ConsultarReclamos() {
                             size="sm"
                             onClick={() => handleCambiarCriticidad(row.id)}
                             className="bg-blue-500 text-white hover:bg-blue-800 w-8 h-8 flex items-center justify-center"
+                            disabled={row.estado === EstadoReclamo.CERRADO || row.estado === EstadoReclamo.CANCELADO || row.estado === EstadoReclamo.RESUELTO}
                             title="Cambiar Criticidad"
                           >
                             <Triangle size={18} />
@@ -691,7 +692,7 @@ export default function ConsultarReclamos() {
                           size="sm"
                           onClick={() => handleAbrirComentarios(row.id)}
                           className="bg-blue-500 text-white hover:bg-blue-800 w-8 h-8 flex items-center justify-center"
-                          disabled={!(row.estado === EstadoReclamo.EN_PROGRESO)}
+                          disabled={!(row.estado === EstadoReclamo.EN_PROGRESO )}
                           title="Comentarios"
                         >
                           <MessageCircle size={18} />
