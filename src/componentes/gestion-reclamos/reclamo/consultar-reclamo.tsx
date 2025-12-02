@@ -125,13 +125,9 @@ export default function ConsultarReclamos() {
   };
 
 
-   const handleAbrirComentarios = async (id: string) => {
+  const handleAbrirComentarios = async (id: string) => {
     if (id) {
-      const payload = {
-        reclamoId: id
-      };
-
-      const response = await ReclamoService.obtenerComentarios(payload);
+      const response = await ReclamoService.obtenerComentarios(id);
       setComentarios(response);
       setMostrarComentarios(true);
     }
