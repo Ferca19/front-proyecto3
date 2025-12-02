@@ -40,6 +40,9 @@ export default function AsignarReclamoForm({
 
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema) as Resolver<FormValues>,
+    defaultValues: {
+      areaId: reclamo.area?.id ?? "",
+    }
   });
 
   const {
