@@ -58,7 +58,7 @@ export default function CambiarCriticidadForm({
           ...formData,
       };
 
-      await ReclamoService.cambiarCriticidad(reclamo.id, payload);
+      await ReclamoService.cambiarCriticidad(reclamo._id, payload);
 
       onClose();
       onSuccess();
