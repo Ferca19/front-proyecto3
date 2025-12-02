@@ -3,6 +3,7 @@ import type { Comentario } from "../../../interfaces/gestion-reclamo/interfaces-
 import MessageBubble from "./recurso-mensajes";
 import { useSesion } from "../../herramientas/context/SesionContext";
 import { X } from "lucide-react";
+import ReclamoService from "../reclamo/reclamo-service";
 
 
 
@@ -35,11 +36,13 @@ export const formatMessageDate = (dateInput: string | Date): string => {
 
 
 export default function ComentariosForm({
+  reclamoId,
   comentarios,
   onClose,
 }: {
+  reclamoId: string;
   comentarios: Comentario[];
-    onClose: () => void;
+  onClose: () => void;
 }) {
 
 
@@ -68,12 +71,15 @@ export default function ComentariosForm({
   }, {} as Record<string, Comentario[]>);
 
   //===================== ENVIAR COMENTARIO (TEMPORAL) ===================================
-  const handleSend = (e: React.FormEvent) => {
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inputText.trim()) return;
 
-    alert("Enviar comentario a API: " + inputText);
-    setInputText("");
+    const payload = {
+      contenido: inputText,
+      reclamoId: reclamoId
+    };
+    
+    await ReclamoService.crearComentario(payload)
   };
 
   //=======================================================================================

@@ -105,6 +105,17 @@ const ReclamoService = {
     }
   },
 
+  crearComentario: async (payload: any) => {
+    try {
+
+      const { data } = await api.post(`${apiUrl}/comentario`, payload);
+      return data;
+    } catch (error) {
+      console.error("Error al crear comentario:", error);
+      throw error
+    }
+  },
+
 };
 
 export default ReclamoService;

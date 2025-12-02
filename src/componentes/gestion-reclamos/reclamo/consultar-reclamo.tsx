@@ -45,6 +45,7 @@ export default function ConsultarReclamos() {
   const [proyectos, setProyectos] = useState<SelectProyecto[]>([]);
   const [clientes, setClientes] = useState<SelectCliente[]>([]);
   const [areas, setAreas] = useState<Area[]>([]);
+  const [reclamoIdSeleccionado, setReclamoIdSeleccionado] = useState<string>("");
 
   const [filtros, setFiltros] = useState({
     proyectoId: "",
@@ -127,6 +128,7 @@ export default function ConsultarReclamos() {
 
   const handleAbrirComentarios = async (id: string) => {
     if (id) {
+      setReclamoIdSeleccionado(id);
       const response = await ReclamoService.obtenerComentarios(id);
       setComentarios(response);
       setMostrarComentarios(true);
@@ -782,6 +784,7 @@ export default function ConsultarReclamos() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="relative p-6 sm:p-8 rounded-lg w-4/5 sm:w-3/5 md:w-2/3 lg:w-1/2 xl:w-2/5 max-w-full">
             <ComentariosForm
+              reclamoId={reclamoIdSeleccionado}
               comentarios={comentarios}
               onClose={handleCerrarComentarios}
             />
