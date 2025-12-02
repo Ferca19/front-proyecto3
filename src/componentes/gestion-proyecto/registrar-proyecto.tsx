@@ -125,7 +125,7 @@ return (
                                   : selectedCliente
                               }
                               options={clientes}
-                              getOptionLabel={(option) => option.nombre}
+                              getOptionLabel={(option) => option.nombre+" "+option.apellido}
                               getOptionValue={(option) => String(option.id)}
                               onChange={(selectedOption) => {
                                 if (selectedOption) {

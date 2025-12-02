@@ -78,7 +78,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ filters, onFilterChange, onClearF
                 : null
             }
             options={clientes}
-            getOptionLabel={(option) => option.nombre}
+            getOptionLabel={(option) => option.nombre+" "+option.apellido}
             getOptionValue={(option) => String(option.id)}
             onChange={(option: any) => handleChange('clienteId', option ? String(option.id) : '')}
             placeholder="Seleccione"

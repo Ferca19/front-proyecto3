@@ -459,7 +459,7 @@ export default function ConsultarReclamos() {
                           : null
                       }
                       options={clientes}
-                      getOptionLabel={(option) => option.nombre + option.apellido}
+                      getOptionLabel={(option) => option.nombre+" "+option.apellido}
                       getOptionValue={(option) => String(option.id)}
                       onChange={(selectedOption) => {
                         setFiltros({
