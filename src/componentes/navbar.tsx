@@ -72,6 +72,7 @@ interface NavbarProps {
 export function Navbar({ className }: NavbarProps) {
   const [userEmail, setUserEmail] = useState("");
   const [rol, setRol] = useState("");
+  const [area, setArea] = useState("");
   const { sesion } = useSesion();
   const usuarioId = sesion.usuarioId
 
@@ -82,6 +83,7 @@ export function Navbar({ className }: NavbarProps) {
         const { data } = await api.get(`${axiosConfig.apiUrl}/usuario/${usuarioId}`);
         setUserEmail(data.email);
         setRol(data.rol.nombre);
+        setArea(data.area.nombre);
       } catch (error) {
         console.error("Error al obtener datos del usuario o empresa", error);
       }
@@ -134,7 +136,7 @@ export function Navbar({ className }: NavbarProps) {
           <div className="flex items-center justify-between text-xs px-1">
             <div className="flex flex-col min-w-0">
               <p className="font-medium text-foreground truncate">{userEmail || "Usuario"}</p>
-              <p className="text-primary truncate opacity-80">{rol}</p>
+              <p className="text-primary truncate opacity-80">{rol+" - "+area}</p>
             </div>
           </div>
         </div>

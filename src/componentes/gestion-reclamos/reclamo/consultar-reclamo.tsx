@@ -128,10 +128,8 @@ export default function ConsultarReclamos() {
 
    const handleAbrirComentarios = async (id: string) => {
     if (id) {
-      /*
       const response = await ReclamoService.obtenerComentarios(id);
       setComentarios(response);
-      */
       setMostrarComentarios(true);
     }
   };
@@ -224,8 +222,9 @@ export default function ConsultarReclamos() {
     setLoading(true);
 
     const filtrosConPaginacion = {
-      usuarioId: usuarioId,
+      clienteId: filtros.clienteId,
       proyectoId: filtros.proyectoId,
+      areaId: filtros.areaId,
       skip: skip,
       take: take,
     };
@@ -312,9 +311,9 @@ export default function ConsultarReclamos() {
     setLoading(true);
 
     const filtrosConPaginacion = {
-      usuarioId: usuarioId,
+      clienteId: filtros.clienteId,
       proyectoId: filtros.proyectoId,
-      //areaId: filtros.areaId,
+      areaId: filtros.areaId,
       skip: skip,
       take: take,
     };
