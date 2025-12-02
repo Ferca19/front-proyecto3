@@ -122,9 +122,7 @@ export default function CambiarEstadoReclamoForm({
                       value: Number(key),
                       label: value,
                     }))}
-                    onChange={(selectedOption) => {
-                      setValue(`estado`, selectedOption ? Number(selectedOption.value) : 0);
-                    }}
+                    onChange={() => {}}
                     className="text-black"
                     menuPortalTarget={document.body}
                     isDisabled= {true}
