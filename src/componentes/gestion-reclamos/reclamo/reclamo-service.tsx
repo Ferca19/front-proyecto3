@@ -76,7 +76,7 @@ const ReclamoService = {
   cambiarPrioridad: async (reclamoId: string, payload:any) => {
     try {
 
-      const { data } = await api.patch(`${apiUrl}/reclamo/prioridad/${reclamoId}`, payload);
+      const { data } = await api.patch(`${apiUrl}/reclamo/${reclamoId}/prioridad`, payload);
       return data;
     } catch (error) {
       console.error("Error al obtener usuario:", error);
@@ -87,7 +87,7 @@ const ReclamoService = {
   cambiarCriticidad: async (reclamoId: string, payload:any) => {
     try {
 
-      const { data } = await api.patch(`${apiUrl}/reclamo/criticidad/${reclamoId}`, payload);
+      const { data } = await api.patch(`${apiUrl}/reclamo/${reclamoId}/criticidad`, payload);
       return data;
     } catch (error) {
       console.error("Error al obtener usuario:", error);
@@ -98,7 +98,7 @@ const ReclamoService = {
   cambiarEstado: async (reclamoId: string, payload:any) => {
     try {
 
-      const { data } = await api.patch(`${apiUrl}/reclamo/estado/${reclamoId}`, payload);
+      const { data } = await api.patch(`${apiUrl}/reclamo/${reclamoId}/estado`, payload);
       return data;
     } catch (error) {
       console.error("Error al obtener usuario:", error);
