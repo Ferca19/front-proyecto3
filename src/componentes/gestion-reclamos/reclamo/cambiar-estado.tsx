@@ -11,7 +11,7 @@ import { parseApiError } from "../../../utils/errores";
 
 interface FormValues{
   estado: number;
-  descripocion?: string | null;
+  descripcion?: string | null;
 }
 
 //===================== schema de validacion ============================================//
@@ -19,7 +19,7 @@ interface FormValues{
 const schema = 
   yup.object().shape({
     estado: yup.number().required("El Estado es obligatoria"),
-    descripocion: yup.string().optional(),
+    descripcion: yup.string().optional(),
   });
 
 
@@ -197,7 +197,7 @@ export default function CambiarEstadoReclamoForm({
               </div>
 
               <div className="flex-1">
-                <FormInput name="descripocion" label={estado === EstadoReclamo.RESUELTO ? "Resolución Final":"Comentario"} />
+                <FormInput name="descripcion" label={estado === EstadoReclamo.RESUELTO ? "Resolución Final":"Descripción"} />
               </div>
 
             </CardContent>

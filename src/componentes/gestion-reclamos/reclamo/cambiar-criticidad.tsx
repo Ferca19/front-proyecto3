@@ -147,7 +147,7 @@ export default function CambiarCriticidadForm({
                 </div>
 
                 <div className="flex-1">
-                  <FormInput name="descripcion" label="Comentario" />
+                  <FormInput name="descripcion" label="Descripción" />
                 </div>
 
             </CardContent>

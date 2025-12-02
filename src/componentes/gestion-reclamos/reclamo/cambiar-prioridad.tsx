@@ -151,7 +151,7 @@ export default function CambiarPrioridadForm({
 
 
                 <div className="flex-1">
-                  <FormInput name="descripcion" label="Comentario" />
+                  <FormInput name="descripcion" label="Descripción" />
                 </div>
 
             </CardContent>
