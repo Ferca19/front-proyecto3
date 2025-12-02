@@ -381,9 +381,9 @@ return (
                               <p className="text-[10px] uppercase tracking-wider font-bold text-slate-400 mb-1">Área</p>
                               <div className="flex items-center gap-1 flex-wrap">
                                 <span className="font-medium text-slate-700">
-                                  {item.areaAnterior.nombre}
+                                  {item.areaAnterior?.nombre}
                                   <ArrowRight size={10} className="text-black" />
-                                  {item.areaNueva.nombre}
+                                  {item.areaNueva?.nombre}
                                 </span>
                               </div>
                             </div>
