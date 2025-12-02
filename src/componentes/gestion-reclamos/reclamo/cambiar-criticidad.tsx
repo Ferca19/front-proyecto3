@@ -36,6 +36,9 @@ export default function CambiarCriticidadForm({
 
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema) as Resolver<FormValues>,
+    defaultValues: {
+      criticidad: reclamo.criticidad,
+    }
   });
 
   const {
