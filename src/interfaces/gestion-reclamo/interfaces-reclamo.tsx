@@ -79,8 +79,8 @@ export const EstadoReclamo = {
 export const EstadoReclamoS: Record<number, string> = {
     1: 'PENDIENTE',
     2: 'ASIGNADO',
-    3: 'EN_ANALISIS',
-    4: 'EN_PROGRESO',
+    3: 'EN ANALISIS',
+    4: 'EN PROGRESO',
     5: 'RESUELTO',
     6: 'CERRADO',
     7: 'CANCELADO',

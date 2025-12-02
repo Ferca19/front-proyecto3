@@ -140,7 +140,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ filters, onFilterChange, onClearF
           />
         </div>
 
-        <div className="flex flex-col w-full mt-7">
+        <div className="flex flex-col w-full mt-1">
           <label className="mb-1 text-sm font-medium text-gray-700">
             Fecha Desde
           </label>
@@ -153,7 +153,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ filters, onFilterChange, onClearF
           />
         </div>
 
-        <div className="flex flex-col w-full mt-7">
+        <div className="flex flex-col w-full mt-1">
           <label className="mb-1 text-sm font-medium text-gray-700">
             Fecha Hasta
           </label>
