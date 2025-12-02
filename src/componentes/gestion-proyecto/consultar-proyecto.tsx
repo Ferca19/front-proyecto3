@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { CreditCard, PlusCircle, Recycle, Search, Trash } from 'lucide-react'
+import { MonitorCog, PlusCircle, Recycle, Search, Trash } from 'lucide-react'
 import { useSesion } from '../herramientas/context/SesionContext';
 import RegistrarActualizarProyectoForm from './registrar-proyecto';
 import { Alertas, TipoAlerta, TituloAlerta, useAlerts } from '../herramientas/alertas/alertas';
@@ -227,13 +227,13 @@ export default function ConsultarProyectos() {
           </div>
         ) : (
             <>
-              <Card className="border-gray-200 dark:border-slate-700">
+              <Card className="bg-transparent border-transparent">
                 <CardHeader className="form-header flex flex-col md:flex-row md:items-center md:justify-between p-4 gap-6">
                   {/* CONTENEDOR IZQUIERDO */}
                   <div className="flex flex-col md:flex-row items-start md:items-center gap-6 w-full">
 
                     <CardTitle className="flex items-center space-x-2">
-                      <CreditCard className="consultar-icon" />
+                      <MonitorCog className="consultar-icon" />
                       <span>Proyectos</span>
                     </CardTitle>
 
@@ -242,7 +242,7 @@ export default function ConsultarProyectos() {
 
                       {/* ESTADO */}
                       <div className="flex flex-col w-full sm:w-[48%] md:w-[200px]">
-                        <label className="mb-1 text-sm font-medium text-gray-700">
+                        <label className="mb-1 text-sm font-medium text-white">
                           Estado
                         </label>
 
@@ -291,7 +291,7 @@ export default function ConsultarProyectos() {
                       {/* CLIENTE */}
                       {rolId === Rol.CLIENTE ? null : (
                       <div className="flex flex-col w-full sm:w-[48%] md:w-[240px]">
-                        <label className="mb-1 text-sm font-medium text-gray-700">
+                        <label className="mb-1 text-sm font-medium text-white">
                           Cliente
                         </label>
 
@@ -339,7 +339,7 @@ export default function ConsultarProyectos() {
                           type="button"
                           variant="outline"
                           size="icon"
-                          className="mt-5 bg-blue-500 text-white hover:bg-gray-700 w-10 h-10 rounded-full shadow-md transition"
+                          className="mt-5 bg-blue-500 text-white hover:bg-gray-700 w-10 h-10 rounded-full border-transparent shadow-md transition"
                           onClick={handleLimpiarFiltros}
                         >
                           <Recycle size={20} />
@@ -354,7 +354,7 @@ export default function ConsultarProyectos() {
                       type="button"
                       variant="outline"
                       size="icon"
-                      className="bg-blue-500 text-white hover:bg-gray-700 w-10 h-10 rounded-full shadow-md transition"
+                      className="bg-blue-500 text-white hover:bg-gray-700 w-10 h-10 rounded-full border-transparent shadow-md transition"
                       onClick={() => handleBuscarProyectos(true)}
                     >
                       <Search size={20} />

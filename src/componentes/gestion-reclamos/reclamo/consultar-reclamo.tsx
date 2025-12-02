@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { PlusCircle, Package, Clock, Eye, MessageCircle, Search, Recycle, ArrowBigRight, Lock, RefreshCcw, X, ArrowUp, Triangle } from "lucide-react";
+import { PlusCircle, Clock, Eye, MessageCircle, Search, Recycle, ArrowBigRight, RefreshCcw, X, ArrowUp, Triangle, MailWarning } from "lucide-react";
 import { Button } from "../../ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/Card";
 import Paginacion from "../../herramientas/reutilizables/paginacion";
@@ -424,18 +424,18 @@ export default function ConsultarReclamos() {
         ) : (
           <>
 
-            <Card className="border-gray-200 dark:border-slate-700">
-              <CardHeader className="form-header  flex flex-col md:flex-row md:items-center md:justify-between p-4 gap-6">
+            <Card className="bg-transparent border-transparent overflow-hidden">
+              <CardHeader className="form-header flex flex-col md:flex-row md:items-center md:justify-between p-4 gap-6">
                 <div className="flex flex-col md:flex-row items-start md:items-center gap-6 w-full">
                   <CardTitle className="flex items-center space-x-2">
-                    <Package className="consultar-icon" />
+                    <MailWarning className="consultar-icon" />
                     <span>Reclamo</span>
                   </CardTitle>
 
                   {/* CLIENTE */}
                   {rolId === Rol.CLIENTE ? null : (
                   <div className="flex flex-col w-full sm:w-[48%] md:w-[240px]">
-                    <label className="mb-1 text-sm font-medium text-gray-700">
+                    <label className="mb-1 text-sm font-medium text-white">
                       Cliente
                     </label>
 
@@ -478,7 +478,7 @@ export default function ConsultarReclamos() {
                   )}
 
                   <div className="flex flex-col w-full sm:w-[48%] md:w-[240px]">
-                    <label className="mb-1 text-sm font-medium text-gray-700">
+                    <label className="mb-1 text-sm font-medium text-white">
                       Proyecto
                     </label>
 
@@ -521,7 +521,7 @@ export default function ConsultarReclamos() {
 
                   {rolId === Rol.ADMINISTRADOR ? (
                   <div className="flex flex-col w-full sm:w-[48%] md:w-[240px]">
-                    <label className="mb-1 text-sm font-medium text-gray-700">
+                    <label className="mb-1 text-sm font-medium text-white">
                       Area
                     </label>
 
@@ -568,7 +568,7 @@ export default function ConsultarReclamos() {
                       type="button"
                       variant="outline"
                       size="icon"
-                      className="mt-5 bg-blue-500 text-white hover:bg-gray-700 w-10 h-10 rounded-full shadow-md transition"
+                      className="mt-5 bg-blue-500 text-white hover:bg-gray-700 w-10 h-10 rounded-full border-transparent shadow-md transition"
                       onClick={handleLimpiarFiltros}
                     >
                       <Recycle size={20} />
@@ -581,7 +581,7 @@ export default function ConsultarReclamos() {
                     type="button"
                     variant="outline"
                     size="icon"
-                    className="bg-blue-500 text-white hover:bg-gray-700 w-10 h-10 rounded-full shadow-md transition"
+                    className="bg-blue-500 text-white hover:bg-gray-700 w-10 h-10 rounded-full border-transparent shadow-md transition"
                     onClick={() => handleBuscarReclamos(true)}
                   >
                     <Search size={20} />

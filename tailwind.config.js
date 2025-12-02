@@ -14,77 +14,92 @@ export default {
         mono: ["Geist Mono", "monospace"],
       },
       colors: {
-        // 🎨 Paleta moderna inspirada en el global.css de Vercel v0
-        background: "oklch(0.98 0.002 264)", // fondo claro gris-azulado
-        foreground: "oklch(0.15 0.01 264)", // texto oscuro
-        card: "oklch(1 0 0)", // blanco puro
-        cardForeground: "oklch(0.15 0.01 264)",
+        // 🎨 Nueva Paleta: Violeta/Indigo Moderno (Aesthetic & Deep)
+        // Se cambió del azul (hue 264) al violeta (hue 285-290) para un look más "tech" y creativo.
+        
+        background: "oklch(0.97 0.01 290)", // Lavanda muy pálido / grisaceo
+        foreground: "oklch(0.14 0.05 285)", // Violeta muy oscuro
+
+        card: "oklch(1 0 0)", 
+        cardForeground: "oklch(0.14 0.05 285)",
+        
         popover: "oklch(1 0 0)",
-        popoverForeground: "oklch(0.15 0.01 264)",
+        popoverForeground: "oklch(0.14 0.05 285)",
 
-        primary: "oklch(0.45 0.18 264)", // azul eléctrico profundo
-        onPrimary: "oklch(0.98 0.002 264)", // texto claro sobre azul
+        primary: "oklch(0.55 0.22 285)", // Violeta Eléctrico
+        onPrimary: "oklch(0.98 0.005 290)",
 
-        secondary: "oklch(0.92 0.01 264)", // gris-azulado suave
-        onSecondary: "oklch(0.15 0.01 264)",
+        secondary: "oklch(0.94 0.03 285)", // Lavanda suave
+        onSecondary: "oklch(0.25 0.1 285)",
 
-        muted: "oklch(0.94 0.01 264)",
-        onMuted: "oklch(0.5 0.02 264)",
+        muted: "oklch(0.96 0.01 285)",
+        onMuted: "oklch(0.5 0.05 285)",
 
-        accent: "oklch(0.92 0.01 264)",
-        onAccent: "oklch(0.15 0.01 264)",
+        accent: "oklch(0.94 0.03 285)",
+        onAccent: "oklch(0.25 0.1 285)",
 
-        destructive: "oklch(0.577 0.245 27.325)", // rojo moderno
-        onDestructive: "oklch(0.98 0.002 264)",
+        destructive: "oklch(0.6 0.2 20)", // Rojo coral
+        onDestructive: "oklch(0.98 0 0)",
 
-        border: "oklch(0.88 0.01 264)",
-        input: "oklch(0.88 0.01 264)",
-        ring: "oklch(0.45 0.18 264)",
+        border: "oklch(0.92 0.02 285)",
+        input: "oklch(0.92 0.02 285)",
+        ring: "oklch(0.55 0.22 285)",
 
-        sidebar: "oklch(0.98 0.002 264)",
-        sidebarForeground: "oklch(0.15 0.01 264)",
-        sidebarPrimary: "oklch(0.45 0.18 264)",
-        sidebarPrimaryForeground: "oklch(0.98 0.002 264)",
-        sidebarAccent: "oklch(0.92 0.01 264)",
-        sidebarAccentForeground: "oklch(0.15 0.01 264)",
-        sidebarBorder: "oklch(0.88 0.01 264)",
-        sidebarRing: "oklch(0.45 0.18 264)",
+        sidebar: "oklch(0.98 0.005 290)",
+        sidebarForeground: "oklch(0.14 0.05 285)",
+        sidebarPrimary: "oklch(0.55 0.22 285)",
+        sidebarPrimaryForeground: "oklch(0.98 0.005 290)",
+        sidebarAccent: "oklch(0.94 0.03 285)",
+        sidebarAccentForeground: "oklch(0.25 0.1 285)",
+        sidebarBorder: "oklch(0.92 0.02 285)",
+        sidebarRing: "oklch(0.55 0.22 285)",
 
         dark: {
-          background: "oklch(0.12 0.02 264)",
-          foreground: "oklch(0.95 0.01 264)",
-          card: "oklch(0.16 0.02 264)",
-          cardForeground: "oklch(0.95 0.01 264)",
-          popover: "oklch(0.16 0.02 264)",
-          popoverForeground: "oklch(0.95 0.01 264)",
-          primary: "oklch(0.6 0.22 264)",
-          onPrimary: "oklch(0.98 0.002 264)",
-          secondary: "oklch(0.22 0.02 264)",
-          onSecondary: "oklch(0.95 0.01 264)",
-          muted: "oklch(0.22 0.02 264)",
-          onMuted: "oklch(0.65 0.02 264)",
-          accent: "oklch(0.22 0.02 264)",
-          onAccent: "oklch(0.95 0.01 264)",
-          destructive: "oklch(0.55 0.25 27)",
-          onDestructive: "oklch(0.98 0.002 264)",
-          border: "oklch(0.24 0.02 264)",
-          input: "oklch(0.24 0.02 264)",
-          ring: "oklch(0.6 0.22 264)",
-          sidebar: "oklch(0.14 0.02 264)",
-          sidebarForeground: "oklch(0.95 0.01 264)",
-          sidebarPrimary: "oklch(0.6 0.22 264)",
-          sidebarPrimaryForeground: "oklch(0.98 0.002 264)",
-          sidebarAccent: "oklch(0.22 0.02 264)",
-          sidebarAccentForeground: "oklch(0.95 0.01 264)",
-          sidebarBorder: "oklch(0.24 0.02 264)",
-          sidebarRing: "oklch(0.6 0.22 264)",
+          background: "oklch(0.15 0.01 260)",         // ≈ #0d1117
+          foreground: "oklch(0.85 0.01 260)",         // ≈ #c9d1d9 (texto principal)
+
+          card: "oklch(0.18 0.01 260)",               // ≈ #161b22
+          cardForeground: "oklch(0.88 0.01 260)",
+
+          popover: "oklch(0.18 0.01 260)", 
+          popoverForeground: "oklch(0.88 0.01 260)",
+
+          primary: "oklch(0.62 0.12 255)",            // Azul GitHub ≈ #2f81f7
+          onPrimary: "oklch(0.98 0.01 260)",
+
+          secondary: "oklch(0.32 0.02 260)",          // ≈ #30363d
+          onSecondary: "oklch(0.85 0.02 260)",
+
+          muted: "oklch(0.32 0.015 260)",             // ≈ #30363d
+          onMuted: "oklch(0.70 0.015 260)",           // ≈ #8b949e
+
+          accent: "oklch(0.32 0.02 260)",             
+          onAccent: "oklch(0.85 0.02 260)",
+
+          destructive: "oklch(0.55 0.25 27)",         // rojo moderno GitHub-ish
+          onDestructive: "oklch(0.98 0.01 260)",
+
+          border: "oklch(0.34 0.015 260)",            // ≈ GitHub border
+          input: "oklch(0.34 0.015 260)",
+
+          ring: "oklch(0.62 0.12 255)",               // igual que primary
         },
       },
       borderRadius: {
-        sm: "calc(0.75rem - 4px)",
+        sm: "calc(0.5rem - 2px)",
         md: "calc(0.75rem - 2px)",
-        lg: "0.75rem",
-        xl: "calc(0.75rem + 4px)",
+        lg: "1rem",     // Más redondeado
+        xl: "1.5rem",   // Aún más redondeado para tarjetas grandes
+        "2xl": "2rem",
+      },
+      animation: {
+        "fade-in-up": "fadeInUp 0.8s ease-out forwards",
+      },
+      keyframes: {
+        fadeInUp: {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
       },
     },
   },
@@ -109,23 +124,46 @@ export default {
       addComponents({
         // 🌟 Botones
         ".btn": {
-          width: "20rem",
-          paddingTop: "0.75rem",
-          paddingBottom: "0.75rem",
-          borderRadius: "0.5rem",
+          width: "100%", // Cambiado a 100% por defecto para mejor respuesta en móviles
+          padding: "0.75rem 1.5rem",
+          borderRadius: "1rem", // Border radius actualizado
           transitionProperty: "all",
-          transitionDuration: "200ms",
-          fontWeight: "500",
+          transitionDuration: "300ms", // Transición un poco más suave
+          fontWeight: "600",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          cursor: "pointer",
+          letterSpacing: "0.025em",
         },
         ".btn-primary": {
-          backgroundColor: "oklch(0.45 0.18 264)",
-          color: "oklch(0.98 0.002 264)",
+          backgroundColor: "theme('colors.primary')",
+          color: "theme('colors.onPrimary')",
+          boxShadow: "0 4px 14px 0 rgba(124, 58, 237, 0.3)", // Sombra coloreada (violeta)
           "&:hover": {
-            backgroundColor: "oklch(0.6 0.22 264)", // azul más brillante en hover
+            transform: "translateY(-1px)",
+            boxShadow: "0 6px 20px 0 rgba(124, 58, 237, 0.45)",
+            filter: "brightness(1.1)",
           },
+          "&:active": {
+             transform: "translateY(0px)",
+          }
+        },
+        ".btn-secondary": {
+          backgroundColor: "theme('colors.secondary')",
+          color: "theme('colors.onSecondary')",
+          "&:hover": {
+            backgroundColor: "theme('colors.muted')", // Un poco más oscuro
+          },
+        },
+        // 🧾 Formularios / Headers Modernizados
+        ".form-header": {
+          // Gradiente Violeta a Azul Profundo
+          backgroundImage: "linear-gradient(135deg, theme('colors.primary'), oklch(0.4 0.15 270))",
+          color: "theme('colors.onPrimary')",
+          padding: "1.5rem",
+          borderTopLeftRadius: "1.5rem",
+          borderTopRightRadius: "1.5rem",
         },
         ".btn-dark": {
           backgroundColor: "oklch(0.45 0.18 264)",
@@ -134,27 +172,12 @@ export default {
             backgroundColor: "oklch(0.6 0.22 264)", // azul más brillante en hover
           },
         },
-        ".btn-secondary": {
-          backgroundColor: "oklch(0.92 0.01 264)",
-          color: "oklch(0.15 0.01 264)",
-          "&:hover": {
-            backgroundColor: "oklch(0.88 0.01 264)",
-          },
-        },
         ".btn-destructive": {
           backgroundColor: "oklch(0.577 0.245 27.325)",
           color: "oklch(0.98 0.002 264)",
           "&:hover": {
             backgroundColor: "oklch(0.55 0.25 27)",
           },
-        },
-        // 🧾 Formularios / Headers
-        ".form-header": {
-          backgroundImage: "linear-gradient(to right, oklch(0.6 0.22 264), oklch(0.25 0.18 264))",
-          color: "oklch(0.98 0.002 264)",
-          padding: "0.75rem",
-          borderTopLeftRadius: "0.60rem",
-          borderTopRightRadius: "0.60rem",
         },
         ".form-title": {
           fontSize: "1.5rem",

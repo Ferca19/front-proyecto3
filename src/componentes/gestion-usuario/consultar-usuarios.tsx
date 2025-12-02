@@ -191,7 +191,7 @@ export default function ConsultarUsuarios() {
           </div>
         ) : (
           <>
-            <Card className="border-gray-200 dark:border-slate-700">
+            <Card className="bg-transparent border-transparent ">
               <CardHeader className="form-header flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4">
                 <div className="flex flex-col md:flex-row flex-wrap gap-4 w-full">
 
@@ -264,7 +264,7 @@ export default function ConsultarUsuarios() {
                     type="button"
                     variant="outline"
                     size="icon"
-                    className="bg-blue-500 text-white hover:bg-gray-700 w-10 h-10 rounded-full shadow-md transition"
+                    className="bg-blue-500 text-white hover:bg-gray-700 w-10 h-10 border-transparent rounded-full shadow-md transition"
                     onClick={() => handleBuscarUsuarios(true)}
                   >
                     <Search size={20} />

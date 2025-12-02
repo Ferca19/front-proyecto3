@@ -2,8 +2,9 @@ import { useState } from "react";
 import {
   Users,
   ChevronDown,
-  ShoppingCart,
-  Receipt,
+  MonitorCog,
+  MailWarning,
+  ChartColumnIncreasing,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "../utils/Utils";
@@ -30,18 +31,18 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   {
-    icon: ShoppingCart,
+    icon: MonitorCog,
     label: "Gestión Proyectos",
     path: "",
     subMenu: [
-      { icon: Receipt, label: "Proyectos", path: "proyectos" },
+      { icon: MonitorCog, label: "Proyectos", path: "proyectos" },
     ],
   },
   {
-    icon: Users,
+    icon: MailWarning,
     label: "Gestión Reclamos",
     path: "",
-    subMenu: [{ icon: Users, label: "Reclamos", path: "reclamos" }],
+    subMenu: [{ icon: MailWarning, label: "Reclamos", path: "reclamos" }],
   },
   {
     icon: Users,
@@ -50,28 +51,28 @@ const menuItems: MenuItem[] = [
     subMenu: [{ icon: Users, label: "Usuarios", path: "usuarios" }],
   },
   {
-    icon: Users,
+    icon: ChartColumnIncreasing,
     label: "Gestión Estadísticas",
     path: "",
-    subMenu: [{ icon: Users, label: "Estadísticas", path: "estadisticas" }],
+    subMenu: [{ icon: ChartColumnIncreasing, label: "Estadísticas", path: "estadisticas" }],
   },
 
 ];
 
 const menuItemsCliente: MenuItem[] = [
   {
-    icon: ShoppingCart,
+    icon: MonitorCog,
     label: "Gestión Proyectos",
     path: "",
     subMenu: [
-      { icon: Receipt, label: "Proyectos", path: "proyectos" },
+      { icon: MonitorCog, label: "Proyectos", path: "proyectos" },
     ],
   },
   {
-    icon: Users,
+    icon: MailWarning,
     label: "Gestión Reclamos",
     path: "",
-    subMenu: [{ icon: Users, label: "Reclamos", path: "reclamos" }],
+    subMenu: [{ icon: MailWarning, label: "Reclamos", path: "reclamos" }],
   },
 ];
 
@@ -79,18 +80,18 @@ const menuItemsCliente: MenuItem[] = [
 
 const menuItemsEmpleado: MenuItem[] = [
   {
-    icon: ShoppingCart,
+    icon: MonitorCog,
     label: "Gestión Proyectos",
     path: "",
     subMenu: [
-      { icon: Receipt, label: "Proyectos", path: "proyectos" },
+      { icon: MonitorCog, label: "Proyectos", path: "proyectos" },
     ],
   },
   {
-    icon: Users,
+    icon: MailWarning,
     label: "Gestión Reclamos",
     path: "",
-    subMenu: [{ icon: Users, label: "Reclamos", path: "reclamos" }],
+    subMenu: [{ icon: MailWarning, label: "Reclamos", path: "reclamos" }],
   },
 ];
 
@@ -139,11 +140,11 @@ export function SidebarMenus({ isOpen, onClose, onOpen }: SidebarProps) {
             className={cn(
               "flex items-center justify-between w-full px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 group bg-sidebarAccent dark:bg-dark-sidebarAccent hover:bg-sidebarAccent hover:text-sidebarAccentForeground dark:hover:bg-dark-sidebarAccent dark:hover:text-dark-sidebarAccentForeground",
               level === 0
-                ? "text-black dark:text-white bg-blue-200 hover:bg-blue-500 hover:text-white hover:shadow-md dark:hover:bg-blue-500"
+                ? "text-black bg-gradient-to-br from-blue-200 to-purple-200 hover:bg-blue-500 hover:shadow-md dark:hover:bg-blue-500"
                 : level === 1
-                  ? "bg-blue-200 text-black hover:bg-blue-500 hover:text-white dark:hover:bg-blue-500 dark:text-white"
+                  ? "bg-gradient-to-br from-blue-200 to-purple-200 text-black"
                   : "bg-blue-200 text-black hover:bg-blue-500 hover:text-black dark:hover:bg-blue-500 dark:text-white",
-              isOpen && item.subMenu ? "bg-blue-500 text-white hover:text-white dark:bg-blue-500" : "",
+              isOpen && item.subMenu ? "bg-gradient-to-br from-blue-400 to-purple-400 text-white hover:text-white" : "",
             )}
           >
             <div className="flex items-center gap-3">
@@ -152,7 +153,7 @@ export function SidebarMenus({ isOpen, onClose, onOpen }: SidebarProps) {
                   "h-5 w-5 transition-colors",
                   level === 0 ? 
                   isOpen && item.subMenu ?
-                  "text-white dark:text-dark-white" : "text-primary dark:text-dark-primary group-hover:text-white dark:group-hover:text-white"
+                  "text-white " : "text-primary"
                   : "text-current",
                 )}
               />
@@ -230,9 +231,9 @@ export function SidebarMenus({ isOpen, onClose, onOpen }: SidebarProps) {
             className="fixed inset-y-0 left-0 z-40 w-80 md:z-auto"
           >
             {/* Estructura de la sidebar con altura completa - CLAVE: usar flex flex-col */}
-            <div className="h-full bg-sidebar dark:bg-dark-sidebar text-sidebarForeground dark:text-dark-sidebarForeground border-r border-sidebarBorder dark:border-dark-sidebarBorder shadow-lg flex flex-col transition-colors duration-300">
+            <div className="h-full bg-white dark:bg-gradient-to-br from-gray-900 to-blue-900 text-sidebarForeground dark:text-dark-sidebarForeground border-r border-sidebarBorder dark:border-blue-500 shadow-lg flex flex-col transition-colors duration-300">
               {/* Header fijo (opcional) */}
-              <div className="flex-shrink-0 p-4 border-b border-sidebarBorder dark:border-dark-sidebarBorder bg-sidebarAccent/50 dark:bg-dark-sidebarAccent/20 backdrop-blur-sm">
+              <div className="flex-shrink-0 p-4 border-b border-sidebarBorder dark:border-blue-500 bg-sidebarAccent/50 dark:bg-dark-sidebarAccent/20 backdrop-blur-sm">
                 <div className="flex items-center space-x-2">
                   <h2 className="text-xl font-semibold text-foreground dark:text-dark-foreground tracking-tight">Menús</h2>
                 </div>

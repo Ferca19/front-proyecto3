@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Calendar, Filter, Search, X } from 'lucide-react';
+import { Filter, Search, X } from 'lucide-react';
 import Select from "react-select";
 import EstadisticasService from './estadisticas-service';
 import type { SelectCliente } from '../../interfaces/generales/interfaces-generales';
@@ -141,25 +141,23 @@ const FilterBar: React.FC<FilterBarProps> = ({ filters, onFilterChange, onClearF
         </div>
 
         <div className="flex flex-col w-full mt-7">
-            <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <Input
-            type="date"
-            name="fechaInicio"
-            className="pl-10 bg-white border-gray-300 text-black focus:border-blue-500 focus:ring-blue-500" 
-            value={filters.fechaInicio}
-            onChange={(e) => handleChange('fechaInicio', e.target.value)}
-            />
+          <Input
+          type="date"
+          name="fechaInicio"
+          className="pl-10 bg-white border-gray-300 text-black focus:border-blue-500 focus:ring-blue-500" 
+          value={filters.fechaInicio}
+          onChange={(e) => handleChange('fechaInicio', e.target.value)}
+          />
         </div>
 
         <div className="flex flex-col w-full mt-7">
-            <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <Input
-            type="date"
-            name="fechaFin"
-            className="pl-10 bg-white border-gray-300 text-black focus:border-blue-500 focus:ring-blue-500"
-            value={filters.fechaFin}
-            onChange={(e) => handleChange('fechaFin', e.target.value)}
-            />
+          <Input
+          type="date"
+          name="fechaFin"
+          className="pl-10 bg-white border-gray-300 text-black focus:border-blue-500 focus:ring-blue-500"
+          value={filters.fechaFin}
+          onChange={(e) => handleChange('fechaFin', e.target.value)}
+          />
         </div>
     
 

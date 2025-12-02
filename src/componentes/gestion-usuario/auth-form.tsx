@@ -106,7 +106,7 @@ export default function AuthForm({ onClose, onSuccess }: { onClose?: () => void;
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-principal hover:bg-overPrincipal text-white text-sm py-2.5 rounded-lg font-medium transition-colors"
+            className="w-full btn-primary hover:bg-overPrincipal text-white text-sm py-2.5 rounded-lg font-medium transition-colors"
           >
             {isSubmitting ? "Verificando..." : "Iniciar Sesión"}
           </Button>

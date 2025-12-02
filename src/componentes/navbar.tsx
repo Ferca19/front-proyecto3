@@ -1,4 +1,4 @@
-import { User, Sun, Moon } from "lucide-react";
+import { User, Sun, Moon, LogOut } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/DropDownMenu";
 import { Button } from "./ui/Button";
 import { cn } from "../utils/Utils";
@@ -17,7 +17,7 @@ function ThemeToggleButton() {
       variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      className="h-10 w-10 bg-blue-500 rounded-lg transition-all duration-200 hover:bg-blue-900 hover:scale-105 text-white border border-white/20 hover:border-white/40"
+      className="h-10 w-10 rounded-xl bg-primary text-dark-foreground  hover:bg-primary transition-all duration-300 border border-transparent"
     >
       {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
     </Button>
@@ -43,21 +43,21 @@ function ThemeToggleButton() {
         <Button
           variant="ghost"
           size="icon"
-          className="h-10 w-10 bg-blue-500 rounded-lg transition-all duration-200 hover:bg-blue-900 hover:scale-105 text-white border border-white/20 hover:border-white/40"
+          className="h-10 w-10 rounded-xl bg-primary text-onPrimary shadow-lg shadow-primary/25 hover:bg-primary/90 hover:scale-105 transition-all duration-300 border border-white/10"
         >
           <User className="h-5 w-5" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className="w-56 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-lg rounded-lg mt-2"
+        className="w-56 p-1.5 bg-popover/95 backdrop-blur-md border border-border text-popover-foreground shadow-xl rounded-2xl mt-2 animate-in fade-in zoom-in-95 duration-200"
       >
         <DropdownMenuItem
-          className="hover:bg-slate-100 text-white dark:hover:bg-slate-700 transition-colors cursor-pointer rounded-md mx-1 my-1"
+          className="flex items-center gap-2 p-2.5 rounded-xl hover:bg-destructive/10 hover:text-destructive focus:bg-destructive/10 focus:text-destructive transition-colors cursor-pointer font-medium"
           onClick={handleLogout}
         >
-          <User className="h-4 w-4 mr-2 text-white" />
-          Cerrar sesión
+          <LogOut className="h-4 w-4" />
+          <span>Cerrar sesión</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -71,6 +71,7 @@ interface NavbarProps {
 
 export function Navbar({ className }: NavbarProps) {
   const [userEmail, setUserEmail] = useState("");
+  const [rol, setRol] = useState("");
   const { sesion } = useSesion();
   const usuarioId = sesion.usuarioId
 
@@ -78,8 +79,9 @@ export function Navbar({ className }: NavbarProps) {
     const fetchUserData = async () => {
 
       try {
-        const userResponse = await api.get(`${axiosConfig.apiUrl}/usuario/${usuarioId}`);
-        setUserEmail(userResponse.data.mail);
+        const { data } = await api.get(`${axiosConfig.apiUrl}/usuario/${usuarioId}`);
+        setUserEmail(data.email);
+        setRol(data.rol.nombre);
       } catch (error) {
         console.error("Error al obtener datos del usuario o empresa", error);
       }
@@ -91,46 +93,48 @@ export function Navbar({ className }: NavbarProps) {
 
 
   return (
-    <header className={cn("bg-blue-300 dark:bg-dark-sidebar text-sidebarForeground dark:text-dark-sidebarForeground sticky top-0 z-50 shadow-lg border-b border-sidebarBorder dark:border-dark-sidebarBorder", className)}>
-      <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-2">
+    <header className={cn("bg-white dark:bg-gradient-to-br from-gray-900 to-blue-900 backdrop-blur-xl border-b border-border dark:border-blue-500 sticky top-0 z-50 transition-colors duration-300", className)}>
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-3">
         <div className="flex items-center justify-between gap-2 sm:gap-4">
 
-          <div className="flex items-center space-x-2 flex-shrink-0">
-            <div className="hidden sm:inline">
-              <h1 className="text-blue-600 dark:text-blue-500 text-sm sm:text-base md:text-lg font-bold leading-tight">Grupo 5</h1>
-              <p className="text-xs text-black dark:text-blue-400 leading-tight">Sistema de Reclamos</p>
+          {/* Logo / Brand */}
+          <div className="flex items-center gap-3 flex-shrink-0">
+             <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-primary/10 text-primary font-bold text-sm border border-primary/20">
+                5
+             </div>
+            <div className="hidden sm:block">
+              <h1 className="text-foreground dark:text-dark-foreground  text-sm sm:text-base font-bold leading-none tracking-tight">Grupo 5</h1>
+              <p className="text-xs text-muted-foreground dark:text-dark-foreground  font-medium leading-none mt-1">Sistema de Reclamos</p>
             </div>
           </div>
 
+          {/* Center Info (Desktop) */}
           <div className="flex-1 flex items-center justify-center gap-2 sm:gap-4 md:gap-6 min-w-0">
-            <div className="hidden md:block w-px h-10 bg-black dark:bg-blue-700 flex-shrink-0" />
+            <div className="hidden md:block w-px h-8 bg-border flex-shrink-0" />
 
-            <div className="hidden sm:block flex-shrink-0">
-              <div className="text-xs sm:text-sm">
-                <p className="text-black dark:text-blue-400 text-xs truncate max-w-[120px] sm:max-w-[150px] md:max-w-none">
-                  {userEmail}
+            <div className="hidden sm:block flex-shrink-0 text-center">
+                <p className="text-sm font-medium text-foreground dark:text-dark-foreground truncate max-w-[150px] md:max-w-none">
+                  {userEmail || "Cargando..."}
                 </p>
-              </div>
+                {rol && <p className="text-xs text-primary font-medium">{rol}</p>}
             </div>
 
-            <div className="hidden md:block w-px h-10 bg-black dark:bg-blue-700 flex-shrink-0" />
-
+            <div className="hidden md:block w-px h-8 bg-border flex-shrink-0" />
           </div>
 
-          <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
-            <div className="scale-75 sm:scale-90 md:scale-100">
-              <ThemeToggleButton />
-            </div>
-            <div className="scale-75 sm:scale-90 md:scale-100">
-              <ProfileButton />
-            </div>
+          {/* Right Actions */}
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <ThemeToggleButton />
+            <ProfileButton />
           </div>
         </div>
 
-        <div className="sm:hidden mt-2 pt-2 border-t border-slate-700">
-          <div className="flex items-center justify-between text-xs">
-            <div className="flex-1 min-w-0">
-              <p className="text-black dark:text-blue-400 truncate">{userEmail}</p>            
+        {/* Mobile Info Bar */}
+        <div className="sm:hidden mt-3 pt-3 border-t border-border">
+          <div className="flex items-center justify-between text-xs px-1">
+            <div className="flex flex-col min-w-0">
+              <p className="font-medium text-foreground truncate">{userEmail || "Usuario"}</p>
+              <p className="text-primary truncate opacity-80">{rol}</p>
             </div>
           </div>
         </div>

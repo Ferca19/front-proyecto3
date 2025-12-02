@@ -36,7 +36,7 @@ const AdministracionPage: React.FC<AdministracionPageProps> = () => {
             ${sidebarMenusOpen ? "md:ml-80" : ""}
           `}
             >
-              <div className="bg-gray-200 p-4 md:p-0 rounded-lg shadow-md dark:bg-gray-900 dark:text-white transition-all duration-300 ease-in-out h-full">
+              <div className="bg-gray-300 p-4 md:p-0 rounded-lg shadow-md dark:bg-gray-900 dark:text-white transition-all duration-300 ease-in-out h-full">
                 <Outlet />
               </div>
             </main>
