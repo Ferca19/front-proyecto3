@@ -150,6 +150,26 @@ export default function ConsultarProyectos() {
     setEntidadesTotales(proyectosFiltrados.total);
   };
 
+  const handleBuscarRapido = async (estado:number) => {
+
+    setLoading(true)
+
+    const filtrosConPaginacion = {
+      clienteId: filtros.clienteId,
+      estado: estado,
+      skip: skip,
+      take: take,
+    };
+
+    let proyectosFiltrados = { data: [] as ConsultarProyecto[], total: 0 };
+
+    proyectosFiltrados = await ProyectoService.obtener(filtrosConPaginacion);
+
+    setLoading(false)
+    setProyectos(proyectosFiltrados.data);
+    setEntidadesTotales(proyectosFiltrados.total);
+  };
+
 
 
     // MANEJO DE PAGINACION ===========================================
@@ -265,6 +285,9 @@ export default function ConsultarProyectos() {
                           }))}
                           onChange={(selectedOption) => {
                             setFiltros({ ...filtros, estado: Number(selectedOption?.value) })
+                            if (rolId === Rol.CLIENTE) {
+                              handleBuscarRapido(Number(selectedOption?.value))
+                            }
                           }}
                           className="text-black"
                           menuPortalTarget={document.body}
