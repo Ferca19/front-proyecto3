@@ -46,7 +46,9 @@ export default function ConsultarProyectos() {
       const response = await ProyectoService.obtenerTotales({}, "clientes");
       setClientes(response);
     };
-    fetchClientes();
+    if (rolId !== Rol.CLIENTE) { 
+      fetchClientes();
+    }
   }, []);
 
 

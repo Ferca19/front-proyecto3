@@ -669,7 +669,7 @@ export default function ConsultarReclamos() {
                             size="sm"
                             onClick={() => handleAbrirAsignarReclamo(row.id)}
                             className="bg-blue-500 text-white hover:bg-blue-800 w-8 h-8 flex items-center justify-center"
-                            disabled={!(row.estado === EstadoReclamo.ASIGNADO || row.estado === EstadoReclamo.EN_ANALISIS)}
+                            disabled={!(row.estado === EstadoReclamo.ASIGNADO || row.estado === EstadoReclamo.EN_ANALISIS || row.estado === EstadoReclamo.PENDIENTE)}
                             title="Asignar Area"
                           >
                             <ArrowBigRight size={18} />
