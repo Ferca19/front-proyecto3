@@ -19,4 +19,5 @@ export const RolS = {
 export interface SelectCliente {
   id: string;
   nombre: string;
+  apellido: string;
 }

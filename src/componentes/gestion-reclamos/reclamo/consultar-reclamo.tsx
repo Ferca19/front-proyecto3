@@ -459,7 +459,7 @@ export default function ConsultarReclamos() {
                           : null
                       }
                       options={clientes}
-                      getOptionLabel={(option) => option.nombre}
+                      getOptionLabel={(option) => option.nombre + option.apellido}
                       getOptionValue={(option) => String(option.id)}
                       onChange={(selectedOption) => {
                         setFiltros({
@@ -510,8 +510,9 @@ export default function ConsultarReclamos() {
                           ...filtros,
                           proyectoId
                         });
-                        // Only call quick search with a safe string (can be empty)
-                        handleBuscarRapido(proyectoId);
+                        if (rolId === Rol.CLIENTE) { 
+                          handleBuscarRapido(proyectoId);
+                        }
                       }}
                       placeholder="Seleccione"
                       className="text-black"
