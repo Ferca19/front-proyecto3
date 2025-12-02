@@ -18,7 +18,7 @@ const MessageBubble: React.FC<ChatMessageProps> = ({ comentario, user, isCurrent
         {/* User Name (only for others) */}
         {!isCurrentUser && user && (
           <p className="text-xs text-gray-500 ml-1 mb-1 font-medium">
-            {user.nombre} <span className="text-gray-400 font-normal">• {user.rol.nombre}</span>
+            {user.nombre} <span className="text-gray-400 font-normal">• {user.rol?.nombre}</span>
           </p>
         )}
 

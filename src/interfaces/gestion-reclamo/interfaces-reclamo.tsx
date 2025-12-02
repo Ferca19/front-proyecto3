@@ -137,7 +137,7 @@ export const PrioridadReclamoS: Record<number, string> = {
 
 
 export interface Comentario {
-  _id: string;
+  id: string;
   contenido: string;
   reclamoId: string;
   usuario: Usuario;

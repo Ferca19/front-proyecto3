@@ -129,7 +129,7 @@ export default function ComentariosForm({
             {/* Burbujas */}
             {groupedMessages[dateLabel].map((comentario) => (
               <MessageBubble
-                key={comentario._id}
+                key={comentario.id}
                 comentario={comentario}
                 user={comentario.usuario}
                 isCurrentUser={comentario.usuario.id === usuarioId}
