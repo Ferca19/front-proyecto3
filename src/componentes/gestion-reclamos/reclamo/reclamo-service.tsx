@@ -54,7 +54,7 @@ const ReclamoService = {
   asignar: async (reclamoId: string, payload:any) => {
     try {
 
-      const { data } = await api.get(`${apiUrl}/reclamo/${reclamoId}/asignar`, payload);
+      const { data } = await api.patch(`${apiUrl}/reclamo/${reclamoId}/asignar`, payload);
       return data;
     } catch (error) {
       console.error("Error al obtener usuario:", error);
@@ -65,7 +65,7 @@ const ReclamoService = {
   cancelar: async (reclamoId: string) => {
     try {
 
-      const { data } = await api.post(`${apiUrl}/reclamo/${reclamoId}/cancelar`);
+      const { data } = await api.patch(`${apiUrl}/reclamo/cancelar/${reclamoId}`);
       return data;
     } catch (error) {
       console.error("Error al cancelar reclamo:", error);
