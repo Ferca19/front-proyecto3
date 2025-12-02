@@ -50,6 +50,7 @@ export default function ComentariosForm({
 
   const handleBuscarComentarios = async () => {
     const respuesta = await ReclamoService.obtenerComentarios(reclamoId);
+    setInputText("")
     setComentariosTraidos(respuesta);
   }
 
@@ -57,7 +58,7 @@ export default function ComentariosForm({
 
 
 
-    const { sesion } = useSesion();
+  const { sesion } = useSesion();
   const usuarioId = sesion.usuarioId;
 
 
@@ -88,7 +89,6 @@ export default function ComentariosForm({
     };
     
     await ReclamoService.crearComentario(payload)
-    setInputText("");
     handleBuscarComentarios();
   };
 
