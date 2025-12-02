@@ -1,7 +1,7 @@
 
 import { Calendar, ArrowRight, UserPlus, X, CheckCircle2, RefreshCw, FilePlus, UserCheck, Flag, Flame, MessageSquare, Paperclip, Star, XCircle } from "lucide-react";
 
-import { EstadoReclamo, PrioridadReclamo, TipoEventoHistorial, type HistorialReclamo } from "../../../interfaces/gestion-reclamo/interfaces-reclamo";
+import { CriticidadReclamo, EstadoReclamo, PrioridadReclamo, TipoEventoHistorial, type HistorialReclamo } from "../../../interfaces/gestion-reclamo/interfaces-reclamo";
 import { Badge } from "../../ui/Badge";
 import { useEffect, useRef } from "react";
 
@@ -88,6 +88,41 @@ export const getPriorityConfig = (priority: number): StatusConfig => {
     case PrioridadReclamo.URGENTE: // URGENTE
       return { 
         label: "Urgente", 
+        color: "bg-red-50 text-red-700 border-red-300" 
+      };
+
+    default:
+      return { 
+        label: "-", 
+        color: "bg-gray-50 text-gray-400 border-gray-200" 
+      };
+  }
+};
+
+export const getCriticidadConfig = (criticidad: number): StatusConfig => {
+  switch (criticidad) {
+
+    case CriticidadReclamo.BAJA: // BAJA
+      return { 
+        label: "Baja", 
+        color: "bg-slate-100 text-slate-600 border-slate-200" 
+      };
+
+    case CriticidadReclamo.MEDIA: // MEDIA
+      return { 
+        label: "Media", 
+        color: "bg-yellow-50 text-yellow-600 border-yellow-200" 
+      };
+
+    case CriticidadReclamo.ALTA: // ALTA
+      return { 
+        label: "Alta", 
+        color: "bg-orange-50 text-orange-600 border-orange-200" 
+      };
+
+    case CriticidadReclamo.CRITICA: // CRITICA
+      return { 
+        label: "Critica", 
         color: "bg-red-50 text-red-700 border-red-300" 
       };
 
@@ -312,7 +347,7 @@ return (
 
                       {/* Priority/Criticality Changes */}
                       {(item.prioridadAnterior !== item.prioridadNueva || item.criticidadAnterior !== item.criticidadNueva) && (
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="grid grid-cols-1 gap-2">
                           {item.prioridadAnterior !== item.prioridadNueva && (
                              <div className="bg-slate-50 rounded p-2 border border-slate-100">
                               <p className="text-[10px] uppercase tracking-wider font-bold text-slate-400 mb-1">Prioridad</p>
@@ -331,9 +366,13 @@ return (
                              <div className="bg-slate-50 rounded p-2 border border-slate-100">
                               <p className="text-[10px] uppercase tracking-wider font-bold text-slate-400 mb-1">Criticidad</p>
                               <div className="flex items-center gap-1 flex-wrap">
-                                <span className="text-xs text-slate-500">{item.criticidadAnterior}</span>
+                                <Badge className={getCriticidadConfig(item.criticidadAnterior).color}>
+                                  {getCriticidadConfig(item.criticidadAnterior).label}
+                                </Badge>
                                 <ArrowRight size={10} className="text-black" />
-                                <span className="text-xs font-semibold text-slate-700">{item.criticidadNueva}</span>
+                                <Badge className={getCriticidadConfig(item.criticidadNueva).color}>
+                                  {getCriticidadConfig(item.criticidadNueva).label}
+                                </Badge>
                               </div>
                             </div>
                           )}
