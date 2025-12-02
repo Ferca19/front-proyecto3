@@ -116,7 +116,7 @@ export default function CambiarEstadoReclamoForm({
                           value: Number(key),
                           label: value // or provide a more user-friendly label if needed
                         }))
-                        .find((option) => Number(option.value) === estado) || null
+                        .find((option) => Number(option.value) === reclamo.estado) || null
                     }
                     options={Object.entries(EstadoReclamoS).map(([key, value]) => ({
                       value: Number(key),
@@ -158,7 +158,7 @@ export default function CambiarEstadoReclamoForm({
                           value: Number(key),
                           label: value // or provide a more user-friendly label if needed
                         }))
-                        .find((option) => Number(option.value) === (estado+1)) || null
+                        .find((option) => Number(option.value) === (reclamo.estado+1)) || null
                     }
                     options={Object.entries(EstadoReclamoS).map(([key, value]) => ({
                       value: Number(key),
