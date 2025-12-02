@@ -141,6 +141,9 @@ const FilterBar: React.FC<FilterBarProps> = ({ filters, onFilterChange, onClearF
         </div>
 
         <div className="flex flex-col w-full mt-7">
+          <label className="mb-1 text-sm font-medium text-gray-700">
+            Fecha Desde
+          </label>
           <Input
           type="date"
           name="fechaInicio"
@@ -151,6 +154,9 @@ const FilterBar: React.FC<FilterBarProps> = ({ filters, onFilterChange, onClearF
         </div>
 
         <div className="flex flex-col w-full mt-7">
+          <label className="mb-1 text-sm font-medium text-gray-700">
+            Fecha Hasta
+          </label>
           <Input
           type="date"
           name="fechaFin"
