@@ -11,7 +11,7 @@ import { parseApiError } from "../../../utils/errores";
 
 interface FormValues{
   criticidad: number;
-  comentario?: string | null;
+  descripcion?: string | null;
 }
 
 //===================== schema de validacion ============================================//
@@ -19,7 +19,7 @@ interface FormValues{
 const schema = 
   yup.object().shape({
     criticidad: yup.number().required("La Criticidad es obligatoria"),
-    comentario: yup.string().optional(),
+    descripcion: yup.string().optional(),
   });
 
 
@@ -147,7 +147,7 @@ export default function CambiarCriticidadForm({
                 </div>
 
                 <div className="flex-1">
-                  <FormInput name="comentario" label="Comentario" />
+                  <FormInput name="descripcion" label="Comentario" />
                 </div>
 
             </CardContent>

@@ -11,7 +11,7 @@ import { parseApiError } from "../../../utils/errores";
 
 interface FormValues{
   prioridad: number;
-  comentario?: string | null;
+  descripcion?: string | null;
 }
 
 //===================== schema de validacion ============================================//
@@ -19,7 +19,7 @@ interface FormValues{
 const schema = 
   yup.object().shape({
     prioridad: yup.number().required("La Prioridad es obligatoria"),
-    comentario: yup.string().optional(),
+    descripcion: yup.string().optional(),
   });
 
 
@@ -151,7 +151,7 @@ export default function CambiarPrioridadForm({
 
 
                 <div className="flex-1">
-                  <FormInput name="comentario" label="Comentario" />
+                  <FormInput name="descripcion" label="Comentario" />
                 </div>
 
             </CardContent>
