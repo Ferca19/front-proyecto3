@@ -76,7 +76,7 @@ const ReclamoService = {
   cambiarPrioridad: async (reclamoId: string, payload:any) => {
     try {
 
-      const { data } = await api.get(`${apiUrl}/reclamo/cambiar-prioridad-criticidad/${reclamoId}`, payload);
+      const { data } = await api.get(`${apiUrl}/reclamo/cambiar-prioridad/${reclamoId}`, payload);
       return data;
     } catch (error) {
       console.error("Error al obtener usuario:", error);
