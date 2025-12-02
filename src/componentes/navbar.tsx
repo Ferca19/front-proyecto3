@@ -84,6 +84,8 @@ export function Navbar({ className }: NavbarProps) {
         setUserEmail(data.email);
         setRol(data.rol.nombre);
         setArea(data.area.nombre);
+
+        console.log("Usuario en Navbar:", userEmail, rol, area);
       } catch (error) {
         console.error("Error al obtener datos del usuario o empresa", error);
       }
@@ -91,6 +93,7 @@ export function Navbar({ className }: NavbarProps) {
 
     fetchUserData();
   }, []);
+
 
 
 
@@ -118,7 +121,7 @@ export function Navbar({ className }: NavbarProps) {
                 <p className="text-sm font-medium text-foreground dark:text-dark-foreground truncate max-w-[150px] md:max-w-none">
                   {userEmail || "Cargando..."}
                 </p>
-                {rol && <p className="text-xs text-primary font-medium">{rol}</p>}
+                {rol && <p className="text-xs text-primary font-medium">{rol+" - "+area}</p>}
             </div>
 
             <div className="hidden md:block w-px h-8 bg-border flex-shrink-0" />
