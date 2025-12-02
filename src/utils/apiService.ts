@@ -29,7 +29,7 @@ api.interceptors.response.use(
       } catch (refreshError) {
         console.error("Error al refrescar token", refreshError);
 
-        //window.location.href = "/"; 
+        window.location.href = "/"; 
       }
     }
 
