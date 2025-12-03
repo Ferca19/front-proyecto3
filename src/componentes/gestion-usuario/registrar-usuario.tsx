@@ -95,7 +95,7 @@ export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () =
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <Card className="w-full max-w-4xl bg-white mx-auto shadow-lg rounded-2xl overflow-hidden transform transition-all duration-300 ease-in-out">
+      <Card className="w-full max-w-5xl bg-white mx-auto shadow-lg rounded-2xl overflow-hidden transform transition-all duration-300 ease-in-out">
 
         <div className="form-header">
           <button
@@ -110,7 +110,7 @@ export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () =
             <span>Registrar Usuario</span>
           </h2>
           <p className="form-subtitle">
-            Ingresa los datos del nuevo usuario para registrarla.
+            Ingresa los datos del nuevo usuario para registrarlo.
           </p>
         </div>
 
@@ -119,17 +119,15 @@ export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () =
             <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6">
               {/* Campos generales */}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 col-span-full">
-
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 col-span-full">
               
-              <FormInput name="nombre" label="Nombre" type="nombre" />
-              <FormInput name="apellido" label="Apellido" type="apellido" />
-              <FormInput name="email" label="Correo Electrónico" placeholder="tu@ejemplo.com" />
-              <FormInput name="telefono" label="Telefono" placeholder="3534114047" />
-              <FormInput name="localidad" label="Localidad" placeholder="Villa Maria" />
-              <FormInput name="direccion" label="Direccion" placeholder="Manuel Belgrano 111" />
+                <FormInput name="nombre" label="Nombre" type="nombre" />
+                <FormInput name="apellido" label="Apellido" type="apellido" />
+                
+                <FormInput name="telefono" label="Telefono" placeholder="3534114047" />
+                <FormInput name="localidad" label="Localidad" placeholder="Villa Maria" />
+                <FormInput name="direccion" label="Direccion" placeholder="Manuel Belgrano 111" />
               
-
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-700">Roles</label>
                 <div  className="w-full">
@@ -178,8 +176,8 @@ export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () =
               </div>
               
               {selectedRol === Rol.EMPLEADO && 
-              <div className="flex-1 rounded-lg p-2 shadow-sm">
-                <label className="block text-sm font-medium text-gray-700 py-1">Areas</label>
+              <div className="flex-1 rounded-lg shadow-sm">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Areas</label>
                 <div className="flex items-end gap-x-2">
                   <div className="flex flex-col w-full gap-y-2">
                     <div className="w-full">
@@ -224,6 +222,8 @@ export default function RegistrarUsuario({ onClose, onSuccess }: { onClose: () =
                 </div>
               </div>
               }
+
+              <FormInput name="email" label="Correo Electrónico" placeholder="tu@ejemplo.com" />
 
               <FormInput name="password" label="Contraseña" type="password" />
 

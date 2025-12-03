@@ -22,11 +22,24 @@ export interface Reclamo {
     calificacion: number;
     asignadoA?: string;
     comentarioCliente: string;
-    imagen_url: string;
+    archivos?: ArchivoAdjunto[];
     createdAt: string;
     updatedAt: string;
     deletedAt?: string;
 }
+
+export interface ArchivoAdjunto {
+    _id: string;
+    nombreOriginal: string;
+    url: string;
+    cloudinaryPublicId: string;
+    mimeType: string;
+    tamanio: number;
+    reclamoId: string;
+    subidoPor: string;
+    viewUrl: string;
+}
+
 
 
 export interface HistorialReclamo {

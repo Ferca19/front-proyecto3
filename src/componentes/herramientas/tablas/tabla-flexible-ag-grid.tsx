@@ -136,7 +136,7 @@ export function TablaAGGrid<T extends Record<string, any>>({
               style={{
                 display: "flex",
                 gap: "0.5rem",
-                minWidth: actionsScrollable ? "300px" : "auto", // 👈 Asegura que el contenido desborde
+                minWidth: "auto", //actionsScrollable ? "300px" : "auto", // 👈 Asegura que el contenido desborde
                 height: "100%",
                 boxSizing: "border-box",
                 alignItems: "center",

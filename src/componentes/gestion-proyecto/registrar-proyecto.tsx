@@ -83,119 +83,105 @@ return (
   <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <Card className="w-full max-w-4xl bg-white mx-auto shadow-lg rounded-2xl overflow-hidden transform transition-all duration-300 ease-in-out">
 
-            {/* Botón de cierre del modal */}
-            <button
-                onClick={onClose}
-                className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-500 text-white rounded-full hover:bg-red-600"
-                >
-                &times;
-            </button>
+          <button
+              onClick={onClose}
+              className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-500 text-white rounded-full hover:bg-red-600"
+              >
+              &times;
+          </button>
 
-            {/* Título del formulario */}
-            <div className="form-header">
-              <h2 className="form-title">
-                <CreditCard className="form-icon" />
-                <span>{"Registrar Proyecto"}</span>
-              </h2>
-              <p className="form-subtitle">{"Ingresa los datos del nuevo Proyecto para registrarlo."}</p>
-            </div>
-
-            {/* Formulario */}
-            <FormProvider {...methods}>
-              <form onSubmit={handleSubmit(onSubmit)}>
-              <CardContent className="space-y-3 px-3 py-2">
-                  {/* Contenedor responsivo para Familias Banco y Banco */}
-               
-                  <div className="flex flex-col md:flex-row gap-4">
-                       <div className="flex gap-x-4">
-                          <div className="flex-1">
-                            <FormInput name="nombre" label="Nombre" />
-                          </div>
-                        </div>
-                    {/* --- Bloque Familias Banco --- */}
-                    <div className="flex-1 rounded-lg p-2 shadow-sm">
-                      <label className="block text-sm font-medium text-gray-700 py-1">Cliente</label>
-                      <div className="flex items-end gap-x-2">
-                        <div className="flex flex-col w-full gap-y-2">
-                          <div className="w-full">
-                            <Select
-                              value={
-                                clientes.length > 0
-                                  ? clientes.find((option) => option.id === clienteId) || null
-                                  : selectedCliente
-                              }
-                              options={clientes}
-                              getOptionLabel={(option) => option.nombre+" "+option.apellido}
-                              getOptionValue={(option) => String(option.id)}
-                              onChange={(selectedOption) => {
-                                if (selectedOption) {
-                                  setValue('clienteId', selectedOption.id);  
-                                  setSelectedCliente(selectedOption);
-                                }
-                              }}
-                              placeholder="Seleccione"
-                              className="text-black"
-                              menuPortalTarget={document.body}
-                              styles={{
-                                control: (base) => ({ ...base, color: "black" }),
-                                singleValue: (base) => ({ ...base, color: "black" }),
-                                option: (base, { isSelected, isFocused }) => ({
-                                  ...base,
-                                  color: isSelected ? "white" : "black",
-                                  backgroundColor: isSelected
-                                    ? "#3b82f6"
-                                    : isFocused
-                                    ? "#93c5fd"
-                                    : "white",
-                                }),
-                                menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-                              }}
-                            />
-                             {errors.clienteId?.message && (
-                              <p className="text-sm text-red-600 mt-1">{errors.clienteId.message}</p>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                     <div className="flex gap-x-4">
-                      <div className="flex-1">
-                        <FormInput name="descripcion" label="Descripcion" />
-                      </div>
-                    </div>
-
-                  </div>
-
-                  {/* Campos generales */}
-                 
-
-                </CardContent>
-
-
-                {errors.root && (
-                  <div className="text-red-600 text-center mb-4">
-                    {errors.root.message}
-                  </div>
-                )}
-
-                {/* Botón de submit */}
-                <CardFooter className="flex justify-center">
-                  <Button type="submit" disabled={isSubmitting} 
-                   className="btn btn-dark">
-                    {isSubmitting ? ("Registrando...") : ("Registrar")}
-                  </Button>
-                </CardFooter>
-              </form>
-            </FormProvider>
-            
-            </Card>
-
-            
+          <div className="form-header">
+            <h2 className="form-title">
+              <CreditCard className="form-icon" />
+              <span>{"Registrar Proyecto"}</span>
+            </h2>
+            <p className="form-subtitle">{"Ingresa los datos del nuevo Proyecto para registrarlo."}</p>
           </div>
 
+          <FormProvider {...methods}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <CardContent className="space-y-3 px-3 py-2">
+               
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-2">
+                  <div className="flex gap-x-4">
+                    <div className="flex-1">
+                      <FormInput name="nombre" label="Nombre" />
+                    </div>
+                  </div>
+
+                  <div className="flex-1 rounded-lg shadow-sm">
+                    <label className="block text-sm font-medium text-gray-700 py-1">Cliente</label>
+                    <div className="flex items-end gap-x-2">
+                      <div className="flex flex-col w-full gap-y-2">
+                        <div className="w-full">
+                          <Select
+                            value={
+                              clientes.length > 0
+                                ? clientes.find((option) => option.id === clienteId) || null
+                                : selectedCliente
+                            }
+                            options={clientes}
+                            getOptionLabel={(option) => option.nombre}
+                            getOptionValue={(option) => String(option.id)}
+                            onChange={(selectedOption) => {
+                              if (selectedOption) {
+                                setValue('clienteId', selectedOption.id);  
+                                setSelectedCliente(selectedOption);
+                              }
+                            }}
+                            placeholder="Seleccione"
+                            className="text-black"
+                            menuPortalTarget={document.body}
+                            styles={{
+                              control: (base) => ({ ...base, color: "black" }),
+                              singleValue: (base) => ({ ...base, color: "black" }),
+                              option: (base, { isSelected, isFocused }) => ({
+                                ...base,
+                                color: isSelected ? "white" : "black",
+                                backgroundColor: isSelected
+                                  ? "#3b82f6"
+                                  : isFocused
+                                  ? "#93c5fd"
+                                  : "white",
+                              }),
+                              menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                            }}
+                          />
+                          {errors.clienteId?.message && (
+                            <p className="text-sm text-red-600 mt-1">{errors.clienteId.message}</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-x-4">
+                  <div className="flex-1">
+                    <FormInput name="descripcion" label="Descripcion" />
+                  </div>
+                </div>
+
+              </CardContent>
 
 
+              {errors.root && (
+                <div className="text-red-600 text-center mb-4">
+                  {errors.root.message}
+                </div>
+              )}
+
+              <CardFooter className="flex justify-center mt-4">
+                <Button type="submit" disabled={isSubmitting} 
+                  className="btn btn-dark">
+                  {isSubmitting ? ("Registrando...") : ("Registrar")}
+                </Button>
+              </CardFooter>
+            </form>
+          </FormProvider>
+        </Card>
+
+      </div>
       );
     }
 

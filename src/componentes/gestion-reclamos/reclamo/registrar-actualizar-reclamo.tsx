@@ -162,18 +162,16 @@ export default function RegistrarActualizarReclamoForm({
 
   return (
     <div className="fixed inset-0 flex items-start justify-center bg-black bg-opacity-50 z-50 overflow-y-auto py-5">
-      <Card className="w-full max-w-6xl bg-white mx-auto shadow-lg rounded-2xl overflow-hidden relative mt-10 mb-12">
+      <Card className="w-full max-w-7xl bg-white mx-auto shadow-lg rounded-2xl overflow-hidden relative mt-10 mb-12">
 
         <button
-            onClick={onClose}
-            className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-500 text-white rounded-full hover:bg-red-600"
-          >
-            &times;
-          </button>
+          onClick={onClose}
+          className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-red-500 text-white rounded-full hover:bg-red-600"
+        >
+          &times;
+        </button>
 
-        {/* Título del formulario */}
         <div className="form-header">
-
           <h2 className="form-title">
             <Layers className="form-icon" />
             <span>{reclamo ? "Actualizar Reclamo" : "Registrar Reclamo"}</span>
@@ -185,25 +183,25 @@ export default function RegistrarActualizarReclamoForm({
           </p>
         </div>
 
-        {/* Formulario */}
         <fieldset disabled={visualizar === true ? true : false}>
         
-        <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 px-6 py-4">
-              {/* Primera fila */}
-              <div className="flex flex-col w-full gap-2">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 col-span-full">
-                  <div className="col-span-full flex items-end gap-2">
-                    <div className="flex-1">
-                      <FormInput
-                        name="titulo"
-                        label="Titulo"
-                        placeholder="Ingrese el titulo"
-                      />
-                    </div>
+          <FormProvider {...methods}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <CardContent className="col-span-full flex flex-col lg:flex-row gap-4">
 
-                    <div>
+                <div className="w-full lg:w-1/2 lg:pl-4 mt-4"> 
+
+                  <div className="flex-1">
+                    <FormInput
+                      name="titulo"
+                      label="Titulo"
+                      placeholder="Ingrese el titulo"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 col-span-full">
+
+                    <div className="mt-2">
                       <label className="mb-2 block text-sm font-medium text-gray-700">Tipo</label>
                       <div  className="w-full">
                         <Select
@@ -250,7 +248,7 @@ export default function RegistrarActualizarReclamoForm({
                       </div>
                     </div>
 
-                    <div>
+                    <div className="mt-2">
                       <label className="mb-2 block text-sm font-medium text-gray-700">Prioridad</label>
                       <div  className="w-full">
                         <Select
@@ -298,151 +296,134 @@ export default function RegistrarActualizarReclamoForm({
                     </div>
 
                     <div>
-                    <label className="mb-2 block text-sm font-medium text-gray-700">Criticidad</label>
-                    <div  className="w-full">
-                      <Select
-                          value={
-                            Object.entries(CriticidadReclamoS)
-                              .map(([key, value]) => ({
-                                value: Number(key),
-                                label: value // or provide a more user-friendly label if needed
-                              }))
-                              .find((option) => Number(option.value) === watch('criticidad')) || null
-                          }
-                          options={Object.entries(CriticidadReclamoS).map(([key, value]) => ({
-                            value: Number(key),
-                            label: value,
-                          }))}
-                          onChange={(selectedOption) => {
-                            methods.setValue(`criticidad`, Number(selectedOption?.value) || 0);
-                          }}
-                          className="text-black"
-                          menuPortalTarget={document.body}
-                          isDisabled={visualizar && visualizar === true ? true : false}
-                          styles={{
-                            control: (base) => ({
-                              ...base,
-                              color: "black",
-                            }),
-                            singleValue: (base) => ({
-                              ...base,
-                              color: "black",
-                            }),
-                            option: (base, { isSelected, isFocused }) => ({
-                              ...base,
-                              color: isSelected ? "white" : "black",
-                              backgroundColor: isSelected 
-                              ? "#3b82f6" 
-                              : isFocused 
-                              ? "#93c5fd"
-                              : "white",
-                            }),
-                            menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-                          }}
-                        />
-                      
-                      {errors.criticidad && <small className="text-red-500">{errors.criticidad?.message as string}</small>}
+                      <label className="mb-2 block text-sm font-medium text-gray-700">Criticidad</label>
+                      <div  className="w-full">
+                        <Select
+                            value={
+                              Object.entries(CriticidadReclamoS)
+                                .map(([key, value]) => ({
+                                  value: Number(key),
+                                  label: value // or provide a more user-friendly label if needed
+                                }))
+                                .find((option) => Number(option.value) === watch('criticidad')) || null
+                            }
+                            options={Object.entries(CriticidadReclamoS).map(([key, value]) => ({
+                              value: Number(key),
+                              label: value,
+                            }))}
+                            onChange={(selectedOption) => {
+                              methods.setValue(`criticidad`, Number(selectedOption?.value) || 0);
+                            }}
+                            className="text-black"
+                            menuPortalTarget={document.body}
+                            isDisabled={visualizar && visualizar === true ? true : false}
+                            styles={{
+                              control: (base) => ({
+                                ...base,
+                                color: "black",
+                              }),
+                              singleValue: (base) => ({
+                                ...base,
+                                color: "black",
+                              }),
+                              option: (base, { isSelected, isFocused }) => ({
+                                ...base,
+                                color: isSelected ? "white" : "black",
+                                backgroundColor: isSelected 
+                                ? "#3b82f6" 
+                                : isFocused 
+                                ? "#93c5fd"
+                                : "white",
+                              }),
+                              menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                            }}
+                          />
+                        
+                        {errors.criticidad && <small className="text-red-500">{errors.criticidad?.message as string}</small>}
+                      </div>
                     </div>
-                  </div>     
 
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 py-1">Proyectos</label>
+                      <div className="flex gap-x-2">
+                        <div className="w-full">
+                          <Select
+                            value={
+                              proyectos.length > 0
+                                ? proyectos.find((option) => option.id === proyectoId) || null
+                                : selectedProyecto
+                            }
+                            options={proyectos}
+                            getOptionLabel={(option) => option.nombre}
+                            getOptionValue={(option) => String(option.id)}
+                            onChange={(selectedOption) => {
+                              methods.setValue(`proyectoId`, selectedOption?.id || "");
+                              setSelectedProyecto(selectedOption as SelectProyecto);
+                            }}
+                            placeholder="Seleccione"
+                            className="text-black"
+                            menuPortalTarget={document.body}
+                            isDisabled={visualizar && visualizar === true ? true : false}
+                            styles={{
+                              control: (base) => ({
+                                ...base,
+                                color: "black",
+                              }),
+                              singleValue: (base) => ({
+                                ...base,
+                                color: "black",
+                              }),
+                              option: (base, { isSelected, isFocused }) => ({
+                                ...base,
+                                color: isSelected ? "white" : "black",
+                                backgroundColor: isSelected ? "#3b82f6" : isFocused ? "#93c5fd" : "white",
+                              }),
+                              menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    
                   </div>
-                </div>
-              </div>
 
-              <div className="flex flex-col w-full gap-2">
-
-                <div className="border border-gray-300 rounded-lg p-2 shadow-sm bg-gray-100">
-                  <label className="block text-sm font-medium text-gray-700 py-1">Proyectos</label>
-                  <div className="flex gap-x-2">
-                    <div className="w-full">
-                      <Select
-                        value={
-                          proyectos.length > 0
-                            ? proyectos.find((option) => option.id === proyectoId) || null
-                            : selectedProyecto
-                        }
-                        options={proyectos}
-                        getOptionLabel={(option) => option.nombre}
-                        getOptionValue={(option) => String(option.id)}
-                        onChange={(selectedOption) => {
-                          methods.setValue(`proyectoId`, selectedOption?.id || "");
-                          setSelectedProyecto(selectedOption as SelectProyecto);
-                        }}
-                        placeholder="Seleccione"
-                        className="text-black"
-                        menuPortalTarget={document.body}
-                        isDisabled={visualizar && visualizar === true ? true : false}
-                        styles={{
-                          control: (base) => ({
-                            ...base,
-                            color: "black",
-                          }),
-                          singleValue: (base) => ({
-                            ...base,
-                            color: "black",
-                          }),
-                          option: (base, { isSelected, isFocused }) => ({
-                            ...base,
-                            color: isSelected ? "white" : "black",
-                            backgroundColor: isSelected ? "#3b82f6" : isFocused ? "#93c5fd" : "white",
-                          }),
-                          menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-                        }}
-                      />
+                  <div className="flex gap-x-4 mt-2 ">
+                    <div className="flex-1">
+                      <FormInput name="descripcion" label="Descripcion" />
                     </div>
                   </div>
+
                 </div>
 
-                <div className="flex gap-x-4">
-                  <div className="flex-1">
-                    <FormInput name="descripcion" label="Descripcion" />
-                  </div>
-                </div>
-
-  
-
-              </div>
-               
-
-              
-              <hr className="col-span-full my-2 border-gray-300" />
-
-              
-
-              <div className="col-span-full flex flex-col lg:flex-row gap-4">
-
-                <div className="w-full lg:w-1/2 lg:pl-4 lg:border-r lg:border-gray-300">
+                <div className="w-full lg:w-1/2 lg:pl-4 lg:border-l lg:border-gray-300 mt-4">
                   <CargaArchivos
+                    archivosRemotos={reclamo?.archivos}
                     label="Archivos del Reclamo"
                     onFilesChange={handleFilesChange}
                   />
                 </div>
+               
+              </CardContent>
 
-    
+              {errors.root?.message && <div className="text-red-600 text-center mb-4">{String(errors.root.message)}</div>}
 
-              </div>
-            </CardContent>
+              <CardFooter className="flex justify-center">
+                {visualizar && visualizar === true ? null : (
+                <Button type="submit" disabled={isSubmitting} className="btn btn-dark">
+                  {isSubmitting
+                    ? reclamo
+                      ? "Actualizando..."
+                      : "Registrando..."
+                    : reclamo
+                      ? "Actualizar"
+                      : "Registrar"}
+                </Button>
+                )}
+              </CardFooter>
 
-            {errors.root?.message && <div className="text-red-600 text-center mb-4">{String(errors.root.message)}</div>}
-
-            {/* Botón de submit */}
-            <CardFooter className="flex justify-center">
-              {visualizar && visualizar === true ? null : (
-              <Button type="submit" disabled={isSubmitting} className="btn btn-dark">
-                {isSubmitting
-                  ? reclamo
-                    ? "Actualizando..."
-                    : "Registrando..."
-                  : reclamo
-                    ? "Actualizar"
-                    : "Registrar"}
-              </Button>
-              )}
-            </CardFooter>
-          </form>
-        </FormProvider>
+            </form>
+          </FormProvider>
         </fieldset>
-
       </Card>
     </div>
   );
