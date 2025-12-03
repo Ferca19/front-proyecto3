@@ -93,7 +93,7 @@ export default function CargaArchivos({
 
               <div className="flex items-center gap-3">
                 <a
-                  href={file.url || file.url}
+                  href={file.viewUrl || file.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary hover:text-primary/70"
