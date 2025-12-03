@@ -66,6 +66,13 @@ export default function ComentariosForm({
   const bottomRef = useRef<HTMLDivElement>(null);
   const [inputText, setInputText] = useState("");
 
+
+  const uniqueUsers = Array.from(
+    new Map(
+      comentariosTraidos.map(c => [c.usuario.id, c.usuario])
+    ).values()
+  ).slice(0, 3);
+
   //===================== AUTO SCROLL ====================================================
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -111,15 +118,13 @@ export default function ComentariosForm({
 
         {/* AVATARES (más a la izquierda) */}
         <div className="flex -space-x-2 overflow-hidden mr-10">
-            {Object.values(comentariosTraidos)
-            .slice(0, 3)
-            .map((comentario) => (
-                <img
-                key={comentario.usuario.id}
+            {uniqueUsers.map((user) => (
+              <img
+                key={user.id}
                 className="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover"
-                src={`https://ui-avatars.com/api/?name=${comentario.usuario.nombre}&background=random`}
-                alt={comentario.usuario.nombre}
-                />
+                src={`https://ui-avatars.com/api/?name=${user.nombre}&background=random`}
+                alt={user.nombre}
+              />
             ))}
         </div>
 

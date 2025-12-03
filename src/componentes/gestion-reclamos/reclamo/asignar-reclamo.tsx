@@ -93,7 +93,7 @@ export default function AsignarReclamoForm({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-2 sm:p-4">
-      <Card className="w-full max-w-2xl bg-white mx-auto shadow-lg rounded-lg overflow-hidden transform transition-all duration-300 ease-in-out max-h-[95vh] flex flex-col">
+      <Card className="w-full max-w-3xl bg-white mx-auto shadow-lg rounded-lg overflow-hidden transform transition-all duration-300 ease-in-out max-h-[95vh] flex flex-col">
         {/* Botón de cierre */}
         <button
           onClick={onClose}
@@ -118,6 +118,7 @@ export default function AsignarReclamoForm({
           <form onSubmit={handleSubmit(onSubmit)}>
             <CardContent className="space-y-3 px-4 sm:px-6 md:px-10 py-3 overflow-y-auto">
               
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-2">
                 <div className="flex flex-col">
                   <label className="block text-sm font-medium text-gray-700 py-1">Area</label>
                   <Select
@@ -154,10 +155,11 @@ export default function AsignarReclamoForm({
                     }}
                   />
                 </div>
+              </div>
 
-                <div className="flex-1">
-                  <FormInput name="comentario" label="Comentario" />
-                </div>
+              <div className="flex-1">
+                <FormInput name="comentario" label="Comentario" />
+              </div>
 
             </CardContent>
 
