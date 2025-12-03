@@ -41,7 +41,9 @@ const FilterBar: React.FC<FilterBarProps> = ({ filters, onFilterChange, onClearF
             const response = await EstadisticasService.obtenerTotalesPara(filters.clienteId || "","proyectos");
             setProyectos(response);
         };
-        fetchProyectos();
+        if (filters.clienteId) { 
+          fetchProyectos();
+        }
 
     }, [filters.clienteId]);
     
@@ -78,7 +80,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ filters, onFilterChange, onClearF
                 : null
             }
             options={clientes}
-            getOptionLabel={(option) => option.nombre+" "+option.apellido}
+            getOptionLabel={(option) => option.nombre}
             getOptionValue={(option) => String(option.id)}
             onChange={(option: any) => handleChange('clienteId', option ? String(option.id) : '')}
             placeholder="Seleccione"
